@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Mundo Pet Feliz - produtos selecionados para cães e gatos, com ofertas especiais e atendimento rápido." />
+  <title>Mundo Pet Feliz | Tudo para o seu pet</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="container nav">
+      <a class="brand" href="#inicio" aria-label="Mundo Pet Feliz">
+        <span class="brand-icon">🐾</span>
+        <span>Mundo Pet <strong>Feliz</strong></span>
+      </a>
+      <nav class="menu" id="menu">
+        <a href="#produtos">Produtos</a>
+        <a href="#beneficios">Benefícios</a>
+        <a href="#depoimentos">Clientes</a>
+        <a href="#faq">Dúvidas</a>
+      </nav>
+      <button class="cart-button" id="cartButton" aria-label="Carrinho">
+        🛒 <span id="cartCount">0</span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="inicio">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <span class="eyebrow">🐶 Cuidado, carinho e qualidade</span>
+          <h1>Seu pet merece o melhor. <span>Todo dia.</span></h1>
+          <p>Produtos selecionados para deixar cães e gatos mais felizes, saudáveis e cheios de energia.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#produtos">Ver ofertas</a>
+            <a class="btn btn-secondary" href="#beneficios">Conhecer a loja</a>
+          </div>
+          <div class="trust-row">
+            <span>✓ Compra segura</span>
+            <span>✓ Atendimento rápido</span>
+            <span>✓ Ofertas especiais</span>
+          </div>
+        </div>
+        <div class="hero-card">
+          <div class="pet-visual">
+            <div class="pet-emoji">🐶🐱</div>
+            <div class="discount-badge"><strong>20% OFF</strong><small>na primeira compra</small></div>
+          </div>
+          <div class="hero-mini-info">
+            <strong>Semana do Pet</strong>
+            <span>Ofertas em itens selecionados</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="categories">
+      <div class="container category-grid">
+        <a href="#produtos" class="category-card"><span>🦴</span><strong>Petiscos</strong></a>
+        <a href="#produtos" class="category-card"><span>🥣</span><strong>Alimentação</strong></a>
+        <a href="#produtos" class="category-card"><span>🎾</span><strong>Brinquedos</strong></a>
+        <a href="#produtos" class="category-card"><span>🧼</span><strong>Higiene</strong></a>
+        <a href="#produtos" class="category-card"><span>🦮</span><strong>Passeio</strong></a>
+      </div>
+    </section>
+
+    <section class="section" id="produtos">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">Mais vendidos</span>
+            <h2>Queridinhos dos pets</h2>
+          </div>
+          <p>Uma seleção de produtos para começar sua vitrine.</p>
+        </div>
+
+        <div class="product-grid">
+          <article class="product-card">
+            <div class="product-image"><span>🥩</span><b>-15%</b></div>
+            <div class="product-info">
+              <span class="tag">Cães</span>
+              <h3>Petisco Natural Premium</h3>
+              <p>Snack saboroso para recompensas e momentos especiais.</p>
+              <div class="rating">★★★★★ <small>(48)</small></div>
+              <div class="price"><del>R$ 29,90</del><strong>R$ 24,90</strong></div>
+              <button class="add-cart" data-product="Petisco Natural Premium" data-price="24.90">Adicionar ao carrinho</button>
+            </div>
+          </article>
+
+          <article class="product-card">
+            <div class="product-image"><span>🎾</span></div>
+            <div class="product-info">
+              <span class="tag">Cães & Gatos</span>
+              <h3>Brinquedo Interativo</h3>
+              <p>Diversão e estímulo para reduzir o tédio dentro de casa.</p>
+              <div class="rating">★★★★★ <small>(32)</small></div>
+              <div class="price"><strong>R$ 34,90</strong></div>
+              <button class="add-cart" data-product="Brinquedo Interativo" data-price="34.90">Adicionar ao carrinho</button>
+            </div>
+          </article>
+
+          <article class="product-card">
+            <div class="product-image"><span>🧴</span><b>-10%</b></div>
+            <div class="product-info">
+              <span class="tag">Higiene</span>
+              <h3>Shampoo Pet Suave</h3>
+              <p>Limpeza delicada com fragrância agradável e toque macio.</p>
+              <div class="rating">★★★★★ <small>(61)</small></div>
+              <div class="price"><del>R$ 39,90</del><strong>R$ 35,90</strong></div>
+              <button class="add-cart" data-product="Shampoo Pet Suave" data-price="35.90">Adicionar ao carrinho</button>
+            </div>
+          </article>
+
+          <article class="product-card">
+            <div class="product-image"><span>🦮</span></div>
+            <div class="product-info">
+              <span class="tag">Passeio</span>
+              <h3>Peitoral Confort Plus</h3>
+              <p>Ajustável, confortável e ideal para passeios mais tranquilos.</p>
+              <div class="rating">★★★★★ <small>(27)</small></div>
+              <div class="price"><strong>R$ 59,90</strong></div>
+              <button class="add-cart" data-product="Peitoral Confort Plus" data-price="59.90">Adicionar ao carrinho</button>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="promo">
+      <div class="container promo-box">
+        <div>
+          <span class="eyebrow light">Oferta especial</span>
+          <h2>Primeira compra com 20% OFF</h2>
+          <p>Use o cupom <strong>PETFELIZ20</strong> e aproveite.</p>
+        </div>
+        <a class="btn btn-light" href="#produtos">Quero aproveitar</a>
+      </div>
+    </section>
+
+    <section class="section soft" id="beneficios">
+      <div class="container">
+        <div class="section-heading centered">
+          <div>
+            <span class="eyebrow">Por que escolher a gente?</span>
+            <h2>Uma experiência feita para quem ama pets</h2>
+          </div>
+        </div>
+        <div class="benefit-grid">
+          <article><span>🚚</span><h3>Envio rápido</h3><p>Despacho ágil para seu pedido chegar o quanto antes.</p></article>
+          <article><span>💬</span><h3>Atendimento humano</h3><p>Suporte próximo para ajudar antes e depois da compra.</p></article>
+          <article><span>🔒</span><h3>Compra segura</h3><p>Ambiente preparado para transmitir confiança ao cliente.</p></article>
+          <article><span>❤️</span><h3>Seleção com carinho</h3><p>Produtos pensados para o bem-estar dos animais.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="depoimentos">
+      <div class="container">
+        <div class="section-heading centered">
+          <div>
+            <span class="eyebrow">Quem compra, recomenda</span>
+            <h2>Clientes apaixonados</h2>
+          </div>
+        </div>
+        <div class="testimonial-grid">
+          <blockquote><div class="rating">★★★★★</div><p>“Chegou rápido e minha cachorrinha amou o brinquedo. Comprarei novamente.”</p><footer>— Camila R.</footer></blockquote>
+          <blockquote><div class="rating">★★★★★</div><p>“Atendimento excelente e produtos muito bem apresentados.”</p><footer>— Bruno M.</footer></blockquote>
+          <blockquote><div class="rating">★★★★★</div><p>“O peitoral ficou perfeito no meu dog. Bem confortável e bonito.”</p><footer>— Juliana S.</footer></blockquote>
+        </div>
+      </div>
+    </section>
+
+    <section class="section soft" id="faq">
+      <div class="container faq-wrap">
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">FAQ</span>
+            <h2>Dúvidas frequentes</h2>
+          </div>
+        </div>
+        <details><summary>Como funciona a entrega?</summary><p>O prazo pode ser configurado conforme sua operação. Nesta demonstração, os textos são ilustrativos.</p></details>
+        <details><summary>Quais formas de pagamento são aceitas?</summary><p>Você pode integrar Pix, cartão e outros meios de pagamento quando conectar seu checkout.</p></details>
+        <details><summary>Posso trocar um produto?</summary><p>Sim. Defina sua política de trocas e devoluções e substitua este texto pelas regras reais da sua loja.</p></details>
+      </div>
+    </section>
+
+    <section class="cta">
+      <div class="container cta-box">
+        <span>🐾</span>
+        <div>
+          <h2>Pronto para mimar seu melhor amigo?</h2>
+          <p>Escolha os favoritos e monte seu pedido.</p>
+        </div>
+        <a href="#produtos" class="btn btn-primary">Comprar agora</a>
+      </div>
+    </section>
+  </main>
+
+  <div class="cart-drawer" id="cartDrawer" aria-hidden="true">
+    <div class="cart-head">
+      <h3>Seu carrinho</h3>
+      <button id="closeCart" aria-label="Fechar">×</button>
+    </div>
+    <div id="cartItems" class="cart-items">
+      <p class="empty-cart">Seu carrinho está vazio.</p>
+    </div>
+    <div class="cart-footer">
+      <div class="cart-total"><span>Total</span><strong id="cartTotal">R$ 0,00</strong></div>
+      <button class="btn btn-primary checkout" id="checkoutButton">Finalizar pedido</button>
+    </div>
+  </div>
+  <div class="overlay" id="overlay"></div>
+
+  <a class="whatsapp-float" href="https://wa.me/" target="_blank" rel="noopener" aria-label="Falar no WhatsApp">💬</a>
+
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div><div class="brand"><span class="brand-icon">🐾</span><span>Mundo Pet <strong>Feliz</strong></span></div><p>Carinho em cada pedido.</p></div>
+      <div><strong>Loja</strong><a href="#produtos">Produtos</a><a href="#beneficios">Benefícios</a></div>
+      <div><strong>Ajuda</strong><a href="#faq">Dúvidas</a><a href="#depoimentos">Avaliações</a></div>
+    </div>
+    <div class="container copyright">© 2026 Mundo Pet Feliz. Página demonstrativa.</div>
+  </footer>
+
+  <script src="assets/js/script.js"></script>
+</body>
+</html>
