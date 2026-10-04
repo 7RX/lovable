@@ -1,0 +1,173 @@
+name: THS Full Legacy Product Export
+on:
+  push:
+    paths:
+      - '.github/workflows/ths-full-legacy-export.yml'
+permissions:
+  contents: write
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install requests beautifulsoup4
+      - name: Build legacy non-tobacco product export
+        run: |
+          python - <<'PY'
+          import json,re,html as htmlmod
+          from concurrent.futures import ThreadPoolExecutor, as_completed
+          from urllib.parse import urlparse
+          import requests
+          from bs4 import BeautifulSoup
+
+          O='https://www.tangiershookahshop.com'
+          s=requests.Session();s.headers.update({'User-Agent':'Mozilla/5.0'})
+          sm=s.get(O+'/loja/arquivos/1486411/sitemaps/sitemap_1.xml',timeout=30).text
+          urls=[x.strip() for x in re.findall(r'<loc>\s*([^<]+)\s*</loc>',sm,re.I)]
+          urls=[u for u in urls if u.startswith(O)]
+          
+          tobacco_prefixes=[
+            '/essencias-','/essencias-convencionais-50g','/tangiers-sabores/','/tangiers-100g/',
+            '/cane-mint/','/azure/','/fumari/','/alfakher/','/pure-tobacco','/sence','/musthave',
+            '/darkside','/haze','/buzz','/starbuzz','/uncut','/blackburn','/al-oustoura','/al-ostoura',
+            '/pred-50','/zgy-50','/zomo-50','/smyrna-50','/adalya-50','/sense-50','/skull-50',
+            '/babos-50','/primal-50','/ona-50','/onix-50','/fusion-50','/nay-50','/mr-lucky'
+          ]
+          info_prefixes=['/contato','/empresa','/como-comprar','/seguranca','/envio','/pagamento','/trocas','/garantia',
+                         '/my-account','/cadastro','/central-do-cliente','/sem-resultados','/loja/','/politica','/termos']
+          
+          def skip_url(u):
+            p=urlparse(u).path.lower().rstrip('/')
+            return any(p.startswith(x) for x in tobacco_prefixes+info_prefixes)
+          
+          candidates=[u for u in urls if not skip_url(u)]
+          
+          def clean_text(x):
+            return re.sub(r'\s+',' ',BeautifulSoup(x or '','html.parser').get_text(' ',strip=True)).strip()
+          
+          def category_for(path,title):
+            x=(path+' '+title).lower()
+            if '/fogareir' in x or 'fogareiro' in x or 'cartucho de gás' in x or 'cartucho de gas' in x:
+              return 'FOGAREIROS'
+            if '/controlador' in x or 'controlador de calor' in x or 'sultan heat' in x or 'safe screen' in x or 'telinha' in x:
+              return 'CONTROLADORES'
+            if '/carvoes-e-aluminios' in x or '/carvoes/' in x or '/aluminios' in x or 'carvão' in x or 'carvao' in x or 'alumínio' in x or 'aluminio' in x:
+              return 'CARVÕES E ALUMÍNIOS'
+            if '/mangueira' in x or ' hose' in x or 'mangueira' in x:
+              return 'MANGUEIRAS'
+            rosh_tokens=['/rosh/','/alpaca-bowl','/artisan-sakamoto','/cosmo-bowl','/predator-bowl','/old-bowl','/seven-bowl','/capsula-bowl','/sakamoto','rosh ',' bowl']
+            if any(t in x for t in rosh_tokens):
+              return "ROSH'S"
+            # hookahs/stems/setups/wookah/blade/core/amotion
+            hookah_tokens=['/arguiles/','/blade-hookah','/amotion-pedal-frx','/amotion-hookah','/amotion-frx','/amotion-flash',
+                           '/core-hookah','/wookah','/bladehookah','stem ','setup ','hookah ','narguile']
+            if any(t in x for t in hookah_tokens):
+              return 'NARGUILES'
+            return 'ACESSÓRIOS'
+          
+          def parse(u):
+            try:
+              r=requests.get(u,timeout=25,headers={'User-Agent':'Mozilla/5.0'})
+              if r.status_code!=200 or 'text/html' not in r.headers.get('content-type',''): return None
+              soup=BeautifulSoup(r.text,'html.parser')
+              body=soup.get_text(' ',strip=True)
+              # strong product-page checks
+              classes=' '.join(soup.html.get('class',[]) if soup.html else [])
+              ogtype=(soup.find('meta',attrs={'property':'og:type'}) or {}).get('content','') if soup.find('meta',attrs={'property':'og:type'}) else ''
+              h1=soup.find('h1')
+              title=' '.join(h1.stripped_strings) if h1 else ''
+              has_product=(
+                'page-product' in classes.lower() or
+                ogtype.lower()=='product' or
+                bool(soup.select_one('[data-product-id]')) and ('Adicionar' in body or 'Comprar' in body or 'Produto indisponível' in body)
+              )
+              # Exclude category/search pages even if they contain product cards
+              if 'page-catalog' in classes.lower() or 'page-search' in classes.lower(): has_product=False
+              if not has_product or not title: return None
+              
+              # price
+              price=None
+              # meta itemprop or data price
+              for tag in soup.find_all(['meta','span','div'],attrs={'itemprop':'price'}):
+                raw=tag.get('content') or tag.get_text(' ',strip=True)
+                m=re.search(r'([0-9]+(?:[\.,][0-9]{1,2})?)',raw or '')
+                if m:
+                  try: price=float(m.group(1).replace('.','').replace(',','.')); break
+                  except: pass
+              if price is None:
+                # prioritize product main content, first BRL value
+                vals=re.findall(r'R\$\s*(?:\(BRL\)\s*)?([0-9\.]+,[0-9]{2})',body,re.I)
+                if vals:
+                  try: price=float(vals[0].replace('.','').replace(',','.'))
+                  except: pass
+              
+              unavailable=bool(re.search(r'Produto indisponível|Esse acabou|indisponível no momento',body,re.I))
+              available=not unavailable
+              
+              # image
+              image=''
+              og=soup.find('meta',attrs={'property':'og:image'})
+              if og and og.get('content') and 'logo-' not in og['content']:
+                image=og['content']
+              if not image:
+                for img in soup.find_all('img'):
+                  vals=[img.get(k) for k in ('data-zoom-image','data-src','src','data-original')]
+                  for x in vals:
+                    if x and 'images.tcdn.com.br/img/img_prod/1486411' in x and 'logo-' not in x:
+                      image=x if x.startswith('http') else O+x
+                      break
+                  if image: break
+              
+              # brand
+              brand=''
+              m=re.search(r'Marca:\s*(?:-|–)?\s*([^|]{1,80}?)(?:\s+Disponibilidade:|\s+Referência:|\s+Refer)',body,re.I)
+              if m: brand=m.group(1).strip(' -')
+              
+              # canonical
+              canon=soup.find('link',rel='canonical')
+              source=(canon.get('href') if canon and canon.get('href') else u)
+              path=urlparse(source).path
+              cat=category_for(path,title)
+              
+              # reject tobacco that slipped through by title/brand/path
+              low=(path+' '+title+' '+brand).lower()
+              tobacco_words=['tangiers sabores','cane mint','fumari 100','alfakher','musthave','blackburn 100','uncut by hookah',
+                             'pure tobacco','starbuzz 250','starbuzz vintage','sence 100','buzz 125','haze 200','azure 250',
+                             'essência','essencia ','50g - escolha o sabor','tabaco']
+              if any(w in low for w in tobacco_words): return None
+              
+              return {'name':htmlmod.unescape(title),'category':cat,'price':price,'available':available,'brand':brand,
+                      'image':image,'source':source,'path':path}
+            except Exception:
+              return None
+          
+          products=[]
+          with ThreadPoolExecutor(max_workers=18) as ex:
+            futs={ex.submit(parse,u):u for u in candidates}
+            for i,f in enumerate(as_completed(futs),1):
+              p=f.result()
+              if p: products.append(p)
+              if i%50==0: print('checked',i,'products',len(products))
+          
+          # dedupe canonical path
+          unique={}
+          for p in products:
+            key=p['path'].rstrip('/')
+            if key and key not in unique: unique[key]=p
+          products=sorted(unique.values(),key=lambda p:(p['category'],p['name'].lower()))
+          counts={}
+          for p in products: counts[p['category']]=counts.get(p['category'],0)+1
+          out={'sitemap_url_count':len(urls),'candidate_count':len(candidates),'count':len(products),'counts':counts,'products':products}
+          with open('ths-store/full-legacy-products.json','w',encoding='utf-8') as f:json.dump(out,f,ensure_ascii=False,indent=2)
+          print(json.dumps({'count':len(products),'counts':counts},ensure_ascii=False))
+          PY
+      - name: Commit export
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add ths-store/full-legacy-products.json
+          git diff --cached --quiet || git commit -m "Export full THS legacy product catalog"
+          git push
