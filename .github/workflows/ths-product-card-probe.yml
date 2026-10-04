@@ -1,0 +1,80 @@
+name: THS Product Card Probe
+on:
+  push:
+    paths:
+      - '.github/workflows/ths-product-card-probe.yml'
+permissions:
+  contents: write
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install requests beautifulsoup4
+      - name: Extract product card structures
+        run: |
+          python - <<'PY'
+          import json,re
+          import requests
+          from bs4 import BeautifulSoup
+          O='https://www.tangiershookahshop.com'
+          paths=['/acessorios','/controladores','/mangueiras','/fogareiros','/carvoes-e-aluminios','/arguiles','/rosh','/narguiles','/roshs','/rosh-s']
+          s=requests.Session();s.headers.update({'User-Agent':'Mozilla/5.0'})
+          out=[]
+          for path in paths:
+            try:
+              r=s.get(O+path,timeout=30)
+              soup=BeautifulSoup(r.text,'html.parser')
+              cards=[]
+              markers=[]
+              for st in soup.find_all(string=re.compile(r'Carregando pre[cç]o|Produto indisponível|Esse acabou',re.I)):
+                node=st.parent
+                best=None
+                for _ in range(9):
+                  if not node: break
+                  txt=' '.join(node.stripped_strings)
+                  if 15 < len(txt) < 700:
+                    html=str(node)
+                    if '<img' in html or 'data-' in html or 'onclick' in html or '<button' in html:
+                      best=node
+                  node=node.parent
+                if best:
+                  html=str(best)
+                  txt=' '.join(best.stripped_strings)
+                  links=[a.get('href') for a in best.find_all('a',href=True)]
+                  imgs=[]
+                  for img in best.find_all('img'):
+                    for attr in ('src','data-src','data-original','data-lazy'):
+                      if img.get(attr): imgs.append(img.get(attr))
+                  attrs={}
+                  for tag in best.find_all(True):
+                    for k,v in tag.attrs.items():
+                      if k.startswith('data-') or k in ('id','onclick','class'):
+                        vv=' '.join(v) if isinstance(v,list) else str(v)
+                        if any(x in k.lower()+vv.lower() for x in ['product','produto','sku','id','url','link','price']):
+                          attrs.setdefault(tag.name,[]).append({k:vv[:500]})
+                  key=re.sub(r'\s+',' ',txt)
+                  if key not in [x['text'] for x in cards]:
+                    cards.append({'text':key[:700],'links':links,'images':imgs[:10],'attrs':attrs,'html':html[:5000]})
+              # inline/script hints
+              script_hints=[]
+              for sc in soup.find_all('script'):
+                txt=sc.string or sc.get_text() or ''
+                if re.search(r'product|produto|catalog|categoria|busca|loading products|ajax',txt,re.I):
+                  script_hints.append(txt[:12000])
+              srcs=[sc.get('src') for sc in soup.find_all('script',src=True)]
+              out.append({'path':path,'status':r.status_code,'length':len(r.text),'cards':cards[:200],'script_srcs':srcs,'script_hints':script_hints[:20]})
+            except Exception as e: out.append({'path':path,'error':str(e)})
+          with open('ths-store/product-card-probe.json','w',encoding='utf-8') as f:json.dump(out,f,ensure_ascii=False,indent=2)
+          print([(x.get('path'),x.get('status'),len(x.get('cards',[]))) for x in out])
+          PY
+      - name: Commit result
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add ths-store/product-card-probe.json
+          git diff --cached --quiet || git commit -m "Capture THS dynamic product cards"
+          git push
