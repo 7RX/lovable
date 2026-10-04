@@ -144,6 +144,29 @@ body{background:#fff}.container{width:min(calc(100% - 64px),1460px)}
 }
 </style>
 
+
+<style id="ths-art-slide-fix">
+.ref-hero.has-art-slide{
+  background-position:center center!important;
+  background-size:cover!important;
+  background-repeat:no-repeat!important;
+}
+.ref-hero.has-art-slide:after{
+  background:linear-gradient(90deg,#050505 0%,rgba(5,5,5,.95) 25%,rgba(5,5,5,.62) 43%,rgba(5,5,5,.16) 64%,rgba(5,5,5,0) 100%)!important;
+}
+.ref-hero.has-art-slide .hero-carousel-visual{display:none!important}
+@media(max-width:760px){
+  .ref-hero.has-art-slide{
+    background-position:68% top!important;
+    background-size:auto 58%!important;
+    background-repeat:no-repeat!important;
+    background-color:#050505!important;
+  }
+  .ref-hero.has-art-slide:after{
+    background:linear-gradient(0deg,#040404 0%,#040404fb 42%,rgba(4,4,4,.38) 66%,rgba(4,4,4,.05) 100%)!important;
+  }
+}
+</style>
 </head>
 <body>
   <div id="ageGate" class="age-gate" aria-hidden="true">
@@ -2918,12 +2941,16 @@ function home(){
      const img=$('#heroVisualImg');
      if(slide.reference){
        hero.classList.remove('has-category-slide','has-art-slide');
-       hero.style.backgroundImage='';
+       hero.style.removeProperty('background');
        img.src='';img.alt='';
      }else{
        hero.classList.remove('has-category-slide');
        hero.classList.add('has-art-slide');
-       hero.style.backgroundImage=`linear-gradient(90deg,rgba(5,5,5,.96) 0%,rgba(5,5,5,.72) 31%,rgba(5,5,5,.16) 56%,rgba(5,5,5,0) 76%),url("${slide.image}")`;
+       hero.style.setProperty(
+         'background',
+         `linear-gradient(90deg,rgba(5,5,5,.96) 0%,rgba(5,5,5,.72) 31%,rgba(5,5,5,.16) 56%,rgba(5,5,5,0) 76%),url("${slide.image}") center center / cover no-repeat,#050505`,
+         'important'
+       );
        img.src='';img.alt=slide.alt||'';
      }
      $$('[data-hero-dot]',dots).forEach((b,i)=>b.classList.toggle('active',i===heroIndex));
