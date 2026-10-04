@@ -66,6 +66,26 @@
 @media(max-width:1150px){.product-showcase .product-grid{grid-template-columns:repeat(4,1fr)}.category-showcase .category-grid-v3{grid-template-columns:repeat(2,1fr)}.hero-main-product{right:7%;width:44vw}.hero-third-product{right:28%}}
 @media(max-width:760px){.announcement{font-size:.48rem;text-align:center;padding:5px 10px}.header-main{height:63px;grid-template-columns:34px 1fr auto}.brand strong{font-size:1.72rem}.hero-v2,.hero-content{min-height:575px}.hero-content{align-items:flex-end;padding-bottom:48px}.hero h1{font-size:clamp(3rem,15vw,4.6rem)}.hero-copy .eyebrow{font-size:.62rem}.hero p{font-size:.7rem;max-width:320px}.hero-main-product{width:88vw;height:52%;right:-17%;top:5%;opacity:.9}.hero-secondary-product{display:block;width:46vw;height:29%;right:-9%;bottom:27%;opacity:.8}.hero-third-product{display:none}.hero-services .container{grid-template-columns:repeat(2,1fr);width:100%}.hero-service{padding:11px 12px;min-height:58px}.hero-service:nth-child(3){border-left:1px solid #262626}.brand-rail .container{grid-template-columns:repeat(5,1fr)}.brand-rail span{padding:12px 4px;font-size:.5rem}.category-showcase .category-grid-v3{grid-template-columns:1fr 1fr;gap:8px}.category-card-v3{height:150px}.category-card-v3 .cat-copy{padding:15px}.category-card-v3 h3{font-size:.95rem}.category-card-v3 p{display:none}.category-card-v3 .mini-link{font-size:.5rem;padding:7px 9px;margin-top:10px}.product-showcase{padding-top:20px}.product-showcase .product-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.product-showcase .section-head h2{font-size:1.2rem}.product-showcase .product-info{min-height:165px}}
 
+/* THS 2.3 — reprodução funcional do layout de referência */
+:root{--ref-gold:#d4a744;--ref-gold-hi:#f1c869;--ref-black:#050505;--ref-panel:#101112;--ref-border:#28292b}
+body{background:#fff}.container{width:min(calc(100% - 64px),1460px)}
+.announcement{height:27px;min-height:27px;padding:0;background:linear-gradient(90deg,#c99637 0%,#e2be69 48%,#c99637 100%);color:#080808;font-size:.58rem;font-weight:900}
+.promo-inner{height:100%;display:flex;align-items:center;justify-content:space-between;gap:24px}.promo-message{margin-left:auto}.promo-links{margin-left:auto;display:flex;align-items:center;gap:42px;white-space:nowrap}.promo-links a{font-weight:900;font-size:.58rem}
+.site-header{position:sticky;top:0;background:#050505;border:0;box-shadow:none}.header-main{height:83px;grid-template-columns:240px minmax(360px,740px) 1fr;gap:42px}.brand{padding-left:38px}.brand strong{font-size:3.1rem;line-height:.75;color:var(--ref-gold-hi);letter-spacing:-.09em}.brand strong span{display:none}.brand small{font-size:.5rem;color:var(--ref-gold-hi);letter-spacing:.12em;margin-top:10px}.search-box{height:44px;border-radius:9px;background:#f6f6f6;border:1px solid #e4e4e4}.search-box span{display:none}.search-box input{color:#5a5a5a;font-size:.77rem;padding-left:18px}.search-box button{font-size:0;position:relative}.search-box button:after{content:'⌕';font-size:1.65rem;color:#0a0a0a;position:absolute;inset:0;display:grid;place-items:center}.header-actions{gap:34px}.header-extra,.cart-button{font-size:.72rem;font-weight:800}.fav-header{gap:7px;display:flex;align-items:center}.fav-header:first-letter{font-size:1.35rem}.cart-icon{font-size:1.5rem}.cart-button b,.header-extra b{position:relative;top:-12px;left:-6px;min-width:20px;height:20px;background:var(--ref-gold);color:#111}.desktop-nav{height:49px;border-top:1px solid #111;border-bottom:1px solid #242424;justify-content:center;gap:52px}.desktop-nav a{height:49px;display:flex;align-items:center;gap:6px;font-size:.67rem;font-weight:800;color:#f2f2f2;position:relative}.desktop-nav a.nav-active{color:var(--ref-gold-hi)}.desktop-nav a.nav-active:after{content:'';position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--ref-gold)}.nav-caret{font-size:.8rem;color:#ddd;margin-top:-4px}
+.ref-hero{position:relative;height:395px;background:radial-gradient(circle at 72% 45%,#3a2616 0,#17100b 27%,#070707 58%,#020202 100%);overflow:hidden;color:white;border-bottom:1px solid #2a2a2a}.ref-hero:after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,#050505 0%,#050505e8 32%,transparent 67%),radial-gradient(circle at 73% 65%,#bd722522 0,transparent 32%);pointer-events:none}.ref-hero-glow{position:absolute;right:0;top:0;width:62%;height:100%;background:radial-gradient(circle at 70% 30%,#f6c56a28 0,transparent 24%),radial-gradient(circle at 85% 80%,#803e171f 0,transparent 32%);filter:blur(8px)}.ref-hero-inner{height:330px;position:relative;z-index:3}.ref-hero-copy{position:absolute;left:42px;top:37px;width:520px}.ref-kicker{display:block;font-size:1.06rem;letter-spacing:.02em;color:var(--ref-gold-hi);margin-bottom:7px}.ref-hero-copy h1{margin:0;font-family:var(--display);font-weight:900;line-height:.82;letter-spacing:-.055em;text-transform:uppercase}.ref-hero-copy h1 span{display:block;font-size:4.45rem;color:#fff}.ref-hero-copy h1 strong{display:block;font-size:4.45rem;color:var(--ref-gold-hi)}.ref-hero-copy p{margin:11px 0 12px;font-size:.87rem;line-height:1.24;font-weight:600;color:#f4f4f4}.ref-cta{display:inline-flex;height:42px;min-width:198px;align-items:center;justify-content:center;gap:18px;border-radius:6px;background:linear-gradient(90deg,#dfad4f,#ebc66e);color:#070707;font-size:.72rem;font-weight:900;box-shadow:0 10px 30px #0006}.ref-cta span{font-size:1rem}.ref-product-scene{position:absolute;right:20px;top:0;width:760px;height:330px;z-index:1}.ref-product{position:absolute;border-radius:22px;overflow:hidden;background:radial-gradient(circle,#f1efe9 0,#ddd9cf 58%,#aaa49b 100%);box-shadow:0 28px 40px #000a;border:1px solid #ffffff20}.ref-product img{width:100%;height:100%;object-fit:contain;display:block}.ref-product-a{width:365px;height:172px;left:205px;top:20px;z-index:4}.ref-product-b{width:260px;height:150px;left:92px;top:165px;z-index:5;transform:rotate(-1deg)}.ref-product-c{width:282px;height:160px;left:338px;top:160px;z-index:6;transform:rotate(1deg)}.ref-product-d{width:210px;height:210px;right:2px;top:83px;z-index:3;transform:rotate(1.5deg)}.ref-decor{position:absolute;z-index:8;color:#72a343;text-shadow:0 10px 20px #000;font-weight:900}.ref-mint{left:134px;top:128px;font-size:4rem}.ref-ice{left:60px;top:190px;font-size:5rem;color:#d7e3e2;transform:rotate(18deg)}.ref-coffee{right:10px;bottom:2px;color:#6d3c21;letter-spacing:9px;font-size:1.5rem}.hero-arrow{position:absolute;top:42%;z-index:10;width:44px;height:44px;border:0;border-radius:50%;background:#0b0b0bb8;color:#fff;font-size:2rem;cursor:pointer}.hero-arrow-left{left:16px}.hero-arrow-right{right:16px}.ref-dots{position:absolute;z-index:10;left:50%;bottom:68px;display:flex;gap:6px}.ref-dots i{width:8px;height:8px;border-radius:50%;background:#fff}.ref-dots i+ i{background:#777}.ref-hero-services{position:absolute;z-index:6;bottom:0;left:50%;transform:translateX(-50%);height:65px;display:flex;align-items:center;gap:46px}.ref-hero-services>div{display:flex;align-items:center;gap:12px;min-width:132px}.svc-icon{font-size:1.55rem;color:var(--ref-gold-hi)}.pix-icon{color:#fff}.ref-hero-services p{margin:0;font-size:.57rem;line-height:1.15;color:#fff}.ref-hero-services b{font-weight:800}
+.ref-brand-strip{background:#151719;padding:10px 0}.ref-brand-track{display:grid;grid-template-columns:repeat(10,1fr) 54px;gap:0}.ref-brand-track a,.ref-brand-track button{height:92px;background:#0d0e0f;border:1px solid #2a2b2d;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px}.ref-brand-track a:nth-child(even){background:#111214}.ref-brand-track button{font-size:2.2rem;border-radius:0;cursor:pointer}.brand-symbol{font:800 1.75rem var(--display);line-height:1;color:#fff}.ref-brand-track a:first-child .brand-symbol{color:#f0a24e}.ref-brand-track a:nth-child(4) .brand-symbol{color:#d62631}.ref-brand-track strong{font-size:.54rem;letter-spacing:.04em}
+.ref-category-zone{background:#191b1d;padding:0 0 10px}.ref-category-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.ref-cat{height:174px;position:relative;overflow:hidden;background:#0e0f10;border:1px solid #343536;color:#fff}.ref-cat:after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,#0b0c0df5 0,#0b0c0dcf 48%,transparent 78%)}.ref-cat>div{position:relative;z-index:3;padding:28px 25px}.ref-cat h3{font:800 1.25rem/1.02 var(--display);margin:0 0 9px}.ref-cat p{font-size:.61rem;line-height:1.32;margin:0 0 17px;color:#eee}.ref-cat span{display:inline-flex;background:linear-gradient(90deg,#dfad4f,#ebc66e);color:#080808;border-radius:4px;padding:9px 15px;font-size:.56rem;font-weight:900}.ref-cat img{position:absolute;z-index:1;right:-5%;top:0;width:62%;height:100%;object-fit:contain;filter:brightness(.72) contrast(1.08);transform:scale(.96)}
+.ref-products{background:#fff;padding:18px 0 65px}.ref-products-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:13px}.ref-products-head>div{display:flex;align-items:center;gap:13px}.ref-products-head .fire{font-size:1.8rem;color:#d7a13a}.ref-products-head h2{font:800 1.16rem var(--display);margin:0}.ref-products-head p{font-size:.55rem;margin:2px 0 0;color:#555}.ref-products-head>a{font-size:.62rem;font-weight:800;border-bottom:1px solid #d5a648;padding-bottom:4px}.ref-products .product-grid{grid-template-columns:repeat(6,minmax(0,1fr));gap:9px}.ref-products .product-card{border:1px solid #e4e4e4;border-radius:5px;box-shadow:0 3px 13px #00000008}.ref-products .product-image{aspect-ratio:1.12/1}.ref-products .product-info{padding:11px;min-height:154px}.ref-products .product-brand{font-size:.49rem}.ref-products .product-name{font-size:.72rem;min-height:34px}.ref-products .availability{font-size:.5rem}.ref-products .price{font-size:.9rem}.ref-products .installment{font-size:.52rem}.ref-products .product-actions{display:none}.ref-products .badge{border-radius:3px;font-size:.47rem;padding:4px 6px}.ref-products .fav-btn{width:26px;height:26px;border:0;background:transparent;font-size:1rem}
+.home-secondary{background:#0f1011}
+@media(max-width:1200px){.container{width:min(calc(100% - 36px),1160px)}.desktop-nav{gap:28px}.ref-product-scene{right:-65px;transform:scale(.88);transform-origin:right center}.ref-hero-copy{left:18px}.ref-products .product-grid{grid-template-columns:repeat(4,1fr)}.ref-brand-track{grid-template-columns:repeat(5,1fr)}.ref-brand-track button{display:none}.ref-category-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:760px){
+ .container{width:min(calc(100% - 24px),100%)}.announcement{height:auto;min-height:25px;padding:4px 0}.promo-inner{justify-content:center}.promo-message{margin:0;text-align:center;font-size:.45rem;line-height:1.2}.promo-links{display:none}.site-header{position:sticky}.header-main{height:64px;grid-template-columns:36px 1fr auto;gap:7px}.brand{padding:0;align-items:center}.brand strong{font-size:2.15rem}.brand small{font-size:.36rem;margin-top:7px}.header-actions{gap:7px}.cart-button{position:relative}.cart-button b{position:absolute;right:-5px;top:-7px;left:auto}.cart-icon{font-size:1.35rem}.desktop-nav{display:none}.mobile-search{display:flex!important;width:calc(100% - 24px);height:39px;margin:0 auto 10px;border-radius:8px;background:#f5f5f5}.mobile-search input{color:#333}.mobile-search span{color:#111}.mobile-search input::placeholder{color:#777}
+ .ref-hero{height:640px;background:radial-gradient(circle at 70% 22%,#342313 0,#15100d 28%,#050505 56%)}.ref-hero:after{background:linear-gradient(0deg,#040404 0,#040404fa 42%,#0404045c 72%,transparent 100%)}.ref-hero-inner{height:560px}.ref-product-scene{top:0;right:-20px;width:calc(100vw + 15px);height:310px;transform:none}.ref-product{border-radius:13px}.ref-product-a{width:52vw;height:125px;left:27vw;top:12px}.ref-product-b{width:38vw;height:105px;left:9vw;top:142px}.ref-product-c{width:43vw;height:112px;left:39vw;top:143px}.ref-product-d{width:31vw;height:142px;right:0;top:64px;opacity:.9}.ref-decor{display:none}.ref-hero-copy{left:12px;right:12px;top:auto;bottom:91px;width:auto}.ref-kicker{font-size:.72rem}.ref-hero-copy h1{line-height:.83}.ref-hero-copy h1 span,.ref-hero-copy h1 strong{font-size:clamp(2.75rem,14vw,4rem)}.ref-hero-copy p{font-size:.66rem;line-height:1.35;max-width:330px}.ref-cta{height:40px;min-width:180px}.hero-arrow{top:23%;width:36px;height:36px;font-size:1.6rem}.hero-arrow-left{left:7px}.hero-arrow-right{right:7px}.ref-dots{bottom:198px}.ref-hero-services{bottom:0;height:82px;width:100%;display:grid;grid-template-columns:repeat(2,1fr);gap:0}.ref-hero-services>div{height:41px;min-width:0;border-top:1px solid #242424;padding:5px 10px;gap:8px}.ref-hero-services>div:nth-child(odd){border-right:1px solid #242424}.svc-icon{font-size:1.1rem}.ref-hero-services p{font-size:.48rem}
+ .ref-brand-strip{padding:8px 0}.ref-brand-track{display:flex;width:100%;overflow-x:auto;scroll-snap-type:x mandatory;padding:0 8px}.ref-brand-track::-webkit-scrollbar{display:none}.ref-brand-track a{min-width:102px;height:76px;scroll-snap-align:start}.brand-symbol{font-size:1.4rem}.ref-brand-track strong{font-size:.45rem}.ref-brand-track button{display:none}
+ .ref-category-zone{padding:8px 0 11px}.ref-category-grid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:8px;width:100%;padding:0 12px}.ref-category-grid::-webkit-scrollbar{display:none}.ref-cat{min-width:78vw;height:155px;scroll-snap-align:center}.ref-cat>div{padding:22px 18px}.ref-cat h3{font-size:1.14rem}.ref-cat p{font-size:.55rem}.ref-cat span{padding:8px 11px}.ref-cat img{width:55%}
+ .ref-products{padding:18px 0 50px}.ref-products-head{align-items:flex-end}.ref-products-head .fire{display:none}.ref-products-head h2{font-size:1rem}.ref-products-head p{font-size:.48rem;max-width:240px}.ref-products-head>a{font-size:.54rem}.ref-products .product-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.ref-products .product-image{aspect-ratio:1/1}.ref-products .product-info{min-height:145px;padding:9px}.ref-products .product-name{font-size:.68rem}.ref-products .price{font-size:.87rem}.ref-products .installment span{display:none}.home-secondary{padding-top:48px}
+}
+
 </style>
 </head>
 <body>
@@ -113,7 +133,7 @@
   </div>
 
   <header class="site-header">
-    <div class="announcement" id="storeAnnouncement">FRETE PARA TODO O BRASIL • PARCELE EM ATÉ 12X • PAGUE COM PIX, CARTÃO OU MERCADO PAGO</div>
+    <div class="announcement" id="storeAnnouncement"><div class="promo-inner container"><span class="promo-message announcement-message">FRETE PARA TODO O BRASIL | PARCELE EM ATÉ 12X | PAGUE COM PIX, CARTÃO OU MERCADO PAGO</span><div class="promo-links"><a href="#/contato">◔&nbsp; ATENDIMENTO</a><a href="#/conta">♟&nbsp; ENTRE OU CADASTRE-SE</a></div></div></div>
     <div class="header-main container">
       <button id="menuButton" class="icon-btn mobile-only" aria-label="Abrir menu">☰</button>
       <a class="brand" href="#/">
@@ -124,10 +144,8 @@
         <span>⌕</span><input id="searchInput" type="search" placeholder="O que você está procurando?" aria-label="Buscar produtos" /><button aria-label="Buscar">→</button>
       </form>
       <div class="header-actions">
-        <a class="header-extra desktop-only" href="#/favoritos">♡ Favoritos <b id="favCount">0</b></a>
-        <a class="header-extra desktop-only" href="#/conta">◉ <span id="accountLabel">Conta</span></a>
-        <a class="header-link desktop-only" href="#/contato">Atendimento</a>
-        <button id="cartButton" class="cart-button" aria-label="Abrir carrinho">▢ <span class="desktop-only">Carrinho</span><b id="cartCount">0</b></button>
+        <a class="header-extra desktop-only fav-header" href="#/favoritos">♡ <span>Favoritos</span><b id="favCount">0</b></a>
+        <button id="cartButton" class="cart-button" aria-label="Abrir carrinho"><span class="cart-icon">🛒</span><span class="desktop-only">Carrinho</span><b id="cartCount">0</b></button>
       </div>
     </div>
     <nav class="desktop-nav container" id="desktopNav"></nav>
@@ -263,49 +281,58 @@ function bindProducts(scope=document){$$('[data-open-product]',scope).forEach(el
 function brandRail(){return ['TANGIERS','MUSTHAVE','BLACKBURN','STARBUZZ','UNCUT','XKAH','CORE','AMOTION','BLADE','KALOUD'].map(b=>`<span>${b}</span>`).join('')}
 
 function home(){
- const featured=products.filter(p=>['tangiers-250g','tangiers-100g','musthave-125g','blackburn-100g','starbuzz-250g','uncut-virginia'].includes(p.id)).slice(0,6);
+ const featured=products.filter(p=>['tangiers-250g','tangiers-100g','musthave-125g','blackburn-100g','core-mad-black-gold','amotion-pedal-frx-grape'].includes(p.id)).slice(0,6);
+ const heroTangiers=productById('tangiers-250g')||products[0];
+ const heroMust=productById('musthave-125g')||products[1]||heroTangiers;
+ const heroBlack=productById('blackburn-100g')||products[2]||heroTangiers;
+ const heroStar=productById('starbuzz-250g')||products[3]||heroTangiers;
+ const catHookah=productById('core-mad-black-gold')||productById('amotion-pedal-frx-grape')||heroTangiers;
+ const catRosh=productById('kaloud-vitria-ii')||productById('xkah-graphite')||heroTangiers;
+ const catCoal=productById('blackburn-100g')||heroBlack;
+ const catLaunch=productById('amotion-pedal-frx-grape')||catHookah;
  const launches=products.filter(p=>p.badge==='Novo').slice(0,6);
- const heroMain=productById(storeConfig.heroMainProductId)||productById('tangiers-250g')||products.find(p=>p.available)||products[0];
- const heroSecondary=productById(storeConfig.heroSecondaryProductId)||productById('musthave-125g')||products.find(p=>p.id!==heroMain?.id)||heroMain;
- const heroThird=productById('blackburn-100g')||products.find(p=>p.id!==heroMain?.id&&p.id!==heroSecondary?.id)||heroMain;
- const catEss=productById('tangiers-250g')||heroMain;
- const catHookah=productById('core-mad-white-gold')||productById('core-mad-black-gold')||heroSecondary;
- const catRosh=productById('kaloud-vitria-ii')||productById('xkah-blue')||heroSecondary;
- const catLaunch=productById('amotion-pedal-frx-grape')||productById('blade-le2-black-gold')||heroSecondary;
- const spotlight=productById('core-mad-black-gold')||featured[0]||products[0];
  $('#app').innerHTML=`
- <section class="hero hero-v2">
-   <div class="hero-product-stage">
-     ${heroMain?`<img class="hero-product hero-main-product" src="${esc(heroMain.image)}" alt="${esc(heroMain.name)}">`:''}
-     ${heroSecondary?`<img class="hero-product hero-secondary-product" src="${esc(heroSecondary.image)}" alt="${esc(heroSecondary.name)}">`:''}
-     ${heroThird?`<img class="hero-third-product" src="${esc(heroThird.image)}" alt="${esc(heroThird.name)}">`:''}
+ <section class="ref-hero">
+   <button class="hero-arrow hero-arrow-left" aria-label="Banner anterior">‹</button>
+   <button class="hero-arrow hero-arrow-right" aria-label="Próximo banner">›</button>
+   <div class="ref-hero-glow"></div>
+   <div class="container ref-hero-inner">
+     <div class="ref-hero-copy">
+       <span class="ref-kicker">${esc(storeConfig.heroEyebrow||'A MAIOR VARIEDADE DO BRASIL')}</span>
+       <h1><span>ESSÊNCIAS</span><strong>PREMIUM</strong></h1>
+       <p>TANGIERS, MUSTHAVE, BLACKBURN, STARBUZZ, UNCUT<br class="desktop-only"> E MUITO MAIS. QUALIDADE E PROCEDÊNCIA GARANTIDA.</p>
+       <a class="ref-cta" href="#/catalogo?categoria=Essências%20Premium">VER ESSÊNCIAS <span>→</span></a>
+     </div>
+     <div class="ref-product-scene" aria-label="Produtos em destaque">
+       <div class="ref-product ref-product-a"><img src="${esc(heroTangiers?.image||'')}" alt="${esc(heroTangiers?.name||'')}"></div>
+       <div class="ref-product ref-product-b"><img src="${esc(heroMust?.image||'')}" alt="${esc(heroMust?.name||'')}"></div>
+       <div class="ref-product ref-product-c"><img src="${esc(heroBlack?.image||'')}" alt="${esc(heroBlack?.name||'')}"></div>
+       <div class="ref-product ref-product-d"><img src="${esc(heroStar?.image||'')}" alt="${esc(heroStar?.name||'')}"></div>
+       <div class="ref-decor ref-mint">✦</div><div class="ref-decor ref-ice">◇</div><div class="ref-decor ref-coffee">● ● ●</div>
+     </div>
    </div>
-   <div class="container hero-content"><div class="hero-copy">
-     <span class="eyebrow">${esc(storeConfig.heroEyebrow)}</span>
-     <h1>${esc(storeConfig.heroTitle)}<br><em>${esc(storeConfig.heroAccent)}</em></h1>
-     <p>${esc(storeConfig.heroText)}</p>
-     <div class="hero-actions"><a class="btn btn-gold" href="#/catalogo?categoria=${encodeURIComponent(categories[0]||'Essências Premium')}">VER ESSÊNCIAS →</a><a class="btn btn-outline" href="#/catalogo">VER CATÁLOGO</a></div>
-   </div></div>
+   <div class="container ref-hero-services">
+     <div><span class="svc-icon">▱</span><p><b>ENVIO PARA<br>TODO BRASIL</b></p></div>
+     <div><span class="svc-icon">▣</span><p><b>ATÉ 12X<br>NO CARTÃO</b></p></div>
+     <div><span class="svc-icon pix-icon">◆</span><p><b>PIX</b></p></div>
+     <div><span class="svc-icon">♙</span><p><b>PAGAMENTO RÁPIDO<br>E SEGURO</b></p></div>
+   </div>
+   <div class="ref-dots"><i></i><i></i></div>
  </section>
- <section class="hero-services"><div class="container">
-   <div class="hero-service"><b>▱</b><div><strong>Envio para todo Brasil</strong><small>Estrutura pronta para cálculo por CEP</small></div></div>
-   <div class="hero-service"><b>▣</b><div><strong>Até 12x no cartão</strong><small>Checkout preparado para integração</small></div></div>
-   <div class="hero-service"><b>◆</b><div><strong>Pix / Mercado Pago</strong><small>Pagamento rápido e seguro</small></div></div>
-   <div class="hero-service"><b>◈</b><div><strong>Atendimento THS</strong><small>Varejo e atacado via WhatsApp</small></div></div>
+ <section class="ref-brand-strip"><div class="container ref-brand-track">
+   ${['TANGIERS','MUSTHAVE','BLACKBURN','PURE','AMOTION','XKAH','CORE','BLADE','WOOKAH','KALOUD'].map((b,i)=>`<a href="#/catalogo?q=${encodeURIComponent(b)}"><span class="brand-symbol">${['96','M','♧','♛','A','X','C','B','◯','✤'][i]}</span><strong>${b}</strong></a>`).join('')}
+   <button aria-label="Mais marcas">›</button>
  </div></section>
- <section class="brand-rail"><div class="container">${brandRail()}</div></section>
- <section class="category-showcase"><div class="container"><div class="category-grid-v3">
-   <a class="category-card-v3" href="#/catalogo?categoria=Essências%20Premium"><img src="${esc(catEss?.image||'')}" alt=""><div class="cat-copy"><span class="eyebrow">PREMIUM</span><h3>Essências</h3><p>Tangiers, Musthave, Blackburn, Starbuzz e mais.</p><span class="mini-link">Ver essências →</span></div></a>
-   <a class="category-card-v3" href="#/catalogo?categoria=Arguiles"><img src="${esc(catHookah?.image||'')}" alt=""><div class="cat-copy"><span class="eyebrow">HOOKAHS</span><h3>Hookahs premium</h3><p>Core, Blade, Amotion, Wookah e outras marcas.</p><span class="mini-link">Ver hookahs →</span></div></a>
-   <a class="category-card-v3" href="#/catalogo?categoria=Rosh"><img src="${esc(catRosh?.image||'')}" alt=""><div class="cat-copy"><span class="eyebrow">ACESSÓRIOS</span><h3>Rosh & acessórios</h3><p>Kaloud, XKAH e seleção premium.</p><span class="mini-link">Ver acessórios →</span></div></a>
-   <a class="category-card-v3" href="#/catalogo"><img src="${esc(catLaunch?.image||'')}" alt=""><div class="cat-copy"><span class="eyebrow">NOVIDADES</span><h3>Lançamentos</h3><p>Produtos recém-chegados e destaques da THS.</p><span class="mini-link">Ver novidades →</span></div></a>
- </div></div></section>
- <section class="product-showcase"><div class="container"><div class="section-head"><div><span class="eyebrow">🔥 MAIS PROCURADOS</span><h2>Produtos em destaque</h2></div><a href="#/catalogo">VER TODOS →</a></div><div class="product-grid">${featured.map(productCard).join('')}</div></div></section>
- ${spotlight?`<section class="section"><div class="container"><div class="featured-split"><div class="featured-image"><img src="${esc(spotlight.image)}" alt="${esc(spotlight.name)}"></div><div class="featured-copy"><span class="eyebrow">${esc(spotlight.brand)}</span><h2>Design que chama atenção.</h2><p>Produtos de maior valor ganham uma vitrine própria, com navegação clara e visual premium.</p><div class="price">${money(spotlight.price)}</div><div class="installment">produto real do catálogo atual</div><button class="btn btn-gold" data-open-product="${esc(spotlight.id)}">Ver produto →</button></div></div></div></section>`:''}
+ <section class="ref-category-zone"><div class="container ref-category-grid">
+   <a class="ref-cat ref-cat-hookah" href="#/catalogo?categoria=Arguiles"><div><h3>HOOKAHS<br>PREMIUM</h3><p>CORE, AMOTION, BLADE,<br>WOOKAH E MAIS.</p><span>VER HOOKAHS →</span></div><img src="${esc(catHookah?.image||'')}" alt=""></a>
+   <a class="ref-cat ref-cat-access" href="#/catalogo?categoria=Rosh"><div><h3>ACESSÓRIOS</h3><p>ROSHS, KALOUD, MANGUEIRAS,<br>E MUITO MAIS.</p><span>VER ACESSÓRIOS →</span></div><img src="${esc(catRosh?.image||'')}" alt=""></a>
+   <a class="ref-cat ref-cat-coal" href="#/catalogo?categoria=Carvões%20e%20Alumínios"><div><h3>CARVÕES</h3><p>ALTA PERFORMANCE PARA<br>A MELHOR SESSÃO.</p><span>VER CARVÕES →</span></div><img src="${esc(catCoal?.image||'')}" alt=""></a>
+   <a class="ref-cat ref-cat-launch" href="#/catalogo"><div><h3>LANÇAMENTOS</h3><p>CONFIRA AS NOVIDADES<br>DA THS.</p><span>VER LANÇAMENTOS →</span></div><img src="${esc(catLaunch?.image||'')}" alt=""></a>
+ </div></section>
+ <section class="ref-products"><div class="container"><div class="ref-products-head"><div><span class="fire">♦</span><div><h2>PRODUTOS EM DESTAQUE</h2><p>OS MAIS VENDIDOS E MAIS PROCURADOS DA THS</p></div></div><a href="#/catalogo">VER TODOS <span>→</span></a></div><div class="product-grid">${featured.map(productCard).join('')}</div></div></section>
  <section class="section home-secondary"><div class="container"><div class="section-head"><div><span class="eyebrow">RECÉM-CHEGADOS</span><h2>Lançamentos</h2></div><a href="#/catalogo">Explorar catálogo →</a></div><div class="product-grid">${launches.map(productCard).join('')}</div></div></section>`;
  bindProducts($('#app'));
 }
-
 function catalog(){
  const params=new URLSearchParams(location.hash.split('?')[1]||'');state.selectedCategory=params.get('categoria')||'Todos';state.search=params.get('q')||'';
  $('#app').innerHTML=`<section class="catalog-page"><div class="container"><div class="page-title"><div><span class="eyebrow">CATÁLOGO THS</span><h1>Produtos</h1><p>Produtos e preços trazidos do catálogo atual quando foi possível confirmar publicamente.</p></div><span id="resultCount"></span></div><div class="catalog-tools"><input id="catalogSearch" value="${state.search}" placeholder="Buscar produto ou marca..."><select id="catalogSort"><option value="relevancia">Relevância</option><option value="menor">Menor preço</option><option value="maior">Maior preço</option><option value="novos">Novidades</option></select></div><div class="chips" id="categoryChips"></div><div id="catalogGrid" class="product-grid"></div></div></section>`;
@@ -440,11 +467,26 @@ function adminPage(){
 function infoPage(title,lead,sections){$('#app').innerHTML=`<section class="info-page"><div class="container info-content"><span class="eyebrow">THS</span><h1>${title}</h1><p class="info-lead">${lead}</p>${sections.map(s=>`<h2>${s[0]}</h2><p>${s[1]}</p>`).join('')}</div></section>`}
 function route(){const path=location.hash.replace('#','').split('?')[0]||'/';window.scrollTo(0,0);if(path==='/catalogo')catalog();else if(path==='/checkout')checkout();else if(path==='/favoritos')favoritesPage();else if(path==='/conta')accountPage();else if(path==='/admin')adminPage();else if(path==='/sobre')infoPage('Sobre a THS','A nova loja preserva o catálogo e a operação comercial atual, mas reconstrói a experiência digital para ficar mais organizada e premium.',[['Nova experiência','Navegação, busca, filtros, produto, carrinho e checkout foram redesenhados para mobile e desktop.'],['Conteúdo real','Produtos, preços e imagens confirmados publicamente foram incorporados.']]);else if(path==='/envio')infoPage('Envio','A operação atual informa entrega para todo o Brasil.',[['Cálculo de frete','A interface de CEP já está pronta. Falta conectar o serviço de frete oficial da empresa.'],['Prazo','Prazos e transportadoras serão retornados pelo integrador escolhido.']]);else if(path==='/pagamento')infoPage('Pagamento','A loja atual utiliza Mercado Pago e a nova interface já está preparada para manter essa lógica.',[['Pix','Será processado pela conta oficial da empresa.'],['Cartão','Parcelamento será exibido com dados retornados pelo provedor. Nenhum cartão deve ser armazenado diretamente no site.']]);else if(path==='/trocas')infoPage('Trocas e devoluções','Página preparada para receber a política definitiva da empresa antes da publicação.',[['Revisão necessária','O texto final deve refletir a operação real e a legislação aplicável.']]);else if(path==='/privacidade')infoPage('Privacidade','Estrutura preparada para uma política compatível com os dados realmente coletados.',[['Pagamentos','Dados sensíveis de cartão ficam no ambiente do provedor de pagamento.'],['Conta do cliente','Na produção, login, endereços e pedidos serão armazenados em banco com autenticação.']]);else if(path==='/contato')infoPage('Atendimento','Fale com a equipe pelos canais cadastrados no painel da THS.',[['Varejo 1',prettyPhone(storeConfig.whatsappRetail1)],['Varejo 2',prettyPhone(storeConfig.whatsappRetail2)],['Atacado',prettyPhone(storeConfig.whatsappWholesale)]]);else home()}
 
-function setupNav(){const desktop=$('#desktopNav'),mobile=$('#mobileNav');desktop.innerHTML='';mobile.innerHTML='';[['Início','#/'],['Essências Premium','#/catalogo?categoria=Essências%20Premium'],['Essências Convencionais','#/catalogo?categoria=Essências%20Convencionais'],['Hookahs','#/catalogo?categoria=Arguiles'],['Rosh','#/catalogo?categoria=Rosh'],['Acessórios','#/catalogo?categoria=Acessórios']].forEach(([n,h])=>desktop.insertAdjacentHTML('beforeend',`<a href="${h}">${n}</a>`));mobile.insertAdjacentHTML('beforeend','<a href="#/" data-close-menu>Início <span>→</span></a><a href="#/catalogo" data-close-menu>Todos os produtos <span>→</span></a>');categories.forEach(c=>{const href=`#/catalogo?categoria=${encodeURIComponent(c)}`;mobile.insertAdjacentHTML('beforeend',`<a href="${href}" data-close-menu>${c}<span>→</span></a>`)});mobile.insertAdjacentHTML('beforeend','<a href="#/favoritos" data-close-menu>Favoritos <span>→</span></a><a href="#/conta" data-close-menu>Minha conta <span>→</span></a>')}
-
+function setupNav(){
+ const desktop=$('#desktopNav'),mobile=$('#mobileNav');desktop.innerHTML='';mobile.innerHTML='';
+ const desktopItems=[
+  ['Início','#/'],
+  ['Essências Premium','#/catalogo?categoria=Essências%20Premium'],
+  ['Essências Convencionais','#/catalogo?categoria=Essências%20Convencionais'],
+  ['Hookahs','#/catalogo?categoria=Arguiles'],
+  ['Acessórios','#/catalogo?categoria=Acessórios'],
+  ['Carvões','#/catalogo?categoria=Carvões%20e%20Alumínios'],
+  ['Marcas','#/catalogo'],
+  ['Promoções','#/catalogo']
+ ];
+ desktopItems.forEach(([n,h],i)=>desktop.insertAdjacentHTML('beforeend',`<a class="${i===0?'nav-active':''}" href="${h}">${n}${[1,2,3,4,5,6].includes(i)?'<span class="nav-caret">⌄</span>':''}</a>`));
+ mobile.insertAdjacentHTML('beforeend','<a href="#/" data-close-menu>Início <span>→</span></a><a href="#/catalogo" data-close-menu>Todos os produtos <span>→</span></a>');
+ categories.forEach(c=>{const href=`#/catalogo?categoria=${encodeURIComponent(c)}`;mobile.insertAdjacentHTML('beforeend',`<a href="${href}" data-close-menu>${c}<span>→</span></a>`)});
+ mobile.insertAdjacentHTML('beforeend','<a href="#/favoritos" data-close-menu>Favoritos <span>→</span></a><a href="#/conta" data-close-menu>Minha conta <span>→</span></a><a href="#/contato" data-close-menu>Atendimento <span>→</span></a>')
+}
 function prettyPhone(v){const d=String(v||'').replace(/\D/g,'');const n=d.startsWith('55')?d.slice(2):d;return n.length===11?`(${n.slice(0,2)}) ${n.slice(2,7)}-${n.slice(7)}`:n}
 function applyStoreConfig(){
-  const ann=$('#storeAnnouncement');if(ann)ann.textContent=storeConfig.announcement||defaultStoreConfig.announcement;
+  const ann=$('.announcement-message');if(ann)ann.textContent=storeConfig.announcement||defaultStoreConfig.announcement;
   const pairs=[['#footerW1',storeConfig.whatsappRetail1,'Varejo 1'],['#footerW2',storeConfig.whatsappRetail2,'Varejo 2'],['#footerW3',storeConfig.whatsappWholesale,'Atacado']];
   pairs.forEach(([sel,num,label])=>{const el=$(sel);if(el){el.href=`https://wa.me/${String(num||'').replace(/\D/g,'')}`;el.textContent=`${label} · ${prettyPhone(num)}`}});
   const wf=$('#whatsappFloat');if(wf)wf.href=`https://wa.me/${String(storeConfig.whatsappRetail1||'').replace(/\D/g,'')}`;
