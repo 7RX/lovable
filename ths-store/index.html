@@ -115,6 +115,35 @@ body{background:#fff}.container{width:min(calc(100% - 64px),1460px)}
 }
 </style>
 
+
+<style id="ths-hero-carousel-css">
+.ref-hero{transition:background .38s ease}
+.ref-hero-copy{transition:opacity .18s ease,transform .25s ease}
+.ref-hero.is-changing .ref-hero-copy{opacity:.18;transform:translateX(-10px)}
+.hero-carousel-visual{position:absolute;z-index:2;right:4%;top:18px;width:52%;height:285px;display:none;align-items:center;justify-content:center;pointer-events:none}
+.hero-carousel-visual img{max-width:88%;max-height:100%;object-fit:contain;filter:drop-shadow(0 28px 30px rgba(0,0,0,.75));transition:opacity .22s ease,transform .3s ease}
+.ref-hero.has-category-slide{
+  background:
+    radial-gradient(circle at 77% 45%,rgba(87,55,23,.42) 0,rgba(30,20,11,.35) 28%,rgba(5,5,5,.12) 56%),
+    linear-gradient(90deg,#050505 0%,#050505 42%,#11100e 100%) !important;
+}
+.ref-hero.has-category-slide:after{background:linear-gradient(90deg,#050505 0%,#050505f4 31%,#05050596 48%,transparent 70%)!important}
+.ref-hero.has-category-slide .hero-carousel-visual{display:flex}
+.ref-dots{z-index:12}
+.ref-dots button{width:8px;height:8px;border:0;padding:0;border-radius:50%;background:#777;cursor:pointer;transition:.2s}
+.ref-dots button.active{background:#fff;transform:scale(1.12)}
+.hero-arrow{display:grid;place-items:center}
+@media(max-width:760px){
+  .hero-carousel-visual{display:none!important}
+  .ref-hero.has-category-slide{
+    background:
+      radial-gradient(circle at 75% 18%,rgba(124,75,25,.28),transparent 34%),
+      linear-gradient(180deg,#11100e 0,#050505 47%,#040404 100%) !important;
+  }
+  .ref-hero.has-category-slide:after{background:linear-gradient(0deg,#040404 0,#040404f8 42%,rgba(4,4,4,.2) 72%,transparent 100%)!important}
+}
+</style>
+
 </head>
 <body>
   <div id="ageGate" class="age-gate" aria-hidden="true">
@@ -2789,30 +2818,65 @@ function home(){
  const heroMust=productById('musthave-125g')||products[1]||heroTangiers;
  const heroBlack=productById('blackburn-100g')||products[2]||heroTangiers;
  const heroStar=productById('starbuzz-250g')||products[3]||heroTangiers;
- const catHookah=productById('core-mad-black-gold')||productById('amotion-pedal-frx-grape')||heroTangiers;
- const catRosh=productById('kaloud-vitria-ii')||productById('xkah-graphite')||heroTangiers;
- const catCoal=productById('blackburn-100g')||heroBlack;
+ const catHookah=productById('core-mad-black-gold')||productById('amotion-pedal-frx-grape')||products.find(p=>p.category==='Arguiles')||heroTangiers;
+ const conventional=products.find(p=>p.category==='Essências Convencionais'&&p.available)||products.find(p=>p.category==='Essências Convencionais')||heroTangiers;
+ const catRosh=productById('kaloud-vitria-ii')||productById('xkah-graphite')||products.find(p=>p.category==='Rosh')||heroTangiers;
+ const catAccess=products.find(p=>p.category==='Acessórios'&&p.available)||products.find(p=>p.category==='Acessórios')||catRosh;
+ const catCoal=products.find(p=>p.category==='Carvões e Alumínios'&&p.available)||products.find(p=>p.category==='Carvões e Alumínios')||heroBlack;
  const catLaunch=productById('amotion-pedal-frx-grape')||catHookah;
  const launches=products.filter(p=>p.badge==='Novo').slice(0,6);
+
+ const heroSlides=[
+   {
+     kicker:'A MAIOR VARIEDADE DO BRASIL',
+     line1:'ESSÊNCIAS',line2:'PREMIUM',
+     text:'TANGIERS, MUSTHAVE, BLACKBURN, STARBUZZ, UNCUT E MUITO MAIS. QUALIDADE E PROCEDÊNCIA GARANTIDA.',
+     button:'VER ESSÊNCIAS',href:'#/catalogo?categoria=Essências%20Premium',
+     image:'',alt:'Essências Premium',reference:true
+   },
+   {
+     kicker:'EXPERIÊNCIA PREMIUM THS',
+     line1:'HOOKAHS',line2:'PREMIUM',
+     text:'CORE, AMOTION, BLADE, WOOKAH E OUTROS MODELOS SELECIONADOS PARA SUA SESSÃO.',
+     button:'VER HOOKAHS',href:'#/catalogo?categoria=Arguiles',
+     image:catHookah?.image||'',alt:catHookah?.name||'Hookahs Premium'
+   },
+   {
+     kicker:'SABORES PARA TODOS OS MOMENTOS',
+     line1:'ESSÊNCIAS',line2:'CONVENCIONAIS',
+     text:'ESCOLHA ENTRE MARCAS, LINHAS E SABORES PARA ENCONTRAR A COMBINAÇÃO IDEAL.',
+     button:'VER CONVENCIONAIS',href:'#/catalogo?categoria=Essências%20Convencionais',
+     image:conventional?.image||'',alt:conventional?.name||'Essências Convencionais'
+   },
+   {
+     kicker:'COMPLETE O SEU SETUP',
+     line1:'ROSH &',line2:'ACESSÓRIOS',
+     text:'ROSHS, CONTROLADORES, MANGUEIRAS, PEÇAS E ACESSÓRIOS PARA COMPLETAR SUA EXPERIÊNCIA.',
+     button:'VER ACESSÓRIOS',href:'#/catalogo?categoria=Acessórios',
+     image:catAccess?.image||catRosh?.image||'',alt:catAccess?.name||'Rosh e Acessórios'
+   },
+   {
+     kicker:'PERFORMANCE PARA SUA SESSÃO',
+     line1:'CARVÕES &',line2:'ALUMÍNIOS',
+     text:'CARVÕES, ALUMÍNIOS E ITENS ESSENCIAIS PARA PREPARO, CALOR E MELHOR RENDIMENTO.',
+     button:'VER CARVÕES',href:'#/catalogo?categoria=Carvões%20e%20Alumínios',
+     image:catCoal?.image||'',alt:catCoal?.name||'Carvões e Alumínios'
+   }
+ ];
+
  $('#app').innerHTML=`
- <section class="ref-hero">
-   <button class="hero-arrow hero-arrow-left" aria-label="Banner anterior">‹</button>
-   <button class="hero-arrow hero-arrow-right" aria-label="Próximo banner">›</button>
+ <section class="ref-hero" id="homeHero">
+   <button class="hero-arrow hero-arrow-left" id="heroPrev" aria-label="Banner anterior">‹</button>
+   <button class="hero-arrow hero-arrow-right" id="heroNext" aria-label="Próximo banner">›</button>
    <div class="ref-hero-glow"></div>
    <div class="container ref-hero-inner">
-     <div class="ref-hero-copy">
-       <span class="ref-kicker">${esc(storeConfig.heroEyebrow||'A MAIOR VARIEDADE DO BRASIL')}</span>
-       <h1><span>ESSÊNCIAS</span><strong>PREMIUM</strong></h1>
-       <p>TANGIERS, MUSTHAVE, BLACKBURN, STARBUZZ, UNCUT<br class="desktop-only"> E MUITO MAIS. QUALIDADE E PROCEDÊNCIA GARANTIDA.</p>
-       <a class="ref-cta" href="#/catalogo?categoria=Essências%20Premium">VER ESSÊNCIAS <span>→</span></a>
+     <div class="ref-hero-copy" id="heroCopy">
+       <span class="ref-kicker" id="heroKicker"></span>
+       <h1><span id="heroLine1"></span><strong id="heroLine2"></strong></h1>
+       <p id="heroText"></p>
+       <a class="ref-cta" id="heroCta" href="#"><span id="heroCtaText"></span> <b>→</b></a>
      </div>
-     <div class="ref-product-scene" aria-label="Produtos em destaque">
-       <div class="ref-product ref-product-a"><img src="${esc(heroTangiers?.image||'')}" alt="${esc(heroTangiers?.name||'')}"></div>
-       <div class="ref-product ref-product-b"><img src="${esc(heroMust?.image||'')}" alt="${esc(heroMust?.name||'')}"></div>
-       <div class="ref-product ref-product-c"><img src="${esc(heroBlack?.image||'')}" alt="${esc(heroBlack?.name||'')}"></div>
-       <div class="ref-product ref-product-d"><img src="${esc(heroStar?.image||'')}" alt="${esc(heroStar?.name||'')}"></div>
-       <div class="ref-decor ref-mint">✦</div><div class="ref-decor ref-ice">◇</div><div class="ref-decor ref-coffee">● ● ●</div>
-     </div>
+     <div class="hero-carousel-visual" id="heroVisual"><img id="heroVisualImg" src="" alt=""></div>
    </div>
    <div class="container ref-hero-services">
      <div><span class="svc-icon">▱</span><p><b>ENVIO PARA<br>TODO BRASIL</b></p></div>
@@ -2820,7 +2884,7 @@ function home(){
      <div><span class="svc-icon pix-icon">◆</span><p><b>PIX</b></p></div>
      <div><span class="svc-icon">♙</span><p><b>PAGAMENTO RÁPIDO<br>E SEGURO</b></p></div>
    </div>
-   <div class="ref-dots"><i></i><i></i></div>
+   <div class="ref-dots" id="heroDots"></div>
  </section>
  <section class="ref-brand-strip"><div class="container ref-brand-track">
    ${['TANGIERS','MUSTHAVE','BLACKBURN','PURE','AMOTION','XKAH','CORE','BLADE','WOOKAH','KALOUD'].map((b,i)=>`<a href="#/catalogo?q=${encodeURIComponent(b)}"><span class="brand-symbol">${['96','M','♧','♛','A','X','C','B','◯','✤'][i]}</span><strong>${b}</strong></a>`).join('')}
@@ -2834,6 +2898,47 @@ function home(){
  </div></section>
  <section class="ref-products"><div class="container"><div class="ref-products-head"><div><span class="fire">♦</span><div><h2>PRODUTOS EM DESTAQUE</h2><p>OS MAIS VENDIDOS E MAIS PROCURADOS DA THS</p></div></div><a href="#/catalogo">VER TODOS <span>→</span></a></div><div class="product-grid">${featured.map(productCard).join('')}</div></div></section>
  <section class="section home-secondary"><div class="container"><div class="section-head"><div><span class="eyebrow">RECÉM-CHEGADOS</span><h2>Lançamentos</h2></div><a href="#/catalogo">Explorar catálogo →</a></div><div class="product-grid">${launches.map(productCard).join('')}</div></div></section>`;
+
+ let heroIndex=0;
+ const hero=$('#homeHero');
+ const dots=$('#heroDots');
+ dots.innerHTML=heroSlides.map((_,i)=>`<button type="button" data-hero-dot="${i}" aria-label="Ir para banner ${i+1}"></button>`).join('');
+
+ function renderHeroSlide(index,animate=true){
+   heroIndex=(index+heroSlides.length)%heroSlides.length;
+   const slide=heroSlides[heroIndex];
+   if(animate)hero.classList.add('is-changing');
+   setTimeout(()=>{
+     $('#heroKicker').textContent=slide.kicker;
+     $('#heroLine1').textContent=slide.line1;
+     $('#heroLine2').textContent=slide.line2;
+     $('#heroText').textContent=slide.text;
+     $('#heroCtaText').textContent=slide.button;
+     $('#heroCta').href=slide.href;
+     const img=$('#heroVisualImg');
+     if(slide.reference){
+       hero.classList.remove('has-category-slide');
+       img.src='';img.alt='';
+     }else{
+       hero.classList.add('has-category-slide');
+       img.src=slide.image||'';img.alt=slide.alt||'';
+     }
+     $$('[data-hero-dot]',dots).forEach((b,i)=>b.classList.toggle('active',i===heroIndex));
+     hero.classList.remove('is-changing');
+   },animate?130:0);
+ }
+ $('#heroPrev').onclick=()=>renderHeroSlide(heroIndex-1);
+ $('#heroNext').onclick=()=>renderHeroSlide(heroIndex+1);
+ $$('[data-hero-dot]',dots).forEach(b=>b.onclick=()=>renderHeroSlide(Number(b.dataset.heroDot)));
+ let touchX=null;
+ hero.addEventListener('touchstart',e=>{touchX=e.touches?.[0]?.clientX??null},{passive:true});
+ hero.addEventListener('touchend',e=>{
+   if(touchX===null)return;
+   const x=e.changedTouches?.[0]?.clientX??touchX;
+   const delta=x-touchX;touchX=null;
+   if(Math.abs(delta)>45)renderHeroSlide(heroIndex+(delta<0?1:-1));
+ },{passive:true});
+ renderHeroSlide(0,false);
  bindProducts($('#app'));
 }
 function catalog(){
