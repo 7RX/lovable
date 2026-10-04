@@ -88,27 +88,6 @@
       "description": ""
     },
     {
-      "title": "Azure - Black line 100g - ESCOLHA O SABOR",
-      "price": 85.0,
-      "available": false,
-      "brand": "AZURE",
-      "image": "https://images.tcdn.com.br/img/img_prod/1486411/1775654001_logo-1288287690-1760480834-569673d143a712b9eb7e0cb27a347ccb1760480834-480-0.png",
-      "images": [
-        "https://images.tcdn.com.br/img/img_prod/1486411/1775654001_logo-1288287690-1760480834-569673d143a712b9eb7e0cb27a347ccb1760480834-480-0.png",
-        "https://images.tcdn.com.br/img/img_prod/1486411/90_azure_black_line_100g_escolha_o_sabor_1_20260810225125_cbac77cf6734.jpg",
-        "https://images.tcdn.com.br/img/img_prod/1486411/90_azure_black_line_100g_escolha_o_sabor_2_20260810232803_6b3317ed28ce.jpg",
-        "https://images.tcdn.com.br/img/img_prod/1486411/azure_black_line_100g_escolha_o_sabor_1_20260810225125_cbac77cf6734.jpg",
-        "https://images.tcdn.com.br/img/img_prod/1486411/azure_black_line_100g_escolha_o_sabor_2_20260810232803_6b3317ed28ce.jpg",
-        "https://images.tcdn.com.br/img/img_prod/1486411/180_social_smoke_100g_escolha_o_sabor_1_20260425173422_ec5b250b5fc7.jpg",
-        "https://images.tcdn.com.br/img/img_prod/1486411/180_tangiers_sabores_100g_escolha_o_sabor_1_20260810214738_3b4a3069c912.jpg",
-        "https://images.tcdn.com.br/img/img_prod/1486411/180_setup_amotion_flash_bang_azure_1_20260813201946_55df2bf93a3e.jpeg"
-      ],
-      "url": "https://www.tangiershookahshop.com/azure/azure",
-      "path": "/azure/azure",
-      "category_path": "azure",
-      "description": "Formas de Pagamento"
-    },
-    {
       "title": "BLACKBURN 100G - ESCOLHA O SABOR:",
       "price": 149.9,
       "available": true,
@@ -120,9 +99,9 @@
         "https://images.tcdn.com.br/img/img_prod/1486411/90_blackburn_100g_escolha_o_sabor_2_20260811214333_87e78e87d46f.jpeg",
         "https://images.tcdn.com.br/img/img_prod/1486411/blackburn_100g_escolha_o_sabor_1_20260811214333_5dcb735f599d.jpeg",
         "https://images.tcdn.com.br/img/img_prod/1486411/blackburn_100g_escolha_o_sabor_2_20260811214333_87e78e87d46f.jpeg",
+        "https://images.tcdn.com.br/img/img_prod/1486411/180_darkside_100g_1_20260811223643_fcb3bbfd2b28.jpeg",
         "https://images.tcdn.com.br/img/img_prod/1486411/180_fumari_100g_escolha_o_sabor_1_20260811222404_44ea23e3c6d9.jpeg",
-        "https://images.tcdn.com.br/img/img_prod/1486411/180_sence_100g_escolha_o_sabor_1_20260911233621_3a9ef9572e93.png",
-        "https://images.tcdn.com.br/img/img_prod/1486411/180_sence_100g_escolha_o_sabor_1_20260811220058_49ff8bcb9d8b.jpeg"
+        "https://images.tcdn.com.br/img/img_prod/1486411/180_sence_100g_escolha_o_sabor_1_20260911233621_3a9ef9572e93.png"
       ],
       "url": "https://www.tangiershookahshop.com/essencias-/blackburn-100g-escolha-o-sabor",
       "path": "/essencias-/blackburn-100g-escolha-o-sabor",
@@ -215,7 +194,7 @@
     },
     {
       "title": "CARVÃO CUBE - TANGIERS 1KG",
-      "price": 44.9,
+      "price": 49.9,
       "available": true,
       "brand": "CARVÃO TANGIERS - CUBE",
       "image": "https://images.tcdn.com.br/img/img_prod/1486411/1775654001_logo-1288287690-1760480834-569673d143a712b9eb7e0cb27a347ccb1760480834-480-0.png",
@@ -384,7 +363,7 @@
     {
       "title": "Rosh Kaloud Samsaris Vitria II Original",
       "price": 144.9,
-      "available": false,
+      "available": true,
       "brand": "KALOUD - SANSARIS VITRIA",
       "image": "https://images.tcdn.com.br/img/img_prod/1486411/1775654001_logo-1288287690-1760480834-569673d143a712b9eb7e0cb27a347ccb1760480834-480-0.png",
       "images": [
@@ -479,11 +458,32 @@
         "https://images.tcdn.com.br/img/img_prod/1486411/sence_100g_escolha_o_sabor_1_20260911233621_3a9ef9572e93.png",
         "https://images.tcdn.com.br/img/img_prod/1486411/sence_100g_escolha_o_sabor_1_20260811220058_49ff8bcb9d8b.jpeg",
         "https://images.tcdn.com.br/img/img_prod/1486411/sence_100g_escolha_o_sabor_2_20260811220058_f4c9e07a7f46.jpeg",
-        "https://images.tcdn.com.br/img/img_prod/1486411/180_darkside_100g_1_20260811223643_fcb3bbfd2b28.jpeg"
+        "https://images.tcdn.com.br/img/img_prod/1486411/180_fumari_100g_escolha_o_sabor_1_20260811222404_44ea23e3c6d9.jpeg"
       ],
       "url": "https://www.tangiershookahshop.com/sence-100g/sence-100g-escolha-o-sabor",
       "path": "/sence-100g/sence-100g-escolha-o-sabor",
       "category_path": "sence-100g",
+      "description": ""
+    },
+    {
+      "title": "Social Smoke 100G - Escolha o Sabor",
+      "price": 90.0,
+      "available": true,
+      "brand": "",
+      "image": "https://images.tcdn.com.br/img/img_prod/1486411/1775654001_logo-1288287690-1760480834-569673d143a712b9eb7e0cb27a347ccb1760480834-480-0.png",
+      "images": [
+        "https://images.tcdn.com.br/img/img_prod/1486411/1775654001_logo-1288287690-1760480834-569673d143a712b9eb7e0cb27a347ccb1760480834-480-0.png",
+        "https://images.tcdn.com.br/img/img_prod/1486411/social_smoke_100g_escolha_o_sabor_1_20260425173422_ec5b250b5fc7.jpg",
+        "https://images.tcdn.com.br/img/img_prod/1486411/90_social_smoke_100g_escolha_o_sabor_1_20260425173422_ec5b250b5fc7.jpg",
+        "https://images.tcdn.com.br/img/img_prod/1486411/180_tangiers_sabores_100g_escolha_o_sabor_1_20260810214738_3b4a3069c912.jpg",
+        "https://images.tcdn.com.br/img/img_prod/1486411/180_azure_black_line_100g_escolha_o_sabor_1_20260810225125_cbac77cf6734.jpg",
+        "https://images.tcdn.com.br/img/img_prod/1486411/180_azure_black_line_100g_escolha_o_sabor_2_20260810232803_6b3317ed28ce.jpg",
+        "https://images.tcdn.com.br/img/img_prod/1486411/180_fumari_100g_escolha_o_sabor_1_20260811222404_44ea23e3c6d9.jpeg",
+        "https://images.tcdn.com.br/img/img_prod/1486411/180_blackburn_100g_escolha_o_sabor_1_20260811214333_5dcb735f599d.jpeg"
+      ],
+      "url": "https://www.tangiershookahshop.com/social-smoke/social-smoke-100g-escolha-o-sabor",
+      "path": "/social-smoke/social-smoke-100g-escolha-o-sabor",
+      "category_path": "social-smoke",
       "description": ""
     },
     {
@@ -666,9 +666,9 @@
         "https://images.tcdn.com.br/img/img_prod/1486411/90_tangiers_cane_mint_100g_1_20260810214044_c4619540c5e6.jpg",
         "https://images.tcdn.com.br/img/img_prod/1486411/180_tangiers_cane_mint_250g_1_20260810213125_267d46afebad.jpg",
         "https://images.tcdn.com.br/img/img_prod/1486411/180_tangiers_sabores_100g_escolha_o_sabor_1_20260810214738_3b4a3069c912.jpg",
-        "https://images.tcdn.com.br/img/img_prod/1486411/180_carvo_cube_tangiers_1_20260923175613_5f888af2914b.png",
-        "https://images.tcdn.com.br/img/img_prod/1486411/180_carvo_cube_tangiers_2_20260923175613_f323a49914f7.png",
-        "https://images.tcdn.com.br/img/img_prod/1486411/180_aviator_hose_tangiers_club_1_20260425120223_d535db992371.jpeg"
+        "https://images.tcdn.com.br/img/img_prod/1486411/180_aviator_hose_tangiers_club_1_20260425120223_d535db992371.jpeg",
+        "https://images.tcdn.com.br/img/img_prod/1486411/180_aviator_hose_tangiers_club_2_20260425120223_bcd7ee9afedf.jpeg",
+        "https://images.tcdn.com.br/img/img_prod/1486411/180_carvo_cube_tangiers_1_20260923175613_5f888af2914b.png"
       ],
       "url": "https://www.tangiershookahshop.com/cane-mint/tangiers-cane-mint-noir-100g",
       "path": "/cane-mint/tangiers-cane-mint-noir-100g",
@@ -727,9 +727,9 @@
         "https://images.tcdn.com.br/img/img_prod/1486411/1775654001_logo-1288287690-1760480834-569673d143a712b9eb7e0cb27a347ccb1760480834-480-0.png",
         "https://images.tcdn.com.br/img/img_prod/1486411/tangiers_sabores_250g_escolha_o_sabor_1_20260810215023_7154214be969.jpg",
         "https://images.tcdn.com.br/img/img_prod/1486411/90_tangiers_sabores_250g_escolha_o_sabor_1_20260810215023_7154214be969.jpg",
+        "https://images.tcdn.com.br/img/img_prod/1486411/180_tangiers_sabores_100g_escolha_o_sabor_1_20260810214738_3b4a3069c912.jpg",
         "https://images.tcdn.com.br/img/img_prod/1486411/180_starbuzz_250g_escolha_o_sabor_2_20260811204809_14d19dfb85aa.jpeg",
         "https://images.tcdn.com.br/img/img_prod/1486411/180_starbuzz_250g_escolha_o_sabor_1_20260811204809_c7d8051f7f53.jpeg",
-        "https://images.tcdn.com.br/img/img_prod/1486411/180_tangiers_sabores_100g_escolha_o_sabor_1_20260810214738_3b4a3069c912.jpg",
         "https://images.tcdn.com.br/img/img_prod/1486411/180_alfakher_250g_escolha_o_sabor_1_20260811224411_f61cc4f8744c.jpeg",
         "https://images.tcdn.com.br/img/img_prod/1486411/180_alfakher_250g_escolha_o_sabor_2_20260811224411_8ec7a75aceef.jpeg"
       ],
