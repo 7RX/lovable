@@ -1,0 +1,50 @@
+{
+  "origin": "https://ths-tangiers-hookah-store.dreekcalton.chatgpt.site",
+  "pages": [
+    {
+      "path": "/",
+      "status": 401,
+      "url": "https://ths-tangiers-hookah-store.dreekcalton.chatgpt.site/",
+      "length": 4215,
+      "scripts": [
+        "https://ths-tangiers-hookah-store.dreekcalton.chatgpt.site/_sites/dispatch-assets/login-required.js",
+        "https://ths-tangiers-hookah-store.dreekcalton.chatgpt.site/_sites/dispatch-assets/status-pages.js"
+      ],
+      "links": [
+        "https://chatgpt.com/",
+        "https://ths-tangiers-hookah-store.dreekcalton.chatgpt.site/signin-with-chatgpt?return_to=%2F",
+        "https://openai.com/policies/privacy-policy"
+      ],
+      "text_sample": "THS | Tangiers Hookah Store Log in to access THS | Tangiers Hookah Store Continue with ChatGPT This site uses ChatGPT to securely log you in. You can review OpenAI’s Privacy Policy ."
+    },
+    {
+      "path": "/catalogo.html",
+      "status": 401,
+      "url": "https://ths-tangiers-hookah-store.dreekcalton.chatgpt.site/catalogo.html",
+      "length": 4241,
+      "scripts": [
+        "https://ths-tangiers-hookah-store.dreekcalton.chatgpt.site/_sites/dispatch-assets/login-required.js",
+        "https://ths-tangiers-hookah-store.dreekcalton.chatgpt.site/_sites/dispatch-assets/status-pages.js"
+      ],
+      "links": [
+        "https://chatgpt.com/",
+        "https://ths-tangiers-hookah-store.dreekcalton.chatgpt.site/signin-with-chatgpt?return_to=%2Fcatalogo.html",
+        "https://openai.com/policies/privacy-policy"
+      ],
+      "text_sample": "THS | Tangiers Hookah Store Log in to access THS | Tangiers Hookah Store Continue with ChatGPT This site uses ChatGPT to securely log you in. You can review OpenAI’s Privacy Policy ."
+    }
+  ],
+  "scripts": [
+    {
+      "url": "https://ths-tangiers-hookah-store.dreekcalton.chatgpt.site/_sites/dispatch-assets/login-required.js",
+      "status": 200,
+      "length": 545
+    },
+    {
+      "url": "https://ths-tangiers-hookah-store.dreekcalton.chatgpt.site/_sites/dispatch-assets/status-pages.js",
+      "status": 200,
+      "length": 401393
+    }
+  ],
+  "hits": []
+}
