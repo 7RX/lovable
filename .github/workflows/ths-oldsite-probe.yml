@@ -1,0 +1,88 @@
+name: THS Old Site Catalog Probe
+
+on:
+  push:
+    paths:
+      - '.github/workflows/ths-oldsite-probe.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install requests beautifulsoup4
+      - name: Fetch old ChatGPT Site
+        run: |
+          python - <<'PY'
+          import json, re
+          from urllib.parse import urljoin, urlparse
+          import requests
+          from bs4 import BeautifulSoup
+
+          origin='https://ths-tangiers-hookah-store.dreekcalton.chatgpt.site'
+          s=requests.Session()
+          s.headers.update({'User-Agent':'Mozilla/5.0'})
+          pages=['/','/catalogo.html']
+          out={'origin':origin,'pages':[],'scripts':[],'hits':[]}
+          seen_scripts=set()
+
+          needles=['Rosh Old Bowl Three Hoja - Gold','167 produtos','NARGUILES','ROSH\'S','Fogareiro Blindado ArtCoco','Stem Core MAD - Preto e Dourado']
+
+          for path in pages:
+            try:
+              r=s.get(origin+path,timeout=30,allow_redirects=True)
+              html=r.text
+              soup=BeautifulSoup(html,'html.parser')
+              scripts=[urljoin(origin,x.get('src')) for x in soup.find_all('script',src=True)]
+              links=[urljoin(origin,x.get('href')) for x in soup.find_all('a',href=True)]
+              out['pages'].append({
+                'path':path,'status':r.status_code,'url':r.url,'length':len(html),
+                'scripts':scripts,'links':links[:500],
+                'text_sample':' '.join(soup.stripped_strings)[:12000]
+              })
+              for n in needles:
+                i=html.find(n)
+                if i>=0: out['hits'].append({'source':path,'needle':n,'context':html[max(0,i-1000):i+4000]})
+              for u in scripts:
+                if urlparse(u).netloc!=urlparse(origin).netloc or u in seen_scripts: continue
+                seen_scripts.add(u)
+                try:
+                  rr=s.get(u,timeout=30)
+                  txt=rr.text
+                  item={'url':u,'status':rr.status_code,'length':len(txt)}
+                  matched=[]
+                  for n in needles:
+                    i=txt.find(n)
+                    if i>=0:
+                      matched.append({'needle':n,'context':txt[max(0,i-2000):i+10000]})
+                  if matched: item['matched']=matched
+                  # capture promising product/data chunks
+                  for pat in [r'const\s+\w*[Pp]roduct\w*\s*=\s*\[', r'products\s*[:=]\s*\[', r'Rosh Old Bowl Three Hoja']:
+                    m=re.search(pat,txt)
+                    if m:
+                      item.setdefault('contexts',[]).append(txt[max(0,m.start()-2000):m.start()+50000])
+                  out['scripts'].append(item)
+                except Exception as e:
+                  out['scripts'].append({'url':u,'error':str(e)})
+            except Exception as e:
+              out['pages'].append({'path':path,'error':str(e)})
+
+          with open('ths-store/old-site-probe.json','w',encoding='utf-8') as f:
+            json.dump(out,f,ensure_ascii=False,indent=2)
+          print(json.dumps({'pages':[(x.get('path'),x.get('status'),x.get('length')) for x in out['pages']],
+                            'scripts':[(x.get('url'),x.get('status'),x.get('length'),bool(x.get('matched') or x.get('contexts'))) for x in out['scripts']],
+                            'hits':len(out['hits'])},ensure_ascii=False))
+          PY
+      - name: Commit probe
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add ths-store/old-site-probe.json
+          git diff --cached --quiet || git commit -m "Capture old THS ChatGPT Site catalog source"
+          git push
