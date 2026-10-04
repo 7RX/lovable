@@ -3,8 +3,9 @@ name: THS Catalog Crawl
 on:
   workflow_dispatch:
   push:
-    paths:
-      - '.github/workflows/ths-catalog.yml'
+    branches: [main]
+    paths-ignore:
+      - 'ths-store/catalog-scrape.json'
 
 permissions:
   contents: write
