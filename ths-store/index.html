@@ -1,1 +1,108 @@
-The requested file reference is not currently visible. Use files.search or files.list to rediscover the file, then retry with a returned ref_id or file_id.
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0c0c0d" />
+  <meta name="description" content="THS — Tangiers Hookah Store. Catálogo premium para maiores de 18 anos." />
+  <title>THS — Tangiers Hookah Store</title>
+  <link rel="preconnect" href="https://images.tcdn.com.br" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="ageGate" class="age-gate" aria-hidden="true">
+    <div class="age-card" role="dialog" aria-modal="true" aria-labelledby="ageTitle">
+      <div class="logo-mark">THS<span>.</span></div>
+      <div class="gold-line"></div>
+      <span class="eyebrow">ACESSO RESTRITO</span>
+      <h1 id="ageTitle">Você tem 18 anos ou mais?</h1>
+      <p>Este site apresenta produtos destinados exclusivamente a adultos. Confirme sua idade para continuar.</p>
+      <button class="btn btn-gold btn-full" id="ageYes">Sim, tenho 18 anos ou mais</button>
+      <a class="btn btn-outline btn-full" href="https://www.google.com/">Não, sou menor de 18 anos</a>
+      <small>Ao prosseguir, você declara ser maior de idade. Venda responsável e sujeita à legislação aplicável.</small>
+    </div>
+  </div>
+
+  <div id="mobileMenu" class="overlay hidden">
+    <aside class="side-panel left-panel" aria-label="Menu">
+      <div class="panel-head"><strong>MENU</strong><button class="icon-btn" data-close-menu aria-label="Fechar">×</button></div>
+      <nav id="mobileNav"></nav>
+    </aside>
+  </div>
+
+  <div id="cartOverlay" class="overlay hidden">
+    <aside class="side-panel cart-panel" aria-label="Carrinho">
+      <div class="panel-head">
+        <div><span class="eyebrow">SUA SELEÇÃO</span><h2>Carrinho <small id="cartCountPanel">(0)</small></h2></div>
+        <button class="icon-btn" data-close-cart aria-label="Fechar">×</button>
+      </div>
+      <div id="cartItems" class="cart-items"></div>
+      <div id="cartBottom" class="cart-bottom hidden">
+        <div class="total-row"><span>Subtotal</span><strong id="cartSubtotal">R$ 0,00</strong></div>
+        <p>Frete e descontos serão calculados no pagamento.</p>
+        <a href="#/checkout" class="btn btn-gold btn-full" data-close-cart>Ir para pagamento →</a>
+        <button class="link-btn" data-close-cart>Continuar comprando</button>
+      </div>
+    </aside>
+  </div>
+
+  <div id="productOverlay" class="product-overlay hidden" aria-hidden="true">
+    <div class="product-modal" role="dialog" aria-modal="true" aria-labelledby="productModalTitle">
+      <button class="icon-btn modal-close" data-close-product aria-label="Fechar">×</button>
+      <div id="productModalContent"></div>
+    </div>
+  </div>
+
+  <header class="site-header">
+    <div class="announcement" id="storeAnnouncement">Enviamos para todo Brasil • Compra segura • Pix e cartão</div>
+    <div class="header-main container">
+      <button id="menuButton" class="icon-btn mobile-only" aria-label="Abrir menu">☰</button>
+      <a class="brand" href="#/">
+        <strong>THS<span>.</span></strong>
+        <small>TANGIERS HOOKAH STORE</small>
+      </a>
+      <form id="headerSearch" class="search-box" role="search">
+        <span>⌕</span><input id="searchInput" type="search" placeholder="O que você está procurando?" aria-label="Buscar produtos" /><button aria-label="Buscar">→</button>
+      </form>
+      <div class="header-actions">
+        <a class="header-extra desktop-only" href="#/favoritos">♡ Favoritos <b id="favCount">0</b></a>
+        <a class="header-extra desktop-only" href="#/conta">◉ <span id="accountLabel">Conta</span></a>
+        <a class="header-link desktop-only" href="#/contato">Atendimento</a>
+        <button id="cartButton" class="cart-button" aria-label="Abrir carrinho">▢ <span class="desktop-only">Carrinho</span><b id="cartCount">0</b></button>
+      </div>
+    </div>
+    <nav class="desktop-nav container" id="desktopNav"></nav>
+    <form id="mobileSearch" class="mobile-search container mobile-only"><span>⌕</span><input id="mobileSearchInput" type="search" placeholder="Buscar produtos, marcas..." /></form>
+  </header>
+
+  <main id="app"></main>
+
+  <section class="newsletter">
+    <div class="container newsletter-grid">
+      <div><span class="eyebrow">FIQUE POR DENTRO</span><h2>Novidades selecionadas para você.</h2><p>Receba lançamentos e novidades da THS.</p></div>
+      <form id="newsletterForm"><div class="newsletter-form"><input type="email" required placeholder="Seu melhor e-mail" aria-label="Seu e-mail"><button class="btn btn-gold">Inscrever-se →</button></div><small id="newsletterMessage"></small></form>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <a class="brand footer-brand" href="#/"><strong>THS<span>.</span></strong><small>TANGIERS HOOKAH STORE</small></a>
+        <p>Seleção premium, catálogo organizado e atendimento próximo.</p>
+        <p class="responsible">Venda destinada exclusivamente a maiores de 18 anos. Observe a legislação aplicável.</p>
+      </div>
+      <div><h3>Explore</h3><a href="#/catalogo">Todos os produtos</a><a href="#/catalogo?categoria=Essências%20Premium">Essências Premium</a><a href="#/catalogo?categoria=Arguiles">Arguiles</a><a href="#/catalogo?categoria=Rosh">Rosh</a><a href="#/catalogo?categoria=Acessórios">Acessórios</a></div>
+      <div><h3>Atendimento</h3><a id="footerW1" href="https://wa.me/5511978219183" target="_blank" rel="noreferrer">Varejo 1 · (11) 97821-9183</a><a id="footerW2" href="https://wa.me/5511940144162" target="_blank" rel="noreferrer">Varejo 2 · (11) 94014-4162</a><a id="footerW3" href="https://wa.me/5511947988458" target="_blank" rel="noreferrer">Atacado · (11) 94798-8458</a></div>
+      <div><h3>Informações</h3><a href="#/sobre">Sobre a THS</a><a href="#/envio">Envio</a><a href="#/pagamento">Pagamento</a><a href="#/trocas">Trocas e devoluções</a><a href="#/privacidade">Privacidade</a><a href="#/admin">Painel administrativo</a></div>
+    </div>
+    <div class="container footer-bottom"><span>© <span id="year"></span> THS — Tangiers Hookah Store.</span><span>Protótipo funcional: pagamento, frete e banco serão conectados na produção.</span></div>
+  </footer>
+
+  <a id="whatsappFloat" class="whatsapp-float" href="https://wa.me/5511978219183" target="_blank" rel="noreferrer" aria-label="WhatsApp">◔</a>
+
+  <script src="app.js"></script>
+</body>
+</html>
