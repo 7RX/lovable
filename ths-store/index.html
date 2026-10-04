@@ -172,7 +172,7 @@ body{background:#fff}.container{width:min(calc(100% - 64px),1460px)}
       <div><h3>Atendimento</h3><a id="footerW1" href="https://wa.me/5511978219183" target="_blank" rel="noreferrer">Varejo 1 · (11) 97821-9183</a><a id="footerW2" href="https://wa.me/5511940144162" target="_blank" rel="noreferrer">Varejo 2 · (11) 94014-4162</a><a id="footerW3" href="https://wa.me/5511947988458" target="_blank" rel="noreferrer">Atacado · (11) 94798-8458</a></div>
       <div><h3>Informações</h3><a href="#/sobre">Sobre a THS</a><a href="#/envio">Envio</a><a href="#/pagamento">Pagamento</a><a href="#/trocas">Trocas e devoluções</a><a href="#/privacidade">Privacidade</a><a href="#/admin">Painel administrativo</a></div>
     </div>
-    <div class="container footer-bottom"><span>© <span id="year"></span> THS — Tangiers Hookah Store.</span><span>Protótipo funcional: pagamento, frete e banco serão conectados na produção.</span></div>
+    <div class="container footer-bottom"><span>© <span id="year"></span> THS — Tangiers Hookah Store.</span><span>Catálogo e painel administrativo sincronizados pela Vercel.</span></div>
   </footer>
 
   <a id="whatsappFloat" class="whatsapp-float" href="https://wa.me/5511978219183" target="_blank" rel="noreferrer" aria-label="WhatsApp">◔</a>
@@ -2650,6 +2650,8 @@ const state={
   profile:readJSON('ths-profile',null),
   selectedCategory:'Todos', search:'', sort:'relevancia'
 };
+let adminKey=sessionStorage.getItem('ths-admin-key')||'';
+let remoteCatalogLoaded=false;
 let products=[];
 function rebuildProducts(){
   const base=baseProducts.filter(p=>!hiddenProducts.includes(p.id)).map(p=>({...p,...(state.overrides[p.id]||{}),_custom:false}));
@@ -2663,6 +2665,37 @@ const installment=v=>hasPrice(v)?money(v/12):'—';
 const productById=id=>products.find(p=>p.id===id);
 const slugify=s=>(s||'produto').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,60)||'produto';
 const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
+function setSyncStatus(text,ok=true){
+  const el=document.querySelector('#syncStatus');
+  if(el){el.textContent=text;el.classList.toggle('off',!ok);}
+}
+async function syncAdminData(){
+  if(!adminKey)return false;
+  setSyncStatus('Salvando na Vercel…',true);
+  try{
+    const r=await fetch('/api/catalog',{
+      method:'PUT',
+      headers:{'content-type':'application/json','x-admin-key':adminKey},
+      body:JSON.stringify({overrides:state.overrides,customProducts,hiddenProducts,categories,storeConfig})
+    });
+    if(r.status===401){
+      adminKey='';sessionStorage.removeItem('ths-admin-key');
+      setSyncStatus('Sessão administrativa expirada',false);
+      alert('A senha administrativa precisa ser informada novamente.');
+      location.hash='#/admin';
+      route();
+      return false;
+    }
+    if(!r.ok)throw new Error('Falha ao salvar');
+    const data=await r.json();
+    setSyncStatus('Sincronizado com a Vercel'+(data.updatedAt?' · '+new Date(data.updatedAt).toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}):''),true);
+    return true;
+  }catch(err){
+    console.error(err);
+    setSyncStatus('Erro ao sincronizar. Tente salvar novamente.',false);
+    return false;
+  }
+}
 function saveAdminData(){
   localStorage.setItem('ths-admin-overrides',JSON.stringify(state.overrides));
   localStorage.setItem('ths-admin-products',JSON.stringify(customProducts));
@@ -2670,6 +2703,32 @@ function saveAdminData(){
   localStorage.setItem('ths-admin-categories',JSON.stringify(categories));
   localStorage.setItem('ths-admin-store',JSON.stringify(storeConfig));
   rebuildProducts();
+  syncAdminData();
+}
+async function loadRemoteCatalog(){
+  try{
+    const r=await fetch('/api/catalog?t='+Date.now(),{cache:'no-store'});
+    if(!r.ok)return false;
+    const data=await r.json();
+    if(!data?.exists||!data.catalog)return false;
+    const remote=data.catalog;
+    state.overrides=remote.overrides&&typeof remote.overrides==='object'?remote.overrides:{};
+    customProducts=Array.isArray(remote.customProducts)?remote.customProducts:[];
+    hiddenProducts=Array.isArray(remote.hiddenProducts)?remote.hiddenProducts:[];
+    categories=Array.isArray(remote.categories)&&remote.categories.length?remote.categories:defaultCategories;
+    storeConfig={...defaultStoreConfig,...(remote.storeConfig||{})};
+    localStorage.setItem('ths-admin-overrides',JSON.stringify(state.overrides));
+    localStorage.setItem('ths-admin-products',JSON.stringify(customProducts));
+    localStorage.setItem('ths-admin-hidden',JSON.stringify(hiddenProducts));
+    localStorage.setItem('ths-admin-categories',JSON.stringify(categories));
+    localStorage.setItem('ths-admin-store',JSON.stringify(storeConfig));
+    rebuildProducts();
+    remoteCatalogLoaded=true;
+    return true;
+  }catch(err){
+    console.warn('Catálogo remoto indisponível; usando catálogo incorporado.',err);
+    return false;
+  }
 }
 function saveCart(){localStorage.setItem('ths-work-cart',JSON.stringify(state.cart));updateCartUI();}
 function saveFavs(){localStorage.setItem('ths-work-favs',JSON.stringify(state.favorites));updateHeaderExtras();}
@@ -2779,12 +2838,35 @@ function accountPage(){
 }
 
 function adminPage(){
+ if(!adminKey){
+   $('#app').innerHTML=`<section class="admin-page"><div class="container admin-shell" style="max-width:620px">
+     <div class="admin-editor-card" style="margin-top:34px">
+       <div class="admin-editor-head"><div><span class="eyebrow">PAINEL THS</span><h1 style="margin:.3rem 0 .5rem">Acesso administrativo</h1><p>Entre com a senha do painel para editar o catálogo publicado na Vercel.</p></div></div>
+       <form id="adminLoginForm" class="admin-form-grid">
+         <label class="full">Senha administrativa<input id="adminPassword" type="password" autocomplete="current-password" required placeholder="Digite a senha do painel"></label>
+         <div class="full admin-form-actions"><button class="btn btn-gold" type="submit">Entrar no painel</button><a class="btn btn-outline" href="#/">Voltar para a loja</a></div>
+         <p id="adminLoginMsg" class="full" style="margin:0;color:#a33;font-size:.75rem"></p>
+       </form>
+     </div>
+   </div></section>`;
+   $('#adminLoginForm').onsubmit=async e=>{
+     e.preventDefault();
+     const key=$('#adminPassword').value;
+     const msg=$('#adminLoginMsg');msg.textContent='Verificando…';
+     try{
+       const r=await fetch('/api/admin-auth',{method:'POST',headers:{'x-admin-key':key}});
+       if(!r.ok){msg.textContent='Senha incorreta.';return;}
+       adminKey=key;sessionStorage.setItem('ths-admin-key',key);adminPage();
+     }catch{msg.textContent='Não foi possível conectar ao servidor.';}
+   };
+   return;
+ }
  const demoOrders=readJSON('ths-demo-orders',[]);
  const availableCount=products.filter(p=>p.available).length;
  const soldOutCount=products.length-availableCount;
  $('#app').innerHTML=`<section class="admin-page"><div class="container admin-shell">
-   <div class="admin-head"><div><span class="eyebrow">PAINEL THS</span><h1>Administração da loja</h1><p>Gerencie o catálogo e a aparência sem editar código. Nesta versão, as alterações ficam salvas neste navegador.</p></div><div class="admin-head-actions"><a class="btn btn-outline" href="#/">Ver loja</a><button class="btn btn-gold" id="adminAddTop">+ Novo produto</button></div></div>
-   <div class="admin-warning"><strong>Modo local.</strong> Você já consegue administrar tudo neste navegador. Para sincronizar alterações entre celulares/computadores e publicar automaticamente para todos os clientes, ainda falta conectar banco de dados + login administrativo.</div>
+   <div class="admin-head"><div><span class="eyebrow">PAINEL THS</span><h1>Administração da loja</h1><p>Gerencie produtos, categorias e aparência. As alterações salvas aqui são publicadas para todos os visitantes.</p></div><div class="admin-head-actions"><a class="btn btn-outline" href="#/">Ver loja</a><button class="btn btn-outline" id="adminLogout">Sair</button><button class="btn btn-gold" id="adminAddTop">+ Novo produto</button></div></div>
+   <div class="admin-warning"><strong>Painel online.</strong> <span id="syncStatus">Sincronizado com a Vercel</span>. Você pode editar por celular ou computador usando a mesma senha administrativa.</div>
    <div class="admin-stats"><div><span>Produtos</span><strong>${products.length}</strong></div><div><span>Disponíveis</span><strong>${availableCount}</strong></div><div><span>Indisponíveis</span><strong>${soldOutCount}</strong></div><div><span>Categorias</span><strong>${categories.length}</strong></div><div><span>Pedidos teste</span><strong>${demoOrders.length}</strong></div></div>
    <div class="admin-tabs"><button class="active" data-admin-tab="products">Produtos</button><button data-admin-tab="categories">Categorias</button><button data-admin-tab="store">Loja & banner</button><button data-admin-tab="orders">Pedidos teste</button><button data-admin-tab="backup">Backup</button></div>
    <div id="adminPanel"></div>
@@ -2794,6 +2876,7 @@ function adminPage(){
  function activateTab(name){$$('[data-admin-tab]').forEach(b=>b.classList.toggle('active',b.dataset.adminTab===name));if(name==='products')renderAdminProducts();if(name==='categories')renderAdminCategories();if(name==='store')renderAdminStore();if(name==='orders')renderAdminOrders();if(name==='backup')renderAdminBackup();}
  $$('[data-admin-tab]').forEach(b=>b.onclick=()=>activateTab(b.dataset.adminTab));
  $('#adminAddTop').onclick=()=>{activateTab('products');openProductEditor()};
+ $('#adminLogout').onclick=()=>{adminKey='';sessionStorage.removeItem('ths-admin-key');adminPage();};
 
  function renderAdminProducts(filter=''){
    const q=filter.trim().toLowerCase();
@@ -2819,7 +2902,8 @@ function adminPage(){
      <label>Preço (R$)<input id="apPrice" inputmode="decimal" required value="${hasPrice(p.price)?Number(p.price).toFixed(2):''}"></label>
      <label>Selo<select id="apBadge"><option ${p.badge==='Destaque'?'selected':''}>Destaque</option><option ${p.badge==='Novo'?'selected':''}>Novo</option><option ${p.badge==='Indisponível'?'selected':''}>Indisponível</option><option ${!['Destaque','Novo','Indisponível'].includes(p.badge)?'selected':''}>Sem selo</option></select></label>
      <label class="toggle-line"><input id="apAvailable" type="checkbox" ${p.available?'checked':''}> Produto disponível para venda</label>
-     <label class="full">URL da foto<input id="apImage" required value="${esc(p.image)}" placeholder="https://..."></label>
+     <label class="full">Foto do produto<input id="apImage" required value="${esc(p.image)}" placeholder="https://..."><small>Você pode colar uma URL ou enviar uma foto abaixo.</small></label>
+     <label class="full">Enviar nova foto<input id="apImageFile" type="file" accept="image/jpeg,image/png,image/webp,image/gif"><small id="apUploadStatus">JPG, PNG, WebP ou GIF · máximo 4 MB</small></label>
      <label class="full">Descrição<textarea id="apDescription" rows="4" placeholder="Descrição do produto">${esc(p.description)}</textarea></label>
      <label class="full">Variações / sabores <small>Uma opção por linha</small><textarea id="apVariants" rows="5" placeholder="Cane Mint\nKashmir Peach">${esc((p.variants||[]).join('\n'))}</textarea></label>
      <label class="full">Link de referência do produto<input id="apSource" value="${esc(p.source)}" placeholder="https://..."></label>
@@ -2827,6 +2911,26 @@ function adminPage(){
    </form></div>`;
    $('.admin-editor-close').onclick=()=>target.innerHTML='';$('#apCancel').onclick=()=>target.innerHTML='';
    $('#adminProductForm').onsubmit=e=>{e.preventDefault();saveProductFromEditor()};
+   $('#apImageFile').onchange=async e=>{
+     const file=e.target.files?.[0];if(!file)return;
+     const status=$('#apUploadStatus');
+     if(file.size>4*1024*1024){status.textContent='A imagem ultrapassa 4 MB.';return;}
+     status.textContent='Enviando foto…';
+     const reader=new FileReader();
+     reader.onload=async()=>{
+       try{
+         const r=await fetch('/api/upload',{
+           method:'POST',
+           headers:{'content-type':'application/json','x-admin-key':adminKey},
+           body:JSON.stringify({filename:file.name,dataUrl:reader.result})
+         });
+         const data=await r.json();
+         if(!r.ok)throw new Error(data.error||'Falha no upload');
+         $('#apImage').value=data.url;status.textContent='Foto enviada e vinculada ao produto.';
+       }catch(err){status.textContent=err.message||'Não foi possível enviar a foto.';}
+     };
+     reader.readAsDataURL(file);
+   };
    target.scrollIntoView({behavior:'smooth',block:'start'});
  }
 
@@ -2868,7 +2972,7 @@ function adminPage(){
      <div class="full admin-form-actions"><button class="btn btn-gold">Salvar loja</button></div>
    </form></div>`;
    $('#asHeroMain').value=storeConfig.heroMainProductId;$('#asHeroSecondary').value=storeConfig.heroSecondaryProductId;
-   $('#adminStoreForm').onsubmit=e=>{e.preventDefault();storeConfig={...storeConfig,announcement:$('#asAnnouncement').value.trim(),heroEyebrow:$('#asEyebrow').value.trim(),heroTitle:$('#asTitle').value.trim(),heroAccent:$('#asAccent').value.trim(),heroText:$('#asText').value.trim(),heroMainProductId:$('#asHeroMain').value,heroSecondaryProductId:$('#asHeroSecondary').value,whatsappRetail1:$('#asW1').value.replace(/\D/g,''),whatsappRetail2:$('#asW2').value.replace(/\D/g,''),whatsappWholesale:$('#asW3').value.replace(/\D/g,'')};saveAdminData();applyStoreConfig();alert('Configurações da loja salvas neste navegador.');};
+   $('#adminStoreForm').onsubmit=e=>{e.preventDefault();storeConfig={...storeConfig,announcement:$('#asAnnouncement').value.trim(),heroEyebrow:$('#asEyebrow').value.trim(),heroTitle:$('#asTitle').value.trim(),heroAccent:$('#asAccent').value.trim(),heroText:$('#asText').value.trim(),heroMainProductId:$('#asHeroMain').value,heroSecondaryProductId:$('#asHeroSecondary').value,whatsappRetail1:$('#asW1').value.replace(/\D/g,''),whatsappRetail2:$('#asW2').value.replace(/\D/g,''),whatsappWholesale:$('#asW3').value.replace(/\D/g,'')};saveAdminData();applyStoreConfig();alert('Configurações salvas. A sincronização com a Vercel acontece automaticamente.');};
  }
 
  function renderAdminOrders(){const orders=readJSON('ths-demo-orders',[]);panel.innerHTML=`<div class="admin-section-card"><div class="admin-section-head"><div><span class="eyebrow">PEDIDOS</span><h2>Pedidos de demonstração</h2><p>Quando o checkout real for conectado, esta área vira a central de pedidos.</p></div>${orders.length?'<button class="btn btn-outline" id="clearDemoOrders">Limpar testes</button>':''}</div><div class="admin-order-list">${orders.length?orders.map(o=>`<div><strong>${esc(o.id)}</strong><span>${new Date(o.createdAt).toLocaleString('pt-BR')}</span><b>${money(o.total)}</b><small>${esc(o.status)}</small></div>`).join(''):'<div class="admin-empty">Nenhum pedido de teste criado.</div>'}</div></div>`;const c=$('#clearDemoOrders');if(c)c.onclick=()=>{if(confirm('Limpar todos os pedidos de teste?')){localStorage.removeItem('ths-demo-orders');renderAdminOrders();}};}
@@ -2908,7 +3012,8 @@ function applyStoreConfig(){
   const wf=$('#whatsappFloat');if(wf)wf.href=`https://wa.me/${String(storeConfig.whatsappRetail1||'').replace(/\D/g,'')}`;
 }
 
-function setup(){
+async function setup(){
+ await loadRemoteCatalog();
  $('#year').textContent=new Date().getFullYear();setupNav();updateCartUI();updateHeaderExtras();applyStoreConfig();
  const verified=sessionStorage.getItem('ths-work-age')==='yes';if(verified)$('#ageGate').classList.add('hidden');else $('#ageGate').setAttribute('aria-hidden','false');$('#ageYes').onclick=()=>{sessionStorage.setItem('ths-work-age','yes');$('#ageGate').classList.add('hidden')};
  $('#cartButton').onclick=openCart;$$('[data-close-cart]').forEach(x=>x.onclick=closeCart);$('#cartOverlay').onclick=e=>{if(e.target.id==='cartOverlay')closeCart()};
