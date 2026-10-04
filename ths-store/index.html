@@ -41,6 +41,31 @@
 @media(max-width:900px){.admin-stats{grid-template-columns:repeat(3,1fr)}.admin-backup-grid{grid-template-columns:1fr 1fr}.admin-product-row{grid-template-columns:60px minmax(0,1fr)}.admin-product-row>img{width:60px;height:60px}.admin-row-actions{grid-column:1/-1;justify-content:flex-end}.admin-category-list{grid-template-columns:1fr}.admin-order-list>div{grid-template-columns:1fr auto}}
 @media(max-width:650px){.admin-page{padding-top:28px}.admin-head{display:block}.admin-head-actions{margin-top:16px}.admin-head-actions .btn{flex:1}.admin-stats{grid-template-columns:repeat(2,1fr)}.admin-toolbar{display:block}.admin-toolbar .btn{width:100%;margin-top:8px}.admin-form-grid{grid-template-columns:1fr}.admin-form-grid .full{grid-column:auto}.admin-editor-card,.admin-section-card{padding:18px}.admin-backup-grid{grid-template-columns:1fr}.admin-product-row{grid-template-columns:52px minmax(0,1fr);gap:10px}.admin-product-row>img{width:52px;height:52px}.admin-row-actions{justify-content:stretch}.admin-row-actions button{flex:1}.admin-order-list>div{grid-template-columns:1fr}.admin-form-actions{display:grid!important;grid-template-columns:1fr 1fr}}
 
+
+/* THS 2.2 — direção visual alinhada ao conceito aprovado */
+:root{--gold:#d5aa51;--gold2:#f0cb73;--ink:#050506;--paper:#f5f3ee}
+.announcement{min-height:28px;background:linear-gradient(90deg,#b88932,#e0bd6b,#b88932);color:#0a0a0a;font-weight:800;letter-spacing:.025em;text-transform:uppercase;font-size:.62rem}
+.site-header{background:#050506;box-shadow:none;border-bottom:1px solid #1f1f20}
+.header-main{height:86px;grid-template-columns:245px minmax(360px,1fr) auto;gap:34px}
+.brand strong{font-size:2.45rem;color:var(--gold2);letter-spacing:-.075em}.brand strong span{color:var(--gold2)}.brand small{color:#e0bd6b;font-size:.43rem;margin-top:5px}
+.search-box{height:46px;background:#f6f6f6;border:0;border-radius:8px;overflow:hidden}.search-box input{color:#161616;font-size:.78rem}.search-box span{color:#444}.search-box button{color:#111;font-size:1.15rem}
+.header-actions{gap:21px}.header-extra,.header-link,.cart-button{color:#f0eee9;font-size:.7rem}.cart-button b,.header-extra b{background:var(--gold);color:#111}
+.desktop-nav{height:51px;gap:36px;border-top:1px solid #19191a}.desktop-nav a{font-size:.66rem;color:#f0eee9;text-transform:uppercase}.desktop-nav a:hover{color:var(--gold2)}
+.hero-v2{min-height:560px;background:radial-gradient(circle at 72% 42%,#46311a 0,#21170f 24%,#090909 51%,#040404 78%);border-bottom:1px solid #222}
+.hero-v2:before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 65% 72%,#cf92331c 0,transparent 33%),radial-gradient(ellipse at 88% 24%,#ffffff12 0,transparent 22%);filter:blur(2px)}
+.hero-v2::after{background:linear-gradient(90deg,#040404 0%,#050505ef 35%,#05050568 62%,#05050522 100%),linear-gradient(0deg,#040404b5 0%,transparent 43%)}
+.hero-content{min-height:560px}.hero-copy{max-width:620px}.hero-copy .eyebrow{font-size:.78rem;color:var(--gold2);letter-spacing:.11em}.hero h1{font-size:clamp(3.6rem,6.2vw,6.4rem);line-height:.86;letter-spacing:-.065em;margin:14px 0 18px}.hero h1 em{display:inline-block;color:var(--gold2)}.hero p{font-size:.92rem;line-height:1.5;text-transform:uppercase;letter-spacing:.03em;max-width:560px}.hero-actions{margin-top:24px}.hero-actions .btn{min-width:170px;height:46px}.hero-actions .btn-outline{background:#09090966;border-color:#6b5c43}
+.hero-product-stage{z-index:1}.hero-product{background:transparent}.hero-main-product{width:min(38vw,560px);height:70%;right:17%;top:8%;z-index:3}.hero-secondary-product{width:min(26vw,365px);height:47%;right:2%;bottom:7%;z-index:4}.hero-third-product{position:absolute;object-fit:contain;width:min(24vw,350px);height:46%;right:33%;bottom:-2%;z-index:2;filter:drop-shadow(0 30px 45px #000d)}
+.hero-mini-benefits{display:none}
+.hero-services{background:#080809;color:#fff;border-top:1px solid #242424;border-bottom:1px solid #242424}.hero-services .container{display:grid;grid-template-columns:repeat(4,1fr)}.hero-service{display:flex;align-items:center;gap:12px;padding:15px 18px;border-right:1px solid #262626;min-height:65px}.hero-service:first-child{border-left:1px solid #262626}.hero-service b{font-size:1.25rem;color:var(--gold2);font-weight:400}.hero-service strong{display:block;font-size:.62rem;letter-spacing:.035em;text-transform:uppercase}.hero-service small{display:block;color:#9f9b93;font-size:.55rem;margin-top:3px}
+.brand-rail{background:#0f1011}.brand-rail .container{grid-template-columns:repeat(10,1fr);width:min(100% - 40px,1460px)}.brand-rail span{padding:19px 8px;color:#f5f2eb;background:#121314;font-size:.61rem}.brand-rail span:nth-child(odd){background:#0c0d0e}
+.category-showcase{background:#17191b;padding:16px 0 22px}.category-showcase .category-grid-v3{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.category-card-v3{position:relative;height:185px;overflow:hidden;background:#0b0c0d;color:#fff;border:1px solid #2b2c2e}.category-card-v3 img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:82% center;transform:scale(.82);filter:brightness(.78) saturate(.9);transition:.35s}.category-card-v3:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#0a0b0de8 0%,#0a0b0da6 52%,#0a0b0d20 100%)}.category-card-v3 .cat-copy{position:relative;z-index:2;padding:24px;height:100%;display:flex;flex-direction:column;justify-content:center;align-items:flex-start}.category-card-v3 .eyebrow{font-size:.57rem}.category-card-v3 h3{font:800 1.25rem var(--display);margin:7px 0 8px;text-transform:uppercase}.category-card-v3 p{margin:0;color:#c1bdb5;font-size:.64rem;max-width:165px;line-height:1.5}.category-card-v3 .mini-link{margin-top:16px;background:var(--gold);color:#111;padding:9px 12px;font-size:.58rem;font-weight:900;text-transform:uppercase}.category-card-v3:hover img{transform:scale(.9)}
+.product-showcase{background:#f8f7f4;padding:24px 0 68px}.product-showcase .section-head{margin-bottom:18px}.product-showcase .section-head h2{font-size:1.4rem;letter-spacing:-.03em;text-transform:uppercase}.product-showcase .eyebrow{color:#b8862d}.product-showcase .product-grid{grid-template-columns:repeat(6,minmax(0,1fr));gap:10px}.product-showcase .product-card{border:1px solid #e1ddd5;box-shadow:0 5px 18px #0000000a}.product-showcase .product-info{padding:13px;min-height:173px}.product-showcase .product-name{font-size:.77rem;min-height:36px}.product-showcase .price{font-size:.95rem}.product-showcase .installment{font-size:.56rem}.product-showcase .product-actions{display:none}.product-showcase .product-brand{font-size:.54rem}.product-showcase .availability{font-size:.56rem}.product-showcase .badge{font-size:.5rem;padding:5px 7px}.product-showcase .fav-btn{width:29px;height:29px;font-size:1rem}
+.home-secondary{background:#101112}.home-secondary .section-head h2,.home-secondary .section-head a{color:white}.home-secondary .product-card{background:#fff}
+.benefits{display:none}
+@media(max-width:1150px){.product-showcase .product-grid{grid-template-columns:repeat(4,1fr)}.category-showcase .category-grid-v3{grid-template-columns:repeat(2,1fr)}.hero-main-product{right:7%;width:44vw}.hero-third-product{right:28%}}
+@media(max-width:760px){.announcement{font-size:.48rem;text-align:center;padding:5px 10px}.header-main{height:63px;grid-template-columns:34px 1fr auto}.brand strong{font-size:1.72rem}.hero-v2,.hero-content{min-height:575px}.hero-content{align-items:flex-end;padding-bottom:48px}.hero h1{font-size:clamp(3rem,15vw,4.6rem)}.hero-copy .eyebrow{font-size:.62rem}.hero p{font-size:.7rem;max-width:320px}.hero-main-product{width:88vw;height:52%;right:-17%;top:5%;opacity:.9}.hero-secondary-product{display:block;width:46vw;height:29%;right:-9%;bottom:27%;opacity:.8}.hero-third-product{display:none}.hero-services .container{grid-template-columns:repeat(2,1fr);width:100%}.hero-service{padding:11px 12px;min-height:58px}.hero-service:nth-child(3){border-left:1px solid #262626}.brand-rail .container{grid-template-columns:repeat(5,1fr)}.brand-rail span{padding:12px 4px;font-size:.5rem}.category-showcase .category-grid-v3{grid-template-columns:1fr 1fr;gap:8px}.category-card-v3{height:150px}.category-card-v3 .cat-copy{padding:15px}.category-card-v3 h3{font-size:.95rem}.category-card-v3 p{display:none}.category-card-v3 .mini-link{font-size:.5rem;padding:7px 9px;margin-top:10px}.product-showcase{padding-top:20px}.product-showcase .product-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.product-showcase .section-head h2{font-size:1.2rem}.product-showcase .product-info{min-height:165px}}
+
 </style>
 </head>
 <body>
@@ -88,7 +113,7 @@
   </div>
 
   <header class="site-header">
-    <div class="announcement" id="storeAnnouncement">Enviamos para todo Brasil • Compra segura • Pix e cartão</div>
+    <div class="announcement" id="storeAnnouncement">FRETE PARA TODO O BRASIL • PARCELE EM ATÉ 12X • PAGUE COM PIX, CARTÃO OU MERCADO PAGO</div>
     <div class="header-main container">
       <button id="menuButton" class="icon-btn mobile-only" aria-label="Abrir menu">☰</button>
       <a class="brand" href="#/">
@@ -159,8 +184,8 @@ const baseProducts = [
 
 const defaultCategories=['Essências Premium','Essências Convencionais','Arguiles','Rosh','Bases','Carvões e Alumínios','Acessórios'];
 const defaultStoreConfig={
-  announcement:'Enviamos para todo Brasil • Compra segura • Pix e cartão',
-  heroEyebrow:'A MAIOR VARIEDADE DA THS',
+  announcement:'FRETE PARA TODO O BRASIL • PARCELE EM ATÉ 12X • PAGUE COM PIX, CARTÃO OU MERCADO PAGO',
+  heroEyebrow:'A MAIOR VARIEDADE DO BRASIL',
   heroTitle:'ESSÊNCIAS',
   heroAccent:'PREMIUM',
   heroText:'Tangiers, Musthave, Blackburn, Starbuzz, Uncut e muito mais. Catálogo reorganizado com produtos reais da loja atual.',
@@ -238,19 +263,46 @@ function bindProducts(scope=document){$$('[data-open-product]',scope).forEach(el
 function brandRail(){return ['TANGIERS','MUSTHAVE','BLACKBURN','STARBUZZ','UNCUT','XKAH','CORE','AMOTION','BLADE','KALOUD'].map(b=>`<span>${b}</span>`).join('')}
 
 function home(){
- const featured=products.filter(p=>['tangiers-250g','tangiers-100g','musthave-125g','blackburn-100g','kaloud-vitria-ii','core-mad-black-gold','xkah-blue','amotion-pedal-frx-grape'].includes(p.id)).slice(0,8);
- const launches=products.filter(p=>p.badge==='Novo').slice(0,8);
- const heroMain=productById(storeConfig.heroMainProductId)||products.find(p=>p.available)||products[0];
- const heroSecondary=productById(storeConfig.heroSecondaryProductId)||products.find(p=>p.id!==heroMain?.id)||heroMain;
+ const featured=products.filter(p=>['tangiers-250g','tangiers-100g','musthave-125g','blackburn-100g','starbuzz-250g','uncut-virginia'].includes(p.id)).slice(0,6);
+ const launches=products.filter(p=>p.badge==='Novo').slice(0,6);
+ const heroMain=productById(storeConfig.heroMainProductId)||productById('tangiers-250g')||products.find(p=>p.available)||products[0];
+ const heroSecondary=productById(storeConfig.heroSecondaryProductId)||productById('musthave-125g')||products.find(p=>p.id!==heroMain?.id)||heroMain;
+ const heroThird=productById('blackburn-100g')||products.find(p=>p.id!==heroMain?.id&&p.id!==heroSecondary?.id)||heroMain;
+ const catEss=productById('tangiers-250g')||heroMain;
+ const catHookah=productById('core-mad-white-gold')||productById('core-mad-black-gold')||heroSecondary;
+ const catRosh=productById('kaloud-vitria-ii')||productById('xkah-blue')||heroSecondary;
+ const catLaunch=productById('amotion-pedal-frx-grape')||productById('blade-le2-black-gold')||heroSecondary;
  const spotlight=productById('core-mad-black-gold')||featured[0]||products[0];
  $('#app').innerHTML=`
- <section class="hero hero-v2"><div class="hero-product-stage">${heroMain?`<img class="hero-product hero-main-product" src="${esc(heroMain.image)}" alt="${esc(heroMain.name)}">`:''}${heroSecondary?`<img class="hero-product hero-secondary-product" src="${esc(heroSecondary.image)}" alt="${esc(heroSecondary.name)}">`:''}</div><div class="container hero-content"><div class="hero-copy"><span class="eyebrow">${esc(storeConfig.heroEyebrow)}</span><h1>${esc(storeConfig.heroTitle)}<br><em>${esc(storeConfig.heroAccent)}</em></h1><p>${esc(storeConfig.heroText)}</p><div class="hero-actions"><a class="btn btn-gold" href="#/catalogo?categoria=${encodeURIComponent(categories[0]||'Essências Premium')}">Ver essências →</a><a class="btn btn-outline" href="#/catalogo">Ver catálogo</a></div><div class="hero-mini-benefits"><span>↗ Todo Brasil</span><span>◇ Pix e cartão</span><span>✓ Compra segura</span></div></div></div></section>
+ <section class="hero hero-v2">
+   <div class="hero-product-stage">
+     ${heroMain?`<img class="hero-product hero-main-product" src="${esc(heroMain.image)}" alt="${esc(heroMain.name)}">`:''}
+     ${heroSecondary?`<img class="hero-product hero-secondary-product" src="${esc(heroSecondary.image)}" alt="${esc(heroSecondary.name)}">`:''}
+     ${heroThird?`<img class="hero-third-product" src="${esc(heroThird.image)}" alt="${esc(heroThird.name)}">`:''}
+   </div>
+   <div class="container hero-content"><div class="hero-copy">
+     <span class="eyebrow">${esc(storeConfig.heroEyebrow)}</span>
+     <h1>${esc(storeConfig.heroTitle)}<br><em>${esc(storeConfig.heroAccent)}</em></h1>
+     <p>${esc(storeConfig.heroText)}</p>
+     <div class="hero-actions"><a class="btn btn-gold" href="#/catalogo?categoria=${encodeURIComponent(categories[0]||'Essências Premium')}">VER ESSÊNCIAS →</a><a class="btn btn-outline" href="#/catalogo">VER CATÁLOGO</a></div>
+   </div></div>
+ </section>
+ <section class="hero-services"><div class="container">
+   <div class="hero-service"><b>▱</b><div><strong>Envio para todo Brasil</strong><small>Estrutura pronta para cálculo por CEP</small></div></div>
+   <div class="hero-service"><b>▣</b><div><strong>Até 12x no cartão</strong><small>Checkout preparado para integração</small></div></div>
+   <div class="hero-service"><b>◆</b><div><strong>Pix / Mercado Pago</strong><small>Pagamento rápido e seguro</small></div></div>
+   <div class="hero-service"><b>◈</b><div><strong>Atendimento THS</strong><small>Varejo e atacado via WhatsApp</small></div></div>
+ </div></section>
  <section class="brand-rail"><div class="container">${brandRail()}</div></section>
- <section class="benefits"><div class="container benefits-grid"><div class="benefit"><div>↗</div><div><strong>Envio para todo Brasil</strong><small>Estrutura pronta para cálculo por CEP</small></div></div><div class="benefit"><div>◇</div><div><strong>Mercado Pago</strong><small>Pix e cartão serão conectados na produção</small></div></div><div class="benefit"><div>◔</div><div><strong>Atendimento THS</strong><small>Varejo e atacado pelo WhatsApp</small></div></div></div></section>
- <section class="section"><div class="container"><div class="section-head"><div><span class="eyebrow">NAVEGAÇÃO ORGANIZADA</span><h2>Compre por categoria</h2></div><a href="#/catalogo">Ver catálogo completo →</a></div><div class="category-grid category-grid-v2"><a class="category-card" href="#/catalogo?categoria=Essências%20Premium"><span class="category-arrow">↗</span><span class="eyebrow">PREMIUM</span><h3>Essências Premium</h3><p>Tangiers, Musthave, Blackburn, Starbuzz e outras marcas.</p><div class="brand-strip">${brandGroups['Essências Premium'].slice(0,6).map(x=>`<span class="brand-pill">${x}</span>`).join('')}</div></a><a class="category-card" href="#/catalogo?categoria=Arguiles"><span class="category-arrow">↗</span><span class="eyebrow">ARGUILES</span><h3>Hookahs premium</h3><p>Core, Blade, Amotion, Wookah e Sultan.</p></a><a class="category-card" href="#/catalogo?categoria=Rosh"><span class="category-arrow">↗</span><span class="eyebrow">ROSH</span><h3>Rosh & tecnologia</h3><p>Kaloud, XKAH, Alpaca, Predator e Cosmo Bowl.</p></a></div></div></section>
- <section class="section dark-section"><div class="container"><div class="section-head"><div><span class="eyebrow">CATÁLOGO REAL</span><h2>Produtos em destaque</h2></div><a href="#/catalogo">Ver todos →</a></div><div class="product-grid">${featured.map(productCard).join('')}</div></div></section>
- ${spotlight?`<section class="section"><div class="container"><div class="featured-split"><div class="featured-image"><img src="${esc(spotlight.image)}" alt="${esc(spotlight.name)}"></div><div class="featured-copy"><span class="eyebrow">${esc(spotlight.brand)}</span><h2>Design que chama atenção.</h2><p>Uma vitrine dedicada aos produtos de maior valor ajuda a loja a sair do formato de catálogo simples e ganhar presença de e-commerce premium.</p><div class="price">${money(spotlight.price)}</div><div class="installment">produto real do catálogo atual</div><button class="btn btn-gold" data-open-product="${esc(spotlight.id)}">Ver produto →</button></div></div></div></section>`:''}
- <section class="section"><div class="container"><div class="section-head"><div><span class="eyebrow">RECÉM-CHEGADOS</span><h2>Lançamentos</h2></div><a href="#/catalogo">Explorar catálogo →</a></div><div class="product-grid">${launches.map(productCard).join('')}</div></div></section>`;
+ <section class="category-showcase"><div class="container"><div class="category-grid-v3">
+   <a class="category-card-v3" href="#/catalogo?categoria=Essências%20Premium"><img src="${esc(catEss?.image||'')}" alt=""><div class="cat-copy"><span class="eyebrow">PREMIUM</span><h3>Essências</h3><p>Tangiers, Musthave, Blackburn, Starbuzz e mais.</p><span class="mini-link">Ver essências →</span></div></a>
+   <a class="category-card-v3" href="#/catalogo?categoria=Arguiles"><img src="${esc(catHookah?.image||'')}" alt=""><div class="cat-copy"><span class="eyebrow">HOOKAHS</span><h3>Hookahs premium</h3><p>Core, Blade, Amotion, Wookah e outras marcas.</p><span class="mini-link">Ver hookahs →</span></div></a>
+   <a class="category-card-v3" href="#/catalogo?categoria=Rosh"><img src="${esc(catRosh?.image||'')}" alt=""><div class="cat-copy"><span class="eyebrow">ACESSÓRIOS</span><h3>Rosh & acessórios</h3><p>Kaloud, XKAH e seleção premium.</p><span class="mini-link">Ver acessórios →</span></div></a>
+   <a class="category-card-v3" href="#/catalogo"><img src="${esc(catLaunch?.image||'')}" alt=""><div class="cat-copy"><span class="eyebrow">NOVIDADES</span><h3>Lançamentos</h3><p>Produtos recém-chegados e destaques da THS.</p><span class="mini-link">Ver novidades →</span></div></a>
+ </div></div></section>
+ <section class="product-showcase"><div class="container"><div class="section-head"><div><span class="eyebrow">🔥 MAIS PROCURADOS</span><h2>Produtos em destaque</h2></div><a href="#/catalogo">VER TODOS →</a></div><div class="product-grid">${featured.map(productCard).join('')}</div></div></section>
+ ${spotlight?`<section class="section"><div class="container"><div class="featured-split"><div class="featured-image"><img src="${esc(spotlight.image)}" alt="${esc(spotlight.name)}"></div><div class="featured-copy"><span class="eyebrow">${esc(spotlight.brand)}</span><h2>Design que chama atenção.</h2><p>Produtos de maior valor ganham uma vitrine própria, com navegação clara e visual premium.</p><div class="price">${money(spotlight.price)}</div><div class="installment">produto real do catálogo atual</div><button class="btn btn-gold" data-open-product="${esc(spotlight.id)}">Ver produto →</button></div></div></div></section>`:''}
+ <section class="section home-secondary"><div class="container"><div class="section-head"><div><span class="eyebrow">RECÉM-CHEGADOS</span><h2>Lançamentos</h2></div><a href="#/catalogo">Explorar catálogo →</a></div><div class="product-grid">${launches.map(productCard).join('')}</div></div></section>`;
  bindProducts($('#app'));
 }
 
