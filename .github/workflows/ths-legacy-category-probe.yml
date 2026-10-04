@@ -1,0 +1,59 @@
+name: THS Legacy Category Probe
+
+on:
+  push:
+    paths:
+      - '.github/workflows/ths-legacy-category-probe.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install requests beautifulsoup4
+      - name: Probe THS category pages
+        run: |
+          python - <<'PY'
+          import json,re
+          from urllib.parse import urljoin,urlparse
+          import requests
+          from bs4 import BeautifulSoup
+
+          ORIGIN='https://www.tangiershookahshop.com'
+          seeds=['/arguiles','/rosh','/acessorios','/mangueiras','/controladores','/carvoes-e-aluminios','/fogareiros','/vasos']
+          s=requests.Session(); s.headers.update({'User-Agent':'Mozilla/5.0'})
+          out=[]
+          for path in seeds:
+            try:
+              r=s.get(ORIGIN+path,timeout=30)
+              soup=BeautifulSoup(r.text,'html.parser')
+              anchors=[]
+              for a in soup.find_all('a',href=True):
+                href=urljoin(ORIGIN,a['href'])
+                if urlparse(href).netloc not in ('www.tangiershookahshop.com','tangiershookahshop.com'): continue
+                txt=' '.join(a.stripped_strings).strip()
+                parent=' '.join(a.parent.stripped_strings).strip()[:500] if a.parent else ''
+                if href not in [x['href'] for x in anchors]:
+                  anchors.append({'href':href,'text':txt[:200],'parent':parent})
+              pag=[x for x in anchors if re.search(r'(pag|pagina|page|pg)=?\d+|/pagina/\d+',x['href'],re.I) or re.fullmatch(r'\d+',x['text'] or '')]
+              prodish=[x for x in anchors if x['text'] and not x['href'].rstrip('/').endswith(path.rstrip('/')) and len(urlparse(x['href']).path.strip('/').split('/'))>=2]
+              out.append({'path':path,'status':r.status_code,'length':len(r.text),'title':soup.title.string if soup.title else '',
+                          'pagination':pag[:100],'anchors':prodish[:800],
+                          'text':' '.join(soup.stripped_strings)[:30000]})
+            except Exception as e: out.append({'path':path,'error':str(e)})
+          with open('ths-store/legacy-category-probe.json','w',encoding='utf-8') as f: json.dump(out,f,ensure_ascii=False,indent=2)
+          print([(x.get('path'),x.get('status'),x.get('length'),len(x.get('anchors',[])),len(x.get('pagination',[]))) for x in out])
+          PY
+      - name: Commit probe
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add ths-store/legacy-category-probe.json
+          git diff --cached --quiet || git commit -m "Capture THS legacy category structure"
+          git push
