@@ -2839,28 +2839,28 @@ function home(){
      line1:'HOOKAHS',line2:'PREMIUM',
      text:'CORE, AMOTION, BLADE, WOOKAH E OUTROS MODELOS SELECIONADOS PARA SUA SESSÃO.',
      button:'VER HOOKAHS',href:'#/catalogo?categoria=Arguiles',
-     image:catHookah?.image||'',alt:catHookah?.name||'Hookahs Premium'
+     image:'/assets/hero-hookahs.svg',alt:catHookah?.name||'Hookahs Premium'
    },
    {
      kicker:'SABORES PARA TODOS OS MOMENTOS',
      line1:'ESSÊNCIAS',line2:'CONVENCIONAIS',
      text:'ESCOLHA ENTRE MARCAS, LINHAS E SABORES PARA ENCONTRAR A COMBINAÇÃO IDEAL.',
      button:'VER CONVENCIONAIS',href:'#/catalogo?categoria=Essências%20Convencionais',
-     image:conventional?.image||'',alt:conventional?.name||'Essências Convencionais'
+     image:'/assets/hero-convencionais.svg',alt:conventional?.name||'Essências Convencionais'
    },
    {
      kicker:'COMPLETE O SEU SETUP',
      line1:'ROSH &',line2:'ACESSÓRIOS',
      text:'ROSHS, CONTROLADORES, MANGUEIRAS, PEÇAS E ACESSÓRIOS PARA COMPLETAR SUA EXPERIÊNCIA.',
      button:'VER ACESSÓRIOS',href:'#/catalogo?categoria=Acessórios',
-     image:catAccess?.image||catRosh?.image||'',alt:catAccess?.name||'Rosh e Acessórios'
+     image:'/assets/hero-acessorios.svg',alt:catAccess?.name||'Rosh e Acessórios'
    },
    {
      kicker:'PERFORMANCE PARA SUA SESSÃO',
      line1:'CARVÕES &',line2:'ALUMÍNIOS',
      text:'CARVÕES, ALUMÍNIOS E ITENS ESSENCIAIS PARA PREPARO, CALOR E MELHOR RENDIMENTO.',
      button:'VER CARVÕES',href:'#/catalogo?categoria=Carvões%20e%20Alumínios',
-     image:catCoal?.image||'',alt:catCoal?.name||'Carvões e Alumínios'
+     image:'/assets/hero-carvoes.svg',alt:catCoal?.name||'Carvões e Alumínios'
    }
  ];
 
@@ -2917,11 +2917,14 @@ function home(){
      $('#heroCta').href=slide.href;
      const img=$('#heroVisualImg');
      if(slide.reference){
-       hero.classList.remove('has-category-slide');
+       hero.classList.remove('has-category-slide','has-art-slide');
+       hero.style.backgroundImage='';
        img.src='';img.alt='';
      }else{
-       hero.classList.add('has-category-slide');
-       img.src=slide.image||'';img.alt=slide.alt||'';
+       hero.classList.remove('has-category-slide');
+       hero.classList.add('has-art-slide');
+       hero.style.backgroundImage=`linear-gradient(90deg,rgba(5,5,5,.96) 0%,rgba(5,5,5,.72) 31%,rgba(5,5,5,.16) 56%,rgba(5,5,5,0) 76%),url("${slide.image}")`;
+       img.src='';img.alt=slide.alt||'';
      }
      $$('[data-hero-dot]',dots).forEach((b,i)=>b.classList.toggle('active',i===heroIndex));
      hero.classList.remove('is-changing');
