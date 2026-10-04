@@ -1,0 +1,38 @@
+name: THS Sitemap Lastmod
+on:
+  push:
+    paths:
+      - '.github/workflows/ths-sitemap-lastmod.yml'
+permissions:
+  contents: write
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Parse sitemap lastmod
+        run: |
+          python - <<'PY'
+          import json,requests,xml.etree.ElementTree as ET
+          url='https://www.tangiershookahshop.com/loja/arquivos/1486411/sitemaps/sitemap_1.xml'
+          r=requests.get(url,timeout=30,headers={'User-Agent':'Mozilla/5.0'})
+          root=ET.fromstring(r.content)
+          ns={'s':'http://www.sitemaps.org/schemas/sitemap/0.9'}
+          rows=[]
+          for n in root.findall('s:url',ns):
+            loc=n.findtext('s:loc',default='',namespaces=ns)
+            lm=n.findtext('s:lastmod',default='',namespaces=ns)
+            rows.append({'url':loc,'lastmod':lm})
+          with open('ths-store/sitemap-lastmod.json','w',encoding='utf-8') as f:json.dump(rows,f,ensure_ascii=False,indent=2)
+          print('ROWS',len(rows))
+          PY
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add ths-store/sitemap-lastmod.json
+          git diff --cached --quiet || git commit -m "Capture THS sitemap lastmod data"
+          git push
