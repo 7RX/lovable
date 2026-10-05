@@ -2872,6 +2872,8 @@ const defaultStoreConfig={
   footerResponsible:'Venda destinada exclusivamente a maiores de 18 anos. Observe a legislação aplicável.',
   footerBottomRight:'Catálogo e painel administrativo sincronizados pela Vercel.',
   paymentDisplayEnabled:true,
+  paymentCheckoutEnabled:false,
+  checkoutShippingFee:0,
   paymentPixEnabled:true,
   paymentCardEnabled:true,
   paymentProviderLabel:'Mercado Pago',
@@ -2908,6 +2910,8 @@ function normalizeStoreConfig(raw={}){
     categoryCards:cleanCards,
     featuredProductIds:Array.isArray(raw.featuredProductIds)&&raw.featuredProductIds.length?raw.featuredProductIds:defaultStoreConfig.featuredProductIds,
     paymentDisplayEnabled:raw.paymentDisplayEnabled!==false,
+    paymentCheckoutEnabled:raw.paymentCheckoutEnabled===true,
+    checkoutShippingFee:Math.max(0,Number(raw.checkoutShippingFee||0)||0),
     paymentPixEnabled:raw.paymentPixEnabled!==false,
     paymentCardEnabled:raw.paymentCardEnabled!==false,
     shippingDisplayEnabled:raw.shippingDisplayEnabled!==false,
@@ -2951,6 +2955,8 @@ const installment=v=>hasPrice(v)?money(v/12):'—';
 const productById=id=>products.find(p=>p.id===id);
 const productHasVariantChoice=p=>/escolha\s+(?:o\s+sabor|a\s+cor)/i.test(String(p?.name||''));
 const productVariantLabel=p=>/escolha\s+a\s+cor/i.test(String(p?.name||''))?'ESCOLHA A COR':'ESCOLHA O SABOR';
+const onlinePaymentCategories=new Set(['Arguiles','Rosh','Bases','Carvões e Alumínios','Acessórios','Mangueiras','Controladores','Fogareiros']);
+const isOnlinePaymentEligible=p=>onlinePaymentCategories.has(String(p?.category||''))&&!/(ess[eê]ncia|tobacco|tabaco|nicotin)/i.test([p?.name,p?.brand,p?.category,p?.description].filter(Boolean).join(' '));
 const slugify=s=>(s||'produto').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,60)||'produto';
 const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
 function setSyncStatus(text,ok=true){
@@ -3149,18 +3155,36 @@ function closeProduct(){$('#productOverlay').classList.add('hidden');$('#product
 
 function checkout(){
  const items=state.cart.map(i=>({item:i,p:productById(i.id)})).filter(x=>x.p);
+ const eligible=items.length>0&&items.every(({p})=>isOnlinePaymentEligible(p));
+ const regulatedItems=items.filter(({p})=>!isOnlinePaymentEligible(p));
+ const shippingFee=Math.max(0,Number(storeConfig.checkoutShippingFee||0)||0);
+ const totalWithShipping=subtotal()+shippingFee;
  $('#app').innerHTML=`<section class="checkout-page"><div class="container">
-   <div class="page-title"><div><span class="eyebrow">MINHA SELEÇÃO</span><h1>Resumo dos produtos</h1><p>Revise os itens que você salvou no catálogo.</p></div></div>
-   <div class="checkout-notice"><strong>Catálogo informativo.</strong> Este site não coleta dados de pagamento e não conclui compras online.</div>
+   <div class="page-title"><div><span class="eyebrow">MINHA SELEÇÃO</span><h1>Resumo dos produtos</h1><p>Revise os itens antes de continuar.</p></div></div>
+   ${!items.length?'<div class="checkout-notice"><strong>Sua seleção está vazia.</strong> Adicione produtos pelo catálogo.</div>':
+     regulatedItems.length?'<div class="checkout-notice"><strong>Pagamento online indisponível para este carrinho.</strong> Há produto(s) de categoria que não pode ser cobrada online por este site. Use os canais oficiais da loja para esses itens.</div>':
+     !storeConfig.paymentCheckoutEnabled?'<div class="checkout-notice"><strong>Pagamento online ainda não ativado.</strong> O catálogo e o carrinho estão prontos, mas o checkout precisa ser habilitado no painel.</div>':
+     '<div class="checkout-notice"><strong>Pagamento seguro.</strong> Você será redirecionado ao Mercado Pago para concluir o pagamento dos itens elegíveis.</div>'}
    <div class="checkout-grid">
-     <div class="checkout-form"><section><span class="eyebrow">ITENS SALVOS</span><h2>Sua seleção</h2>
+     <div class="checkout-form"><section><span class="eyebrow">ITENS</span><h2>Sua seleção</h2>
        ${items.length?items.map(({item,p})=>`<div class="summary-item" style="grid-template-columns:70px 1fr auto;background:#fff;padding:14px;margin-bottom:8px"><img src="${esc(p.image)}" alt=""><div><strong>${esc(p.name)}</strong><small>${esc(item.variant||p.brand)} · qtd. ${item.qty}</small></div><strong>${money(p.price*item.qty)}</strong></div>`).join(''):'<div class="no-results"><h3>Sua seleção está vazia</h3><p>Adicione produtos pelo catálogo para vê-los aqui.</p></div>'}
-       <div class="builder-actions"><a class="btn btn-gold" href="#/catalogo">Voltar ao catálogo →</a>${items.length?'<button class="btn btn-outline" id="clearSelection" type="button">Limpar seleção</button>':''}</div>
+       ${eligible&&storeConfig.paymentCheckoutEnabled?`<div class="field full" style="margin-top:18px"><label>E-mail para o pagamento</label><input id="paymentEmail" type="email" value="${esc(state.profile?.email||'')}" placeholder="seu@email.com"></div><button class="btn btn-gold btn-full" id="startPayment" style="margin-top:12px">Pagar com Mercado Pago →</button><small id="paymentStatus" style="display:block;margin-top:8px;color:var(--muted)"></small>`:''}
+       <div class="builder-actions"><a class="btn btn-outline" href="#/catalogo">Voltar ao catálogo</a>${items.length?'<button class="btn btn-outline" id="clearSelection" type="button">Limpar seleção</button>':''}</div>
      </section></div>
-     <aside class="summary"><h2>Resumo</h2>${items.length?items.map(({item,p})=>`<div class="summary-item"><img src="${esc(p.image)}" alt=""><div><strong>${esc(p.name)}</strong><small>${esc(item.variant||p.brand)} · qtd. ${item.qty}</small></div><strong>${money(p.price*item.qty)}</strong></div>`).join(''):'<p>Nenhum item selecionado.</p>'}<div class="summary-total"><span>Total de referência</span><strong>${money(subtotal())}</strong></div></aside>
+     <aside class="summary"><h2>Resumo</h2>${items.length?items.map(({item,p})=>`<div class="summary-item"><img src="${esc(p.image)}" alt=""><div><strong>${esc(p.name)}</strong><small>${esc(item.variant||p.brand)} · qtd. ${item.qty}</small></div><strong>${money(p.price*item.qty)}</strong></div>`).join(''):'<p>Nenhum item selecionado.</p>'}${shippingFee>0?'<div class="summary-total"><span>Frete</span><strong>'+money(shippingFee)+'</strong></div>':''}<div class="summary-total"><span>Total${shippingFee>0?' com frete':''}</span><strong>${money(totalWithShipping)}</strong></div></aside>
    </div>
  </div></section>`;
  const clear=$('#clearSelection');if(clear)clear.onclick=()=>{state.cart=[];saveCart();checkout();};
+ const pay=$('#startPayment');if(pay)pay.onclick=async()=>{
+   const status=$('#paymentStatus');const email=$('#paymentEmail')?.value.trim()||'';
+   if(email&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){status.textContent='Digite um e-mail válido.';return;}
+   pay.disabled=true;pay.textContent='Abrindo Mercado Pago…';status.textContent='Criando pagamento seguro…';
+   try{
+     const r=await fetch('/api/create-payment',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({email,items:state.cart.map(i=>({id:i.id,qty:i.qty,variant:i.variant||''}))})});
+     const data=await r.json();if(!r.ok)throw new Error(data.error||'Não foi possível iniciar o pagamento.');
+     location.href=data.checkoutUrl;
+   }catch(err){status.textContent=err.message||'Não foi possível iniciar o pagamento.';pay.disabled=false;pay.textContent='Pagar com Mercado Pago →';}
+ };
 }
 function favoritesPage(){const list=products.filter(p=>state.favorites.includes(p.id));$('#app').innerHTML=`<section class="catalog-page"><div class="container"><div class="page-title"><div><span class="eyebrow">FAVORITOS</span><h1>Minha seleção</h1><p>Produtos salvos neste navegador.</p></div><span>${list.length} itens</span></div><div class="product-grid">${list.length?list.map(productCard).join(''):'<div class="no-results" style="grid-column:1/-1"><h3>Nenhum favorito ainda</h3><p>Use o coração nos produtos para salvar.</p></div>'}</div></div></section>`;bindProducts($('#app'))}
 
@@ -3377,6 +3401,7 @@ function adminPage(){
      bp.innerHTML=`<div class="builder-card"><h3>Formas de pagamento</h3><p>Controle as formas de pagamento que o site informa aos visitantes. Esta área altera somente a apresentação das condições comerciais; não ativa cobrança online.</p>
        <form id="paymentBuilderForm" class="admin-form-grid">
          <label class="toggle-line"><input id="pcPaymentEnabled" type="checkbox" ${storeConfig.paymentDisplayEnabled!==false?'checked':''}> Exibir informações de pagamento</label>
+         <label class="toggle-line"><input id="pcCheckoutEnabled" type="checkbox" ${storeConfig.paymentCheckoutEnabled===true?'checked':''}> Ativar checkout Mercado Pago para produtos elegíveis</label>
          <label class="toggle-line"><input id="pcPixEnabled" type="checkbox" ${storeConfig.paymentPixEnabled!==false?'checked':''}> Exibir PIX</label>
          <label class="toggle-line"><input id="pcCardEnabled" type="checkbox" ${storeConfig.paymentCardEnabled!==false?'checked':''}> Exibir cartão</label>
          <label>Nome do PIX<input id="pcPixText" value="${esc(storeConfig.paymentPixText)}"></label>
@@ -3391,6 +3416,7 @@ function adminPage(){
        <form id="shippingBuilderForm" class="admin-form-grid">
          <label class="toggle-line"><input id="pcShippingEnabled" type="checkbox" ${storeConfig.shippingDisplayEnabled!==false?'checked':''}> Exibir informações de envio</label>
          <label>Área atendida<input id="pcCoverage" value="${esc(storeConfig.shippingCoverage)}" placeholder="Ex.: Todo o Brasil"></label>
+         <label>Frete fixo no checkout (R$)<input id="pcCheckoutShippingFee" inputmode="decimal" value="${Number(storeConfig.checkoutShippingFee||0).toFixed(2)}"><small>Use 0 para não incluir frete no pagamento e combinar separadamente.</small></label>
          <label class="full">Modalidades / descrição do envio<input id="pcMethods" value="${esc(storeConfig.shippingMethods)}"></label>
          <label class="full">Prazo e cálculo<textarea id="pcEstimate">${esc(storeConfig.shippingEstimateText)}</textarea></label>
          <label class="full">Texto complementar<textarea id="pcShippingExtra">${esc(storeConfig.shippingExtraText)}</textarea></label>
@@ -3402,6 +3428,7 @@ function adminPage(){
        e.preventDefault();
        storeConfig={...storeConfig,
          paymentDisplayEnabled:$('#pcPaymentEnabled').checked,
+         paymentCheckoutEnabled:$('#pcCheckoutEnabled').checked,
          paymentPixEnabled:$('#pcPixEnabled').checked,
          paymentCardEnabled:$('#pcCardEnabled').checked,
          paymentPixText:$('#pcPixText').value.trim(),
@@ -3417,6 +3444,7 @@ function adminPage(){
        storeConfig={...storeConfig,
          shippingDisplayEnabled:$('#pcShippingEnabled').checked,
          shippingCoverage:$('#pcCoverage').value.trim(),
+         checkoutShippingFee:Math.max(0,Number($('#pcCheckoutShippingFee').value.replace(',','.'))||0),
          shippingMethods:$('#pcMethods').value.trim(),
          shippingEstimateText:$('#pcEstimate').value.trim(),
          shippingExtraText:$('#pcShippingExtra').value.trim()
@@ -3487,7 +3515,16 @@ function adminPage(){
  activateTab('products');
 }
 function infoPage(title,lead,sections){$('#app').innerHTML=`<section class="info-page"><div class="container info-content"><span class="eyebrow">THS</span><h1>${title}</h1><p class="info-lead">${lead}</p>${sections.map(s=>`<h2>${s[0]}</h2><p>${s[1]}</p>`).join('')}</div></section>`}
-function route(){const path=location.hash.replace('#','').split('?')[0]||'/';window.scrollTo(0,0);if(path==='/catalogo')catalog();else if(path==='/checkout')checkout();else if(path==='/favoritos')favoritesPage();else if(path==='/conta')accountPage();else if(path==='/admin')adminPage();else if(path==='/sobre')infoPage('Sobre a THS','A THS reúne um catálogo organizado de produtos e acessórios para maiores de 18 anos, com navegação pensada para celular e computador.',[['Experiência','Busca, filtros, categorias, favoritos e seleção de produtos facilitam a consulta ao catálogo.'],['Catálogo','Imagens, descrições, disponibilidade e preços podem ser atualizados pelo painel administrativo.']]);else if(path==='/envio')infoPage('Envio',storeConfig.shippingDisplayEnabled!==false?('Área atendida: '+storeConfig.shippingCoverage+'.'):'As informações de envio estão temporariamente indisponíveis.',storeConfig.shippingDisplayEnabled!==false?[['Modalidades',storeConfig.shippingMethods],['Prazo e cálculo',storeConfig.shippingEstimateText],['Informações adicionais',storeConfig.shippingExtraText]]:[['Atendimento','Consulte os canais oficiais da loja.']]);else if(path==='/pagamento')infoPage('Pagamento',storeConfig.paymentDisplayEnabled!==false?'Formas de pagamento informadas pela loja.':'As informações de pagamento estão temporariamente indisponíveis.',storeConfig.paymentDisplayEnabled!==false?[...(storeConfig.paymentPixEnabled!==false?[[storeConfig.paymentPixText||'PIX','Forma de pagamento informada pela loja.']]:[]),...(storeConfig.paymentCardEnabled!==false?[[storeConfig.paymentCardText||'Cartão',(storeConfig.paymentInstallments||'')+(storeConfig.paymentProviderLabel?' · '+storeConfig.paymentProviderLabel:'')]]:[]),['Condições',storeConfig.paymentNotice||'Consulte as condições nos canais oficiais da loja.'],['Segurança','Este catálogo não coleta dados de cartão e não processa cobranças online.']]:[['Segurança','Este catálogo não coleta dados de cartão e não processa cobranças online.']]);else if(path==='/trocas')infoPage('Trocas e devoluções','As condições de troca e devolução seguem a política vigente da loja e a legislação aplicável.',[['Atendimento','Para orientações específicas, consulte os canais oficiais de atendimento.']]);else if(path==='/privacidade')infoPage('Privacidade','O site utiliza armazenamento local do navegador para recursos como favoritos, seleção de produtos e perfil local.',[['Pagamentos','Este site não coleta dados de cartão.'],['Perfil local','Os dados do perfil ficam no próprio navegador e não constituem uma conta online.']]);else if(path==='/contato')infoPage('Atendimento','Fale com a equipe pelos canais cadastrados no painel da THS.',[['Varejo 1',prettyPhone(storeConfig.whatsappRetail1)],['Varejo 2',prettyPhone(storeConfig.whatsappRetail2)],['Atacado',prettyPhone(storeConfig.whatsappWholesale)]]);else home()}
+function paymentResultPage(type){
+ const map={
+  success:['Pagamento aprovado','Seu pagamento foi concluído no Mercado Pago.',['Próximo passo','Guarde o comprovante e acompanhe o atendimento pelos canais oficiais da loja.']],
+  pending:['Pagamento pendente','O Mercado Pago informou que o pagamento ainda está em processamento.',['Aguarde a confirmação','Alguns meios, incluindo PIX em determinadas situações, podem permanecer pendentes por alguns instantes.']],
+  failure:['Pagamento não concluído','O pagamento não foi aprovado ou foi cancelado.',['Tente novamente','Volte ao carrinho para iniciar uma nova tentativa ou fale com a loja.']]
+ };
+ const x=map[type]||map.failure;
+ infoPage(x[0],x[1],[x[2]]);
+}
+function route(){const path=location.hash.replace('#','').split('?')[0]||'/';window.scrollTo(0,0);if(path==='/catalogo')catalog();else if(path==='/checkout')checkout();else if(path==='/pagamento-sucesso')paymentResultPage('success');else if(path==='/pagamento-pendente')paymentResultPage('pending');else if(path==='/pagamento-falhou')paymentResultPage('failure');else if(path==='/favoritos')favoritesPage();else if(path==='/conta')accountPage();else if(path==='/admin')adminPage();else if(path==='/sobre')infoPage('Sobre a THS','A THS reúne um catálogo organizado de produtos e acessórios para maiores de 18 anos, com navegação pensada para celular e computador.',[['Experiência','Busca, filtros, categorias, favoritos e seleção de produtos facilitam a consulta ao catálogo.'],['Catálogo','Imagens, descrições, disponibilidade e preços podem ser atualizados pelo painel administrativo.']]);else if(path==='/envio')infoPage('Envio',storeConfig.shippingDisplayEnabled!==false?('Área atendida: '+storeConfig.shippingCoverage+'.'):'As informações de envio estão temporariamente indisponíveis.',storeConfig.shippingDisplayEnabled!==false?[['Modalidades',storeConfig.shippingMethods],['Prazo e cálculo',storeConfig.shippingEstimateText],['Informações adicionais',storeConfig.shippingExtraText]]:[['Atendimento','Consulte os canais oficiais da loja.']]);else if(path==='/pagamento')infoPage('Pagamento',storeConfig.paymentDisplayEnabled!==false?'Formas de pagamento informadas pela loja.':'As informações de pagamento estão temporariamente indisponíveis.',storeConfig.paymentDisplayEnabled!==false?[...(storeConfig.paymentPixEnabled!==false?[[storeConfig.paymentPixText||'PIX','Forma de pagamento informada pela loja.']]:[]),...(storeConfig.paymentCardEnabled!==false?[[storeConfig.paymentCardText||'Cartão',(storeConfig.paymentInstallments||'')+(storeConfig.paymentProviderLabel?' · '+storeConfig.paymentProviderLabel:'')]]:[]),['Condições',storeConfig.paymentNotice||'Consulte as condições nos canais oficiais da loja.'],['Segurança','Este catálogo não coleta dados de cartão e não processa cobranças online.']]:[['Segurança','Este catálogo não coleta dados de cartão e não processa cobranças online.']]);else if(path==='/trocas')infoPage('Trocas e devoluções','As condições de troca e devolução seguem a política vigente da loja e a legislação aplicável.',[['Atendimento','Para orientações específicas, consulte os canais oficiais de atendimento.']]);else if(path==='/privacidade')infoPage('Privacidade','O site utiliza armazenamento local do navegador para recursos como favoritos, seleção de produtos e perfil local.',[['Pagamentos','Este site não coleta dados de cartão.'],['Perfil local','Os dados do perfil ficam no próprio navegador e não constituem uma conta online.']]);else if(path==='/contato')infoPage('Atendimento','Fale com a equipe pelos canais cadastrados no painel da THS.',[['Varejo 1',prettyPhone(storeConfig.whatsappRetail1)],['Varejo 2',prettyPhone(storeConfig.whatsappRetail2)],['Atacado',prettyPhone(storeConfig.whatsappWholesale)]]);else home()}
 
 function setupNav(){
  const desktop=$('#desktopNav'),mobile=$('#mobileNav');desktop.innerHTML='';mobile.innerHTML='';
