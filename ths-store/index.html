@@ -2871,6 +2871,19 @@ const defaultStoreConfig={
   footerDescription:'Seleção premium, catálogo organizado e atendimento próximo.',
   footerResponsible:'Venda destinada exclusivamente a maiores de 18 anos. Observe a legislação aplicável.',
   footerBottomRight:'Catálogo e painel administrativo sincronizados pela Vercel.',
+  paymentDisplayEnabled:true,
+  paymentPixEnabled:true,
+  paymentCardEnabled:true,
+  paymentProviderLabel:'Mercado Pago',
+  paymentInstallments:'até 12x',
+  paymentPixText:'PIX',
+  paymentCardText:'Cartão de crédito',
+  paymentNotice:'Consulte condições, disponibilidade e regras aplicáveis nos canais oficiais da loja.',
+  shippingDisplayEnabled:true,
+  shippingCoverage:'Todo o Brasil',
+  shippingMethods:'Envio conforme disponibilidade para o CEP informado.',
+  shippingEstimateText:'Prazo e valor de entrega variam conforme destino, modalidade e disponibilidade.',
+  shippingExtraText:'Consulte as condições de envio nos canais oficiais da loja.',
   heroEyebrow:'A MAIOR VARIEDADE DO BRASIL',
   heroTitle:'ESSÊNCIAS',
   heroAccent:'PREMIUM',
@@ -2894,6 +2907,10 @@ function normalizeStoreConfig(raw={}){
     brandRail:cleanBrands,
     categoryCards:cleanCards,
     featuredProductIds:Array.isArray(raw.featuredProductIds)&&raw.featuredProductIds.length?raw.featuredProductIds:defaultStoreConfig.featuredProductIds,
+    paymentDisplayEnabled:raw.paymentDisplayEnabled!==false,
+    paymentPixEnabled:raw.paymentPixEnabled!==false,
+    paymentCardEnabled:raw.paymentCardEnabled!==false,
+    shippingDisplayEnabled:raw.shippingDisplayEnabled!==false,
     carouselSlides:normalizeCarouselSlides(raw.carouselSlides)
   };
 }
@@ -3120,8 +3137,11 @@ function renderCatalogGrid(){let list=[...products];if(state.selectedCategory!==
 
 function openProduct(id){
  const p=productById(id);if(!p)return;const overlay=$('#productOverlay');const variants=p.variants?.length?`<label class="eyebrow">VARIAÇÃO</label><select id="modalVariant" class="variant-select">${p.variants.map(v=>`<option>${v}</option>`).join('')}</select>`:'';
- $('#productModalContent').innerHTML=`<div class="product-detail"><div class="product-detail-media"><img src="${p.image}" alt="${p.name}"></div><div class="product-detail-copy"><div class="detail-top"><span class="eyebrow">${p.brand}</span><button class="detail-fav ${state.favorites.includes(p.id)?'active':''}" id="detailFav">♡ Favoritar</button></div><h2 id="productModalTitle">${p.name}</h2><span class="availability ${p.available?'':'out'}">${p.available?'Disponível':'Indisponível no momento'}</span><div class="price">${money(p.price)}</div><div class="installment">${hasPrice(p.price)?`até 12x de ${installment(p.price)} • referência ao parcelamento atual`:'Preço exato pendente de cadastro no painel'}</div><p>${p.description}</p>${variants}<div class="shipping-demo"><label>Calcular entrega</label><div><input id="modalCep" inputmode="numeric" placeholder="00000-000" maxlength="9"><button id="modalFreight" class="btn btn-dark">Calcular</button></div><small id="freightResult">Consulte a disponibilidade e as condições de entrega nos canais oficiais da loja.</small></div>${p.available&&hasPrice(p.price)?`<button id="modalAdd" class="btn btn-gold btn-full">Adicionar ao carrinho</button>`:p.available?`<a class="btn btn-gold btn-full" href="${p.source}" target="_blank" rel="noreferrer">Consultar valor atual ↗</a>`:`<form id="notifyForm" class="notify-form"><input type="email" required placeholder="Seu e-mail"><button class="btn btn-outline">Avise-me</button><small id="notifyMsg"></small></form>`}<p><strong>Pagamento:</strong> este catálogo não processa cobranças online.</p><a class="source-link" href="${p.source}" target="_blank" rel="noreferrer">Ver referência no site atual ↗</a></div></div>`;
- overlay.classList.remove('hidden');overlay.setAttribute('aria-hidden','false');$('#detailFav').onclick=()=>{toggleFav(p.id);$('#detailFav').classList.toggle('active',state.favorites.includes(p.id))};$('#modalFreight').onclick=()=>{const c=$('#modalCep').value.replace(/\D/g,'');$('#freightResult').textContent=c.length===8?'CEP preenchido. Este catálogo não calcula frete automaticamente.':'Digite um CEP com 8 números.'};const add=$('#modalAdd');if(add)add.onclick=()=>{addToCart(p.id,$('#modalVariant')?.value||'');closeProduct()};const nf=$('#notifyForm');if(nf)nf.onsubmit=e=>{e.preventDefault();$('#notifyMsg').textContent='Recurso de aviso por e-mail não está disponível neste catálogo.'};
+ $('#productModalContent').innerHTML=`<div class="product-detail"><div class="product-detail-media"><img src="${p.image}" alt="${p.name}"></div><div class="product-detail-copy"><div class="detail-top"><span class="eyebrow">${p.brand}</span><button class="detail-fav ${state.favorites.includes(p.id)?'active':''}" id="detailFav">♡ Favoritar</button></div><h2 id="productModalTitle">${p.name}</h2><span class="availability ${p.available?'':'out'}">${p.available?'Disponível':'Indisponível no momento'}</span><div class="price">${money(p.price)}</div><div class="installment">${hasPrice(p.price)?`até 12x de ${installment(p.price)} • referência ao parcelamento atual`:'Preço exato pendente de cadastro no painel'}</div><p>${p.description}</p>${variants}<div class="shipping-demo"><label>Calcular entrega</label><div><input id="modalCep" inputmode="numeric" placeholder="00000-000" maxlength="9"><button id="modalFreight" class="btn btn-dark">Calcular</button></div><small id="freightResult">${storeConfig.shippingDisplayEnabled!==false?esc(storeConfig.shippingMethods)+' '+esc(storeConfig.shippingEstimateText):'Informações de envio indisponíveis.'}</small></div>${p.available&&hasPrice(p.price)?`<button id="modalAdd" class="btn btn-gold btn-full">Adicionar ao carrinho</button>`:p.available?`<a class="btn btn-gold btn-full" href="${p.source}" target="_blank" rel="noreferrer">Consultar valor atual ↗</a>`:`<form id="notifyForm" class="notify-form"><input type="email" required placeholder="Seu e-mail"><button class="btn btn-outline">Avise-me</button><small id="notifyMsg"></small></form>`}${storeConfig.paymentDisplayEnabled!==false?`<p><strong>Pagamento:</strong> ${[
+  storeConfig.paymentPixEnabled!==false?storeConfig.paymentPixText:'',
+  storeConfig.paymentCardEnabled!==false?(storeConfig.paymentCardText+(storeConfig.paymentInstallments?' · '+storeConfig.paymentInstallments:'')):''
+].filter(Boolean).join(' • ') || 'Consulte as condições disponíveis'}. ${storeConfig.paymentProviderLabel?esc(storeConfig.paymentProviderLabel)+'. ':''}${esc(storeConfig.paymentNotice||'')}</p>`:''}<a class="source-link" href="${p.source}" target="_blank" rel="noreferrer">Ver referência no site atual ↗</a></div></div>`;
+ overlay.classList.remove('hidden');overlay.setAttribute('aria-hidden','false');$('#detailFav').onclick=()=>{toggleFav(p.id);$('#detailFav').classList.toggle('active',state.favorites.includes(p.id))};$('#modalFreight').onclick=()=>{const c=$('#modalCep').value.replace(/\D/g,'');$('#freightResult').textContent=c.length===8?(storeConfig.shippingDisplayEnabled!==false?(storeConfig.shippingCoverage+' · '+storeConfig.shippingEstimateText):'Informações de envio indisponíveis.'):'Digite um CEP com 8 números.'};const add=$('#modalAdd');if(add)add.onclick=()=>{addToCart(p.id,$('#modalVariant')?.value||'');closeProduct()};const nf=$('#notifyForm');if(nf)nf.onsubmit=e=>{e.preventDefault();$('#notifyMsg').textContent='Recurso de aviso por e-mail não está disponível neste catálogo.'};
 }
 function closeProduct(){$('#productOverlay').classList.add('hidden');$('#productOverlay').setAttribute('aria-hidden','true')}
 
@@ -3275,6 +3295,7 @@ function adminPage(){
      <button class="active" data-builder-tab="brand">Marca & tema</button>
      <button data-builder-tab="header">Cabeçalho</button>
      <button data-builder-tab="benefits">PIX & benefícios</button>
+     <button data-builder-tab="commerce">Pagamentos & envio</button>
      <button data-builder-tab="carousel">Carrossel</button>
      <button data-builder-tab="cards">Cards da home</button>
      <button data-builder-tab="brands">Marcas</button>
@@ -3298,6 +3319,7 @@ function adminPage(){
      if(name==='brand')renderBrand();
      if(name==='header')renderHeaderEditor();
      if(name==='benefits')renderBenefits();
+     if(name==='commerce')renderCommerce();
      if(name==='carousel')renderCarousel();
      if(name==='cards')renderCards();
      if(name==='brands')renderBrands();
@@ -3345,6 +3367,58 @@ function adminPage(){
      const items=storeConfig.benefits||defaultBenefits;
      bp.innerHTML=`<div class="builder-card"><h3>PIX, envio, cartão e segurança</h3><p>Esses são os quatro benefícios que aparecem embaixo do carrossel.</p><div class="builder-four">${items.map((b,i)=>`<div class="builder-item"><h4>Benefício ${i+1}</h4><div class="builder-fields"><label>Ícone<input data-benefit-icon="${i}" value="${esc(b.icon)}"></label><label>Texto<textarea data-benefit-text="${i}">${esc(b.text)}</textarea></label></div></div>`).join('')}</div><div class="builder-actions"><button class="btn btn-gold" id="saveBenefits">Salvar benefícios</button></div></div>`;
      $('#saveBenefits').onclick=()=>{storeConfig={...storeConfig,benefits:items.map((_,i)=>({icon:$('[data-benefit-icon="'+i+'"]').value,text:$('[data-benefit-text="'+i+'"]').value}))};saveAndRefresh();};
+   }
+
+   function renderCommerce(){
+     bp.innerHTML=`<div class="builder-card"><h3>Formas de pagamento</h3><p>Controle as formas de pagamento que o site informa aos visitantes. Esta área altera somente a apresentação das condições comerciais; não ativa cobrança online.</p>
+       <form id="paymentBuilderForm" class="admin-form-grid">
+         <label class="toggle-line"><input id="pcPaymentEnabled" type="checkbox" ${storeConfig.paymentDisplayEnabled!==false?'checked':''}> Exibir informações de pagamento</label>
+         <label class="toggle-line"><input id="pcPixEnabled" type="checkbox" ${storeConfig.paymentPixEnabled!==false?'checked':''}> Exibir PIX</label>
+         <label class="toggle-line"><input id="pcCardEnabled" type="checkbox" ${storeConfig.paymentCardEnabled!==false?'checked':''}> Exibir cartão</label>
+         <label>Nome do PIX<input id="pcPixText" value="${esc(storeConfig.paymentPixText)}"></label>
+         <label>Nome do cartão<input id="pcCardText" value="${esc(storeConfig.paymentCardText)}"></label>
+         <label>Parcelamento<input id="pcInstallments" value="${esc(storeConfig.paymentInstallments)}" placeholder="Ex.: até 12x"></label>
+         <label>Provedor / operadora<input id="pcProvider" value="${esc(storeConfig.paymentProviderLabel)}" placeholder="Ex.: Mercado Pago"></label>
+         <label class="full">Texto complementar<textarea id="pcPaymentNotice">${esc(storeConfig.paymentNotice)}</textarea></label>
+         <div class="full admin-form-actions"><button class="btn btn-gold">Salvar pagamentos</button></div>
+       </form>
+     </div>
+     <div class="builder-card"><h3>Envio e entrega</h3><p>Edite a área de envio que aparece nas páginas informativas e nos produtos.</p>
+       <form id="shippingBuilderForm" class="admin-form-grid">
+         <label class="toggle-line"><input id="pcShippingEnabled" type="checkbox" ${storeConfig.shippingDisplayEnabled!==false?'checked':''}> Exibir informações de envio</label>
+         <label>Área atendida<input id="pcCoverage" value="${esc(storeConfig.shippingCoverage)}" placeholder="Ex.: Todo o Brasil"></label>
+         <label class="full">Modalidades / descrição do envio<input id="pcMethods" value="${esc(storeConfig.shippingMethods)}"></label>
+         <label class="full">Prazo e cálculo<textarea id="pcEstimate">${esc(storeConfig.shippingEstimateText)}</textarea></label>
+         <label class="full">Texto complementar<textarea id="pcShippingExtra">${esc(storeConfig.shippingExtraText)}</textarea></label>
+         <div class="full admin-form-actions"><button class="btn btn-gold">Salvar envio</button></div>
+       </form>
+     </div>`;
+
+     $('#paymentBuilderForm').onsubmit=e=>{
+       e.preventDefault();
+       storeConfig={...storeConfig,
+         paymentDisplayEnabled:$('#pcPaymentEnabled').checked,
+         paymentPixEnabled:$('#pcPixEnabled').checked,
+         paymentCardEnabled:$('#pcCardEnabled').checked,
+         paymentPixText:$('#pcPixText').value.trim(),
+         paymentCardText:$('#pcCardText').value.trim(),
+         paymentInstallments:$('#pcInstallments').value.trim(),
+         paymentProviderLabel:$('#pcProvider').value.trim(),
+         paymentNotice:$('#pcPaymentNotice').value.trim()
+       };
+       saveAndRefresh('Informações de pagamento salvas.');
+     };
+     $('#shippingBuilderForm').onsubmit=e=>{
+       e.preventDefault();
+       storeConfig={...storeConfig,
+         shippingDisplayEnabled:$('#pcShippingEnabled').checked,
+         shippingCoverage:$('#pcCoverage').value.trim(),
+         shippingMethods:$('#pcMethods').value.trim(),
+         shippingEstimateText:$('#pcEstimate').value.trim(),
+         shippingExtraText:$('#pcShippingExtra').value.trim()
+       };
+       saveAndRefresh('Informações de envio salvas.');
+     };
    }
 
    function renderCarousel(){
@@ -3409,7 +3483,7 @@ function adminPage(){
  activateTab('products');
 }
 function infoPage(title,lead,sections){$('#app').innerHTML=`<section class="info-page"><div class="container info-content"><span class="eyebrow">THS</span><h1>${title}</h1><p class="info-lead">${lead}</p>${sections.map(s=>`<h2>${s[0]}</h2><p>${s[1]}</p>`).join('')}</div></section>`}
-function route(){const path=location.hash.replace('#','').split('?')[0]||'/';window.scrollTo(0,0);if(path==='/catalogo')catalog();else if(path==='/checkout')checkout();else if(path==='/favoritos')favoritesPage();else if(path==='/conta')accountPage();else if(path==='/admin')adminPage();else if(path==='/sobre')infoPage('Sobre a THS','A THS reúne um catálogo organizado de produtos e acessórios para maiores de 18 anos, com navegação pensada para celular e computador.',[['Experiência','Busca, filtros, categorias, favoritos e seleção de produtos facilitam a consulta ao catálogo.'],['Catálogo','Imagens, descrições, disponibilidade e preços podem ser atualizados pelo painel administrativo.']]);else if(path==='/envio')infoPage('Envio','A loja informa atendimento para todo o Brasil.',[['Condições','Disponibilidade, prazo e valores de entrega devem ser confirmados pelos canais oficiais da loja.'],['Endereço','As condições podem variar conforme destino e disponibilidade dos produtos.']]);else if(path==='/pagamento')infoPage('Pagamento','Este catálogo exibe informações comerciais, mas não processa cobranças online.',[['Segurança','Nenhum dado de cartão é solicitado ou armazenado neste site.'],['Condições','Formas e condições de pagamento devem ser confirmadas pelos canais oficiais da loja.']]);else if(path==='/trocas')infoPage('Trocas e devoluções','As condições de troca e devolução seguem a política vigente da loja e a legislação aplicável.',[['Atendimento','Para orientações específicas, consulte os canais oficiais de atendimento.']]);else if(path==='/privacidade')infoPage('Privacidade','O site utiliza armazenamento local do navegador para recursos como favoritos, seleção de produtos e perfil local.',[['Pagamentos','Este site não coleta dados de cartão.'],['Perfil local','Os dados do perfil ficam no próprio navegador e não constituem uma conta online.']]);else if(path==='/contato')infoPage('Atendimento','Fale com a equipe pelos canais cadastrados no painel da THS.',[['Varejo 1',prettyPhone(storeConfig.whatsappRetail1)],['Varejo 2',prettyPhone(storeConfig.whatsappRetail2)],['Atacado',prettyPhone(storeConfig.whatsappWholesale)]]);else home()}
+function route(){const path=location.hash.replace('#','').split('?')[0]||'/';window.scrollTo(0,0);if(path==='/catalogo')catalog();else if(path==='/checkout')checkout();else if(path==='/favoritos')favoritesPage();else if(path==='/conta')accountPage();else if(path==='/admin')adminPage();else if(path==='/sobre')infoPage('Sobre a THS','A THS reúne um catálogo organizado de produtos e acessórios para maiores de 18 anos, com navegação pensada para celular e computador.',[['Experiência','Busca, filtros, categorias, favoritos e seleção de produtos facilitam a consulta ao catálogo.'],['Catálogo','Imagens, descrições, disponibilidade e preços podem ser atualizados pelo painel administrativo.']]);else if(path==='/envio')infoPage('Envio',storeConfig.shippingDisplayEnabled!==false?('Área atendida: '+storeConfig.shippingCoverage+'.'):'As informações de envio estão temporariamente indisponíveis.',storeConfig.shippingDisplayEnabled!==false?[['Modalidades',storeConfig.shippingMethods],['Prazo e cálculo',storeConfig.shippingEstimateText],['Informações adicionais',storeConfig.shippingExtraText]]:[['Atendimento','Consulte os canais oficiais da loja.']]);else if(path==='/pagamento')infoPage('Pagamento',storeConfig.paymentDisplayEnabled!==false?'Formas de pagamento informadas pela loja.':'As informações de pagamento estão temporariamente indisponíveis.',storeConfig.paymentDisplayEnabled!==false?[...(storeConfig.paymentPixEnabled!==false?[[storeConfig.paymentPixText||'PIX','Forma de pagamento informada pela loja.']]:[]),...(storeConfig.paymentCardEnabled!==false?[[storeConfig.paymentCardText||'Cartão',(storeConfig.paymentInstallments||'')+(storeConfig.paymentProviderLabel?' · '+storeConfig.paymentProviderLabel:'')]]:[]),['Condições',storeConfig.paymentNotice||'Consulte as condições nos canais oficiais da loja.'],['Segurança','Este catálogo não coleta dados de cartão e não processa cobranças online.']]:[['Segurança','Este catálogo não coleta dados de cartão e não processa cobranças online.']]);else if(path==='/trocas')infoPage('Trocas e devoluções','As condições de troca e devolução seguem a política vigente da loja e a legislação aplicável.',[['Atendimento','Para orientações específicas, consulte os canais oficiais de atendimento.']]);else if(path==='/privacidade')infoPage('Privacidade','O site utiliza armazenamento local do navegador para recursos como favoritos, seleção de produtos e perfil local.',[['Pagamentos','Este site não coleta dados de cartão.'],['Perfil local','Os dados do perfil ficam no próprio navegador e não constituem uma conta online.']]);else if(path==='/contato')infoPage('Atendimento','Fale com a equipe pelos canais cadastrados no painel da THS.',[['Varejo 1',prettyPhone(storeConfig.whatsappRetail1)],['Varejo 2',prettyPhone(storeConfig.whatsappRetail2)],['Atacado',prettyPhone(storeConfig.whatsappWholesale)]]);else home()}
 
 function setupNav(){
  const desktop=$('#desktopNav'),mobile=$('#mobileNav');desktop.innerHTML='';mobile.innerHTML='';
