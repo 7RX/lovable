@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://images.tcdn.com.br" crossorigin>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&family=Montserrat:wght@400;500;600;700;800&family=Oswald:wght@400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
 :root{
   --ink:#0b0b0c;--ink2:#141416;--paper:#f5f2ea;--white:#fff;--gold:#c9a45f;--gold2:#e0c17d;--text:#161618;--muted:#77736d;--line:#d9d4ca;--soft:#ece7dd;--danger:#8f3030;
@@ -88,6 +88,11 @@ body{background:#fff}.container{width:min(calc(100% - 64px),1460px)}
 
 
 .admin-carousel-list{display:grid;gap:12px}.admin-carousel-card{display:grid;grid-template-columns:190px minmax(0,1fr);gap:18px;padding:16px;border:1px solid var(--line);background:#fbfaf7}.admin-carousel-preview{height:120px;background:#090909;border:1px solid #292722;overflow:hidden;position:relative}.admin-carousel-preview img{width:100%;height:100%;object-fit:cover;display:block}.admin-carousel-preview .empty{height:100%;display:grid;place-items:center;color:#958d81;font-size:.62rem;text-align:center;padding:10px}.admin-carousel-card h3{margin:0 0 10px;font:800 1rem var(--display)}.admin-carousel-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:11px}.admin-carousel-actions button{height:34px}.admin-carousel-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.admin-carousel-grid label{display:grid;gap:5px;font-size:.6rem;font-weight:800}.admin-carousel-grid label.full{grid-column:1/-1}.admin-carousel-grid input,.admin-carousel-grid textarea{width:100%;border:1px solid var(--line);background:#fff;padding:0 9px;font-size:.7rem}.admin-carousel-grid input{height:38px}.admin-carousel-grid textarea{padding-top:9px;min-height:74px;resize:vertical}.admin-carousel-toggle{display:flex!important;grid-auto-flow:column;justify-content:start;align-items:center;gap:8px}.admin-carousel-toggle input{width:17px!important;height:17px!important}.admin-upload-line{display:flex;gap:8px;align-items:center}.admin-upload-line input[type=file]{height:auto;padding:8px}.admin-upload-status{font-size:.6rem;color:var(--muted)}@media(max-width:760px){.admin-carousel-card{grid-template-columns:1fr}.admin-carousel-preview{height:170px}.admin-carousel-grid{grid-template-columns:1fr}.admin-carousel-grid label.full{grid-column:auto}}
+
+.brand-logo-img{display:block;max-width:180px;max-height:58px;width:auto;height:auto;object-fit:contain}.footer-brand .brand-logo-img{max-width:170px;max-height:62px}.age-brand-logo{display:block;max-width:190px;max-height:80px;margin:0 auto 12px;object-fit:contain}
+.site-builder-nav{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}.site-builder-nav button{height:36px;border:1px solid var(--line);background:#fff;padding:0 11px;font-size:.62rem;font-weight:800;cursor:pointer}.site-builder-nav button.active{background:#111;color:#fff;border-color:#111}
+.builder-card{background:#fff;border:1px solid var(--line);padding:22px;margin-bottom:14px}.builder-card h3{font:800 1.2rem var(--display);margin:0 0 5px}.builder-card>p{font-size:.7rem;color:var(--muted);margin:0 0 18px}.builder-two{display:grid;grid-template-columns:1fr 1fr;gap:12px}.builder-four{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.builder-item{border:1px solid var(--line);background:#fbfaf7;padding:14px}.builder-item h4{margin:0 0 10px;font-size:.76rem}.builder-fields{display:grid;gap:8px}.builder-fields label{display:grid;gap:5px;font-size:.6rem;font-weight:800}.builder-fields input,.builder-fields textarea,.builder-fields select{width:100%;border:1px solid var(--line);background:#fff;padding:0 9px;font-size:.69rem}.builder-fields input,.builder-fields select{height:38px}.builder-fields textarea{min-height:72px;padding-top:8px;resize:vertical}.builder-preview{height:110px;background:#0b0b0b;border:1px solid #2e2b27;margin-bottom:10px;overflow:hidden;display:grid;place-items:center;color:#948b7d;font-size:.6rem;text-align:center}.builder-preview img{width:100%;height:100%;object-fit:cover}.builder-upload{display:flex;gap:7px;align-items:center}.builder-upload input[type=file]{height:auto;padding:7px}.builder-upload small{font-size:.58rem;color:var(--muted)}.color-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.color-row input[type=color]{height:44px;padding:4px}.builder-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+@media(max-width:900px){.builder-four,.color-row{grid-template-columns:repeat(2,1fr)}}@media(max-width:760px){.builder-two,.builder-four,.color-row{grid-template-columns:1fr}}
 </style>
 
 <style id="ths-reference-assets">
@@ -173,7 +178,8 @@ body{background:#fff}.container{width:min(calc(100% - 64px),1460px)}
 <body>
   <div id="ageGate" class="age-gate" aria-hidden="true">
     <div class="age-card" role="dialog" aria-modal="true" aria-labelledby="ageTitle">
-      <div class="logo-mark">THS<span>.</span></div>
+      <img id="ageBrandLogo" class="age-brand-logo hidden" alt="Logo da loja">
+      <div class="logo-mark" id="ageBrandText">THS<span>.</span></div>
       <div class="gold-line"></div>
       <span class="eyebrow">ACESSO RESTRITO</span>
       <h1 id="ageTitle">Você tem 18 anos ou mais?</h1>
@@ -215,12 +221,13 @@ body{background:#fff}.container{width:min(calc(100% - 64px),1460px)}
   </div>
 
   <header class="site-header">
-    <div class="announcement" id="storeAnnouncement"><div class="promo-inner container"><span class="promo-message announcement-message">FRETE PARA TODO O BRASIL | PARCELE EM ATÉ 12X | PAGUE COM PIX, CARTÃO OU MERCADO PAGO</span><div class="promo-links"><a href="#/contato">◔&nbsp; ATENDIMENTO</a><a href="#/conta">♟&nbsp; ENTRE OU CADASTRE-SE</a></div></div></div>
+    <div class="announcement" id="storeAnnouncement"><div class="promo-inner container"><span class="promo-message announcement-message">FRETE PARA TODO O BRASIL | PARCELE EM ATÉ 12X | PAGUE COM PIX, CARTÃO OU MERCADO PAGO</span><div class="promo-links"><a href="#/contato" id="promoSupport">◔&nbsp; ATENDIMENTO</a><a href="#/conta" id="promoAccount">♟&nbsp; ENTRE OU CADASTRE-SE</a></div></div></div>
     <div class="header-main container">
       <button id="menuButton" class="icon-btn mobile-only" aria-label="Abrir menu">☰</button>
-      <a class="brand" href="#/">
-        <strong>THS<span>.</span></strong>
-        <small>TANGIERS HOOKAH STORE</small>
+      <a class="brand" href="#/" data-brand>
+        <img class="brand-logo-img hidden" data-brand-logo alt="Logo da loja">
+        <strong class="brand-text-strong" data-brand-name>THS<span>.</span></strong>
+        <small class="brand-text-small" data-brand-tagline>TANGIERS HOOKAH STORE</small>
       </a>
       <form id="headerSearch" class="search-box" role="search">
         <span>⌕</span><input id="searchInput" type="search" placeholder="O que você está procurando?" aria-label="Buscar produtos" /><button aria-label="Buscar">→</button>
@@ -238,23 +245,23 @@ body{background:#fff}.container{width:min(calc(100% - 64px),1460px)}
 
   <section class="newsletter">
     <div class="container newsletter-grid">
-      <div><span class="eyebrow">FIQUE POR DENTRO</span><h2>Novidades selecionadas para você.</h2><p>Receba lançamentos e novidades da THS.</p></div>
-      <form id="newsletterForm"><div class="newsletter-form"><input type="email" required placeholder="Seu melhor e-mail" aria-label="Seu e-mail"><button class="btn btn-gold">Inscrever-se →</button></div><small id="newsletterMessage"></small></form>
+      <div><span class="eyebrow" id="newsletterEyebrow">FIQUE POR DENTRO</span><h2 id="newsletterTitle">Novidades selecionadas para você.</h2><p id="newsletterText">Receba lançamentos e novidades da THS.</p></div>
+      <form id="newsletterForm"><div class="newsletter-form"><input id="newsletterInput" type="email" required placeholder="Seu melhor e-mail" aria-label="Seu e-mail"><button class="btn btn-gold" id="newsletterButton">Inscrever-se →</button></div><small id="newsletterMessage"></small></form>
     </div>
   </section>
 
   <footer class="site-footer">
     <div class="container footer-grid">
       <div>
-        <a class="brand footer-brand" href="#/"><strong>THS<span>.</span></strong><small>TANGIERS HOOKAH STORE</small></a>
-        <p>Seleção premium, catálogo organizado e atendimento próximo.</p>
-        <p class="responsible">Venda destinada exclusivamente a maiores de 18 anos. Observe a legislação aplicável.</p>
+        <a class="brand footer-brand" href="#/" data-brand><img class="brand-logo-img hidden" data-brand-logo alt="Logo da loja"><strong class="brand-text-strong" data-brand-name>THS<span>.</span></strong><small class="brand-text-small" data-brand-tagline>TANGIERS HOOKAH STORE</small></a>
+        <p id="footerDescription">Seleção premium, catálogo organizado e atendimento próximo.</p>
+        <p class="responsible" id="footerResponsible">Venda destinada exclusivamente a maiores de 18 anos. Observe a legislação aplicável.</p>
       </div>
       <div><h3>Explore</h3><a href="#/catalogo">Todos os produtos</a><a href="#/catalogo?categoria=Essências%20Premium">Essências Premium</a><a href="#/catalogo?categoria=Arguiles">Arguiles</a><a href="#/catalogo?categoria=Rosh">Rosh</a><a href="#/catalogo?categoria=Acessórios">Acessórios</a></div>
       <div><h3>Atendimento</h3><a id="footerW1" href="https://wa.me/5511978219183" target="_blank" rel="noreferrer">Varejo 1 · (11) 97821-9183</a><a id="footerW2" href="https://wa.me/5511940144162" target="_blank" rel="noreferrer">Varejo 2 · (11) 94014-4162</a><a id="footerW3" href="https://wa.me/5511947988458" target="_blank" rel="noreferrer">Atacado · (11) 94798-8458</a></div>
       <div><h3>Informações</h3><a href="#/sobre">Sobre a THS</a><a href="#/envio">Envio</a><a href="#/pagamento">Pagamento</a><a href="#/trocas">Trocas e devoluções</a><a href="#/privacidade">Privacidade</a><a href="#/admin">Painel administrativo</a></div>
     </div>
-    <div class="container footer-bottom"><span>© <span id="year"></span> THS — Tangiers Hookah Store.</span><span>Catálogo e painel administrativo sincronizados pela Vercel.</span></div>
+    <div class="container footer-bottom"><span id="footerCopyright">© <span id="year"></span> THS — Tangiers Hookah Store.</span><span id="footerBottomRight">Catálogo e painel administrativo sincronizados pela Vercel.</span></div>
   </footer>
 
   <a id="whatsappFloat" class="whatsapp-float" href="https://wa.me/5511978219183" target="_blank" rel="noreferrer" aria-label="WhatsApp">◔</a>
@@ -2795,8 +2802,63 @@ function normalizeCarouselSlides(slides){
     };
   });
 }
+const defaultBenefits=[
+  {icon:'▱',text:'ENVIO PARA\nTODO BRASIL'},
+  {icon:'▣',text:'ATÉ 12X\nNO CARTÃO'},
+  {icon:'◆',text:'PIX'},
+  {icon:'♙',text:'PAGAMENTO RÁPIDO\nE SEGURO'}
+];
+const defaultBrandRail=[
+  {symbol:'96',name:'TANGIERS',href:'#/catalogo?q=TANGIERS'},
+  {symbol:'M',name:'MUSTHAVE',href:'#/catalogo?q=MUSTHAVE'},
+  {symbol:'♧',name:'BLACKBURN',href:'#/catalogo?q=BLACKBURN'},
+  {symbol:'♛',name:'PURE',href:'#/catalogo?q=PURE'},
+  {symbol:'A',name:'AMOTION',href:'#/catalogo?q=AMOTION'},
+  {symbol:'X',name:'XKAH',href:'#/catalogo?q=XKAH'},
+  {symbol:'C',name:'CORE',href:'#/catalogo?q=CORE'},
+  {symbol:'B',name:'BLADE',href:'#/catalogo?q=BLADE'},
+  {symbol:'◯',name:'WOOKAH',href:'#/catalogo?q=WOOKAH'},
+  {symbol:'✤',name:'KALOUD',href:'#/catalogo?q=KALOUD'}
+];
+const defaultCategoryCards=[
+  {id:'hookahs',title:'HOOKAHS\nPREMIUM',text:'CORE, AMOTION, BLADE,\nWOOKAH E MAIS.',button:'VER HOOKAHS',href:'#/catalogo?categoria=Arguiles',image:''},
+  {id:'acessorios',title:'ACESSÓRIOS',text:'ROSHS, KALOUD, MANGUEIRAS,\nE MUITO MAIS.',button:'VER ACESSÓRIOS',href:'#/catalogo?categoria=Acessórios',image:''},
+  {id:'carvoes',title:'CARVÕES',text:'ALTA PERFORMANCE PARA\nA MELHOR SESSÃO.',button:'VER CARVÕES',href:'#/catalogo?categoria=Carvões%20e%20Alumínios',image:''},
+  {id:'lancamentos',title:'LANÇAMENTOS',text:'CONFIRA AS NOVIDADES\nDA THS.',button:'VER LANÇAMENTOS',href:'#/catalogo',image:''}
+];
 const defaultStoreConfig={
   announcement:'FRETE PARA TODO O BRASIL • PARCELE EM ATÉ 12X • PAGUE COM PIX, CARTÃO OU MERCADO PAGO',
+  brandName:'THS',
+  brandTagline:'TANGIERS HOOKAH STORE',
+  logoImage:'',
+  useLogoImage:false,
+  searchPlaceholder:'O que você está procurando?',
+  promoSupportText:'ATENDIMENTO',
+  promoAccountText:'ENTRE OU CADASTRE-SE',
+  bodyFont:'DM Sans',
+  displayFont:'Manrope',
+  themeInk:'#0b0b0c',
+  themePaper:'#f5f2ea',
+  themeGold:'#c9a45f',
+  themeGold2:'#e0c17d',
+  benefits:defaultBenefits,
+  brandRail:defaultBrandRail,
+  categoryCards:defaultCategoryCards,
+  featuredTitle:'PRODUTOS EM DESTAQUE',
+  featuredSubtitle:'OS MAIS VENDIDOS E MAIS PROCURADOS DA THS',
+  featuredLinkText:'VER TODOS',
+  featuredProductIds:['tangiers-250g','tangiers-100g','musthave-125g','blackburn-100g','core-mad-black-gold','amotion-pedal-frx-grape'],
+  launchEyebrow:'RECÉM-CHEGADOS',
+  launchTitle:'Lançamentos',
+  launchLinkText:'Explorar catálogo →',
+  newsletterEyebrow:'FIQUE POR DENTRO',
+  newsletterTitle:'Novidades selecionadas para você.',
+  newsletterText:'Receba lançamentos e novidades da THS.',
+  newsletterButton:'Inscrever-se →',
+  newsletterPlaceholder:'Seu melhor e-mail',
+  footerDescription:'Seleção premium, catálogo organizado e atendimento próximo.',
+  footerResponsible:'Venda destinada exclusivamente a maiores de 18 anos. Observe a legislação aplicável.',
+  footerBottomRight:'Catálogo e painel administrativo sincronizados pela Vercel.',
   heroEyebrow:'A MAIOR VARIEDADE DO BRASIL',
   heroTitle:'ESSÊNCIAS',
   heroAccent:'PREMIUM',
@@ -2808,9 +2870,18 @@ const defaultStoreConfig={
   whatsappWholesale:'5511947988458'
 };
 function normalizeStoreConfig(raw={}){
+  const cleanBenefits=(Array.isArray(raw.benefits)&&raw.benefits.length?raw.benefits:defaultBenefits).slice(0,4).map((x,i)=>({icon:String(x.icon||defaultBenefits[i]?.icon||'◆'),text:String(x.text||defaultBenefits[i]?.text||'BENEFÍCIO')}));
+  while(cleanBenefits.length<4)cleanBenefits.push({...defaultBenefits[cleanBenefits.length]});
+  const cleanBrands=(Array.isArray(raw.brandRail)&&raw.brandRail.length?raw.brandRail:defaultBrandRail).map((x,i)=>({symbol:String(x.symbol||x.name?.[0]||'•'),name:String(x.name||'MARCA '+(i+1)),href:String(x.href||'#/catalogo')}));
+  const cleanCards=(Array.isArray(raw.categoryCards)&&raw.categoryCards.length?raw.categoryCards:defaultCategoryCards).slice(0,4).map((x,i)=>({...defaultCategoryCards[i],...x,id:x.id||defaultCategoryCards[i].id}));
+  while(cleanCards.length<4)cleanCards.push({...defaultCategoryCards[cleanCards.length]});
   return {
     ...defaultStoreConfig,
     ...raw,
+    benefits:cleanBenefits,
+    brandRail:cleanBrands,
+    categoryCards:cleanCards,
+    featuredProductIds:Array.isArray(raw.featuredProductIds)&&raw.featuredProductIds.length?raw.featuredProductIds:defaultStoreConfig.featuredProductIds,
     carouselSlides:normalizeCarouselSlides(raw.carouselSlides)
   };
 }
@@ -2942,21 +3013,21 @@ function bindProducts(scope=document){$$('[data-open-product]',scope).forEach(el
 function brandRail(){return ['TANGIERS','MUSTHAVE','BLACKBURN','STARBUZZ','UNCUT','XKAH','CORE','AMOTION','BLADE','KALOUD'].map(b=>`<span>${b}</span>`).join('')}
 
 function home(){
- const featured=products.filter(p=>['tangiers-250g','tangiers-100g','musthave-125g','blackburn-100g','core-mad-black-gold','amotion-pedal-frx-grape'].includes(p.id)).slice(0,6);
+ const featured=(storeConfig.featuredProductIds||[]).map(productById).filter(Boolean).slice(0,6);
+ if(!featured.length)featured.push(...products.slice(0,6));
  const heroTangiers=productById('tangiers-250g')||products[0];
- const heroMust=productById('musthave-125g')||products[1]||heroTangiers;
  const heroBlack=productById('blackburn-100g')||products[2]||heroTangiers;
- const heroStar=productById('starbuzz-250g')||products[3]||heroTangiers;
  const catHookah=productById('core-mad-black-gold')||productById('amotion-pedal-frx-grape')||products.find(p=>p.category==='Arguiles')||heroTangiers;
- const conventional=products.find(p=>p.category==='Essências Convencionais'&&p.available)||products.find(p=>p.category==='Essências Convencionais')||heroTangiers;
  const catRosh=productById('kaloud-vitria-ii')||productById('xkah-graphite')||products.find(p=>p.category==='Rosh')||heroTangiers;
- const catAccess=products.find(p=>p.category==='Acessórios'&&p.available)||products.find(p=>p.category==='Acessórios')||catRosh;
  const catCoal=products.find(p=>p.category==='Carvões e Alumínios'&&p.available)||products.find(p=>p.category==='Carvões e Alumínios')||heroBlack;
  const catLaunch=productById('amotion-pedal-frx-grape')||catHookah;
  const launches=products.filter(p=>p.badge==='Novo').slice(0,6);
-
  const heroSlides=normalizeCarouselSlides(storeConfig.carouselSlides).filter(s=>s.enabled!==false);
  if(!heroSlides.length)heroSlides.push({...defaultCarouselSlides[0]});
+ const benefitItems=storeConfig.benefits||defaultBenefits;
+ const rail=storeConfig.brandRail||defaultBrandRail;
+ const fallbackCardImages=[catHookah?.image||'',catRosh?.image||'',catCoal?.image||'',catLaunch?.image||''];
+ const cards=(storeConfig.categoryCards||defaultCategoryCards).map((x,i)=>({...x,image:x.image||fallbackCardImages[i]}));
 
  $('#app').innerHTML=`
  <section class="ref-hero" id="homeHero">
@@ -2973,25 +3044,19 @@ function home(){
      <div class="hero-carousel-visual" id="heroVisual"><img id="heroVisualImg" src="" alt=""></div>
    </div>
    <div class="container ref-hero-services">
-     <div><span class="svc-icon">▱</span><p><b>ENVIO PARA<br>TODO BRASIL</b></p></div>
-     <div><span class="svc-icon">▣</span><p><b>ATÉ 12X<br>NO CARTÃO</b></p></div>
-     <div><span class="svc-icon pix-icon">◆</span><p><b>PIX</b></p></div>
-     <div><span class="svc-icon">♙</span><p><b>PAGAMENTO RÁPIDO<br>E SEGURO</b></p></div>
+     ${benefitItems.map((b,i)=>`<div><span class="svc-icon ${i===2?'pix-icon':''}">${esc(b.icon)}</span><p><b>${esc(b.text).replace(/\n/g,'<br>')}</b></p></div>`).join('')}
    </div>
    <div class="ref-dots" id="heroDots"></div>
  </section>
  <section class="ref-brand-strip"><div class="container ref-brand-track">
-   ${['TANGIERS','MUSTHAVE','BLACKBURN','PURE','AMOTION','XKAH','CORE','BLADE','WOOKAH','KALOUD'].map((b,i)=>`<a href="#/catalogo?q=${encodeURIComponent(b)}"><span class="brand-symbol">${['96','M','♧','♛','A','X','C','B','◯','✤'][i]}</span><strong>${b}</strong></a>`).join('')}
+   ${rail.map(b=>`<a href="${esc(b.href)}"><span class="brand-symbol">${esc(b.symbol)}</span><strong>${esc(b.name)}</strong></a>`).join('')}
    <button aria-label="Mais marcas">›</button>
  </div></section>
  <section class="ref-category-zone"><div class="container ref-category-grid">
-   <a class="ref-cat ref-cat-hookah" href="#/catalogo?categoria=Arguiles"><div><h3>HOOKAHS<br>PREMIUM</h3><p>CORE, AMOTION, BLADE,<br>WOOKAH E MAIS.</p><span>VER HOOKAHS →</span></div><img src="${esc(catHookah?.image||'')}" alt=""></a>
-   <a class="ref-cat ref-cat-access" href="#/catalogo?categoria=Acessórios"><div><h3>ACESSÓRIOS</h3><p>ROSHS, KALOUD, MANGUEIRAS,<br>E MUITO MAIS.</p><span>VER ACESSÓRIOS →</span></div><img src="${esc(catRosh?.image||'')}" alt=""></a>
-   <a class="ref-cat ref-cat-coal" href="#/catalogo?categoria=Carvões%20e%20Alumínios"><div><h3>CARVÕES</h3><p>ALTA PERFORMANCE PARA<br>A MELHOR SESSÃO.</p><span>VER CARVÕES →</span></div><img src="${esc(catCoal?.image||'')}" alt=""></a>
-   <a class="ref-cat ref-cat-launch" href="#/catalogo"><div><h3>LANÇAMENTOS</h3><p>CONFIRA AS NOVIDADES<br>DA THS.</p><span>VER LANÇAMENTOS →</span></div><img src="${esc(catLaunch?.image||'')}" alt=""></a>
+   ${cards.map(card=>`<a class="ref-cat" href="${esc(card.href)}"><div><h3>${esc(card.title).replace(/\n/g,'<br>')}</h3><p>${esc(card.text).replace(/\n/g,'<br>')}</p><span>${esc(card.button)} →</span></div>${card.image?`<img src="${esc(card.image)}" alt="">`:''}</a>`).join('')}
  </div></section>
- <section class="ref-products"><div class="container"><div class="ref-products-head"><div><span class="fire">♦</span><div><h2>PRODUTOS EM DESTAQUE</h2><p>OS MAIS VENDIDOS E MAIS PROCURADOS DA THS</p></div></div><a href="#/catalogo">VER TODOS <span>→</span></a></div><div class="product-grid">${featured.map(productCard).join('')}</div></div></section>
- <section class="section home-secondary"><div class="container"><div class="section-head"><div><span class="eyebrow">RECÉM-CHEGADOS</span><h2>Lançamentos</h2></div><a href="#/catalogo">Explorar catálogo →</a></div><div class="product-grid">${launches.map(productCard).join('')}</div></div></section>`;
+ <section class="ref-products"><div class="container"><div class="ref-products-head"><div><span class="fire">♦</span><div><h2>${esc(storeConfig.featuredTitle)}</h2><p>${esc(storeConfig.featuredSubtitle)}</p></div></div><a href="#/catalogo">${esc(storeConfig.featuredLinkText)} <span>→</span></a></div><div class="product-grid">${featured.map(productCard).join('')}</div></div></section>
+ <section class="section home-secondary"><div class="container"><div class="section-head"><div><span class="eyebrow">${esc(storeConfig.launchEyebrow)}</span><h2>${esc(storeConfig.launchTitle)}</h2></div><a href="#/catalogo">${esc(storeConfig.launchLinkText)}</a></div><div class="product-grid">${launches.map(productCard).join('')}</div></div></section>`;
 
  let heroIndex=0;
  const hero=$('#homeHero');
@@ -3017,11 +3082,7 @@ function home(){
      }else{
        hero.classList.remove('has-category-slide');
        hero.classList.add('has-art-slide');
-       hero.style.setProperty(
-         'background',
-         `linear-gradient(90deg,rgba(5,5,5,.96) 0%,rgba(5,5,5,.72) 31%,rgba(5,5,5,.16) 56%,rgba(5,5,5,0) 76%),url("${slide.image}") center center / cover no-repeat,#050505`,
-         'important'
-       );
+       hero.style.setProperty('background',`linear-gradient(90deg,rgba(5,5,5,.96) 0%,rgba(5,5,5,.72) 31%,rgba(5,5,5,.16) 56%,rgba(5,5,5,0) 76%),url("${slide.image}") center center / cover no-repeat,#050505`,'important');
        img.src='';img.alt=slide.alt||'';
      }
      $$('[data-hero-dot]',dots).forEach((b,i)=>b.classList.toggle('active',i===heroIndex));
@@ -3033,12 +3094,7 @@ function home(){
  $$('[data-hero-dot]',dots).forEach(b=>b.onclick=()=>renderHeroSlide(Number(b.dataset.heroDot)));
  let touchX=null;
  hero.addEventListener('touchstart',e=>{touchX=e.touches?.[0]?.clientX??null},{passive:true});
- hero.addEventListener('touchend',e=>{
-   if(touchX===null)return;
-   const x=e.changedTouches?.[0]?.clientX??touchX;
-   const delta=x-touchX;touchX=null;
-   if(Math.abs(delta)>45)renderHeroSlide(heroIndex+(delta<0?1:-1));
- },{passive:true});
+ hero.addEventListener('touchend',e=>{if(touchX===null)return;const x=e.changedTouches?.[0]?.clientX??touchX;const delta=x-touchX;touchX=null;if(Math.abs(delta)>45)renderHeroSlide(heroIndex+(delta<0?1:-1));},{passive:true});
  renderHeroSlide(0,false);
  bindProducts($('#app'));
 }
@@ -3102,7 +3158,7 @@ function adminPage(){
    <div class="admin-head"><div><span class="eyebrow">PAINEL THS</span><h1>Administração da loja</h1><p>Gerencie produtos, categorias e aparência. As alterações salvas aqui são publicadas para todos os visitantes.</p></div><div class="admin-head-actions"><a class="btn btn-outline" href="#/">Ver loja</a><button class="btn btn-outline" id="adminLogout">Sair</button><button class="btn btn-gold" id="adminAddTop">+ Novo produto</button></div></div>
    <div class="admin-warning"><strong>Painel online.</strong> <span id="syncStatus">Sincronizado com a Vercel</span>. Você pode editar por celular ou computador usando a mesma senha administrativa.</div>
    <div class="admin-stats"><div><span>Produtos</span><strong>${products.length}</strong></div><div><span>Disponíveis</span><strong>${availableCount}</strong></div><div><span>Indisponíveis</span><strong>${soldOutCount}</strong></div><div><span>Categorias</span><strong>${categories.length}</strong></div><div><span>Pedidos teste</span><strong>${demoOrders.length}</strong></div></div>
-   <div class="admin-tabs"><button class="active" data-admin-tab="products">Produtos</button><button data-admin-tab="categories">Categorias</button><button data-admin-tab="store">Editar site & carrossel</button><button data-admin-tab="orders">Pedidos teste</button><button data-admin-tab="backup">Backup</button></div>
+   <div class="admin-tabs"><button class="active" data-admin-tab="products">Produtos</button><button data-admin-tab="categories">Categorias</button><button data-admin-tab="store">Editor do site</button><button data-admin-tab="orders">Pedidos teste</button><button data-admin-tab="backup">Backup</button></div>
    <div id="adminPanel"></div>
  </div></section>`;
 
@@ -3192,130 +3248,136 @@ function adminPage(){
 
  function renderAdminStore(){
    storeConfig=normalizeStoreConfig(storeConfig);
+   const fontOptions=['DM Sans','Manrope','Montserrat','Poppins','Oswald','Bebas Neue','Arial','Georgia'];
    panel.innerHTML=`
-   <div class="admin-section-card">
-     <div class="admin-section-head"><div><span class="eyebrow">LOJA</span><h2>Avisos e contatos</h2><p>Configurações gerais da vitrine e WhatsApp.</p></div></div>
-     <form id="adminStoreForm" class="admin-form-grid">
-       <label class="full">Aviso superior<input id="asAnnouncement" value="${esc(storeConfig.announcement)}"></label>
-       <label>WhatsApp varejo 1 <small>Somente números, com 55 + DDD</small><input id="asW1" value="${esc(storeConfig.whatsappRetail1)}"></label>
-       <label>WhatsApp varejo 2<input id="asW2" value="${esc(storeConfig.whatsappRetail2)}"></label>
-       <label>WhatsApp atacado<input id="asW3" value="${esc(storeConfig.whatsappWholesale)}"></label>
-       <div class="full admin-form-actions"><button class="btn btn-gold">Salvar configurações</button></div>
-     </form>
+   <div class="site-builder-nav">
+     <button class="active" data-builder-tab="brand">Marca & tema</button>
+     <button data-builder-tab="header">Cabeçalho</button>
+     <button data-builder-tab="benefits">PIX & benefícios</button>
+     <button data-builder-tab="carousel">Carrossel</button>
+     <button data-builder-tab="cards">Cards da home</button>
+     <button data-builder-tab="brands">Marcas</button>
+     <button data-builder-tab="sections">Seções & rodapé</button>
    </div>
-   <div class="admin-section-card">
-     <div class="admin-section-head"><div><span class="eyebrow">CARROSSEL DA HOME</span><h2>Editar banners</h2><p>Troque imagens, textos, botões, links e a ordem dos slides. As alterações são publicadas para todos os visitantes.</p></div><button class="btn btn-gold" id="addCarouselSlide">+ Novo slide</button></div>
-     <div class="admin-carousel-list" id="adminCarouselList"></div>
-   </div>`;
+   <div id="siteBuilderPanel"></div>`;
 
-   $('#adminStoreForm').onsubmit=e=>{
-     e.preventDefault();
-     storeConfig={...storeConfig,
-       announcement:$('#asAnnouncement').value.trim(),
-       whatsappRetail1:$('#asW1').value.replace(/\D/g,''),
-       whatsappRetail2:$('#asW2').value.replace(/\D/g,''),
-       whatsappWholesale:$('#asW3').value.replace(/\D/g,'')
-     };
-     saveAdminData();applyStoreConfig();alert('Configurações salvas e sincronizadas.');
-   };
-
-   function carouselValue(slide,key,value){
-     const slides=normalizeCarouselSlides(storeConfig.carouselSlides);
-     const s=slides.find(x=>x.id===slide.id);if(!s)return;
-     s[key]=value;
-     if(key==='image'&&value)s.reference=false;
-     storeConfig={...storeConfig,carouselSlides:slides};
+   const bp=$('#siteBuilderPanel');
+   async function uploadBuilderImage(file,status){
+     if(!file)return null;
+     if(file.size>4*1024*1024){status.textContent='A imagem ultrapassa 4 MB.';return null;}
+     status.textContent='Enviando…';
+     const dataUrl=await new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve(r.result);r.onerror=reject;r.readAsDataURL(file)});
+     const r=await fetch('/api/upload',{method:'POST',headers:{'content-type':'application/json','x-admin-key':adminKey},body:JSON.stringify({filename:file.name,dataUrl})});
+     const data=await r.json();if(!r.ok)throw new Error(data.error||'Falha no upload');
+     status.textContent='Imagem enviada ✓';return data.url;
    }
+   function saveAndRefresh(message='Alterações salvas.'){storeConfig=normalizeStoreConfig(storeConfig);saveAdminData();applyStoreConfig();alert(message);}
+   function activateBuilder(name){
+     $$('[data-builder-tab]').forEach(b=>b.classList.toggle('active',b.dataset.builderTab===name));
+     if(name==='brand')renderBrand();
+     if(name==='header')renderHeaderEditor();
+     if(name==='benefits')renderBenefits();
+     if(name==='carousel')renderCarousel();
+     if(name==='cards')renderCards();
+     if(name==='brands')renderBrands();
+     if(name==='sections')renderSections();
+   }
+   $$('[data-builder-tab]').forEach(b=>b.onclick=()=>activateBuilder(b.dataset.builderTab));
 
-   function renderCarouselList(){
-     storeConfig={...storeConfig,carouselSlides:normalizeCarouselSlides(storeConfig.carouselSlides)};
-     const list=$('#adminCarouselList');
-     list.innerHTML=storeConfig.carouselSlides.map((s,i)=>`
-       <article class="admin-carousel-card" data-carousel-id="${esc(s.id)}">
-         <div>
-           <div class="admin-carousel-preview">${s.image?`<img src="${esc(s.image)}" alt="">`:`<div class="empty">${s.reference?'Usando a arte original embutida do banner':'Sem imagem cadastrada'}</div>`}</div>
-           <div class="admin-carousel-actions">
-             <button class="admin-mini" type="button" data-slide-up="${esc(s.id)}" ${i===0?'disabled':''}>↑ Subir</button>
-             <button class="admin-mini" type="button" data-slide-down="${esc(s.id)}" ${i===storeConfig.carouselSlides.length-1?'disabled':''}>↓ Descer</button>
-             <button class="admin-mini danger" type="button" data-slide-delete="${esc(s.id)}">Excluir</button>
-           </div>
+   function renderBrand(){
+     bp.innerHTML=`<div class="builder-card"><h3>Marca e identidade visual</h3><p>Troque o nome THS por uma logo, escolha as fontes e ajuste as cores principais do site.</p>
+       <form id="brandForm" class="admin-form-grid">
+         <label>Nome da marca<input id="sbBrandName" value="${esc(storeConfig.brandName)}"></label>
+         <label>Slogan / nome completo<input id="sbBrandTagline" value="${esc(storeConfig.brandTagline)}"></label>
+         <label class="full">URL da logo<input id="sbLogoImage" value="${esc(storeConfig.logoImage)}" placeholder="https://..."></label>
+         <label class="toggle-line"><input id="sbUseLogo" type="checkbox" ${storeConfig.useLogoImage?'checked':''}> Usar imagem da logo no lugar do texto</label>
+         <label class="full">Enviar logo<input id="sbLogoFile" type="file" accept="image/jpeg,image/png,image/webp,image/gif"><small id="sbLogoStatus">PNG transparente funciona muito bem · máximo 4 MB</small></label>
+         <label>Fonte dos textos<select id="sbBodyFont">${fontOptions.map(x=>`<option ${x===storeConfig.bodyFont?'selected':''}>${x}</option>`).join('')}</select></label>
+         <label>Fonte dos títulos<select id="sbDisplayFont">${fontOptions.map(x=>`<option ${x===storeConfig.displayFont?'selected':''}>${x}</option>`).join('')}</select></label>
+         <div class="full color-row">
+           <label>Preto principal<input id="sbInk" type="color" value="${esc(storeConfig.themeInk)}"></label>
+           <label>Fundo claro<input id="sbPaper" type="color" value="${esc(storeConfig.themePaper)}"></label>
+           <label>Dourado<input id="sbGold" type="color" value="${esc(storeConfig.themeGold)}"></label>
+           <label>Dourado claro<input id="sbGold2" type="color" value="${esc(storeConfig.themeGold2)}"></label>
          </div>
-         <div>
-           <h3>Slide ${i+1} · ${esc((s.line1+' '+s.line2).trim()||'Sem título')}</h3>
-           <div class="admin-carousel-grid">
-             <label class="admin-carousel-toggle full"><input type="checkbox" data-slide-field="enabled" data-slide-id="${esc(s.id)}" ${s.enabled!==false?'checked':''}> Exibir este slide</label>
-             <label>Texto pequeno<input data-slide-field="kicker" data-slide-id="${esc(s.id)}" value="${esc(s.kicker)}"></label>
-             <label>Primeira linha<input data-slide-field="line1" data-slide-id="${esc(s.id)}" value="${esc(s.line1)}"></label>
-             <label>Palavra / linha dourada<input data-slide-field="line2" data-slide-id="${esc(s.id)}" value="${esc(s.line2)}"></label>
-             <label>Texto do botão<input data-slide-field="button" data-slide-id="${esc(s.id)}" value="${esc(s.button)}"></label>
-             <label class="full">Descrição<textarea data-slide-field="text" data-slide-id="${esc(s.id)}">${esc(s.text)}</textarea></label>
-             <label class="full">Link do botão<input data-slide-field="href" data-slide-id="${esc(s.id)}" value="${esc(s.href)}" placeholder="#/catalogo?categoria=..."></label>
-             <label class="full">Imagem do banner<input data-slide-field="image" data-slide-id="${esc(s.id)}" value="${esc(s.image)}" placeholder="https://..."><small>Você pode colar uma URL ou usar o upload abaixo.</small></label>
-             <label class="full">Enviar nova imagem
-               <div class="admin-upload-line"><input type="file" data-slide-file="${esc(s.id)}" accept="image/jpeg,image/png,image/webp,image/gif"><span class="admin-upload-status" data-slide-status="${esc(s.id)}">Máximo 4 MB</span></div>
-             </label>
-           </div>
-           <div class="admin-form-actions"><button class="btn btn-gold" type="button" data-slide-save="${esc(s.id)}">Salvar este slide</button></div>
-         </div>
-       </article>`).join('');
-
-     $$('[data-slide-field]',list).forEach(el=>{
-       const id=el.dataset.slideId,field=el.dataset.slideField;
-       const apply=()=>carouselValue({id},field,field==='enabled'?el.checked:el.value);
-       el.onchange=apply;
-     });
-
-     $$('[data-slide-save]',list).forEach(b=>b.onclick=async()=>{
-       const id=b.dataset.slideSave;
-       const card=b.closest('[data-carousel-id]');
-       $$('[data-slide-field]',card).forEach(el=>carouselValue({id},el.dataset.slideField,el.dataset.slideField==='enabled'?el.checked:el.value));
-       saveAdminData();
-       b.textContent='Salvo ✓';
-       setTimeout(()=>{if(document.body.contains(b))b.textContent='Salvar este slide'},1200);
-     });
-
-     $$('[data-slide-file]',list).forEach(inp=>inp.onchange=e=>{
-       const file=e.target.files?.[0];if(!file)return;
-       const id=inp.dataset.slideFile;
-       const status=$(`[data-slide-status="${CSS.escape(id)}"]`,list);
-       if(file.size>4*1024*1024){status.textContent='A imagem ultrapassa 4 MB.';return;}
-       status.textContent='Enviando…';
-       const reader=new FileReader();
-       reader.onload=async()=>{
-         try{
-           const r=await fetch('/api/upload',{method:'POST',headers:{'content-type':'application/json','x-admin-key':adminKey},body:JSON.stringify({filename:'banner-'+file.name,dataUrl:reader.result})});
-           const data=await r.json();if(!r.ok)throw new Error(data.error||'Falha no upload');
-           carouselValue({id},'image',data.url);saveAdminData();renderCarouselList();
-         }catch(err){status.textContent=err.message||'Não foi possível enviar a imagem.';}
-       };
-       reader.readAsDataURL(file);
-     });
-
-     $$('[data-slide-up]',list).forEach(b=>b.onclick=()=>moveSlide(b.dataset.slideUp,-1));
-     $$('[data-slide-down]',list).forEach(b=>b.onclick=()=>moveSlide(b.dataset.slideDown,1));
-     $$('[data-slide-delete]',list).forEach(b=>b.onclick=()=>{
-       const slides=normalizeCarouselSlides(storeConfig.carouselSlides);
-       const s=slides.find(x=>x.id===b.dataset.slideDelete);
-       if(!s||!confirm('Excluir este slide do carrossel?'))return;
-       storeConfig={...storeConfig,carouselSlides:slides.filter(x=>x.id!==s.id)};
-       saveAdminData();renderCarouselList();
-     });
+         <div class="full admin-form-actions"><button class="btn btn-gold">Salvar marca e tema</button></div>
+       </form></div>`;
+     $('#sbLogoFile').onchange=async e=>{try{const url=await uploadBuilderImage(e.target.files?.[0],$('#sbLogoStatus'));if(url){$('#sbLogoImage').value=url;$('#sbUseLogo').checked=true;}}catch(err){$('#sbLogoStatus').textContent=err.message}};
+     $('#brandForm').onsubmit=e=>{e.preventDefault();storeConfig={...storeConfig,brandName:$('#sbBrandName').value.trim()||'THS',brandTagline:$('#sbBrandTagline').value.trim(),logoImage:$('#sbLogoImage').value.trim(),useLogoImage:$('#sbUseLogo').checked,bodyFont:$('#sbBodyFont').value,displayFont:$('#sbDisplayFont').value,themeInk:$('#sbInk').value,themePaper:$('#sbPaper').value,themeGold:$('#sbGold').value,themeGold2:$('#sbGold2').value};saveAndRefresh();};
    }
 
-   function moveSlide(id,dir){
-     const slides=normalizeCarouselSlides(storeConfig.carouselSlides);
-     const i=slides.findIndex(x=>x.id===id);const j=i+dir;
-     if(i<0||j<0||j>=slides.length)return;
-     [slides[i],slides[j]]=[slides[j],slides[i]];
-     storeConfig={...storeConfig,carouselSlides:slides};saveAdminData();renderCarouselList();
+   function renderHeaderEditor(){
+     bp.innerHTML=`<div class="builder-card"><h3>Cabeçalho, busca e contatos</h3><p>Edite a faixa superior, textos do topo, campo de busca e WhatsApp.</p><form id="headerBuilderForm" class="admin-form-grid">
+       <label class="full">Faixa superior<input id="bhAnnouncement" value="${esc(storeConfig.announcement)}"></label>
+       <label class="full">Texto da busca<input id="bhSearch" value="${esc(storeConfig.searchPlaceholder)}"></label>
+       <label>Texto atendimento<input id="bhSupport" value="${esc(storeConfig.promoSupportText)}"></label>
+       <label>Texto da conta<input id="bhAccount" value="${esc(storeConfig.promoAccountText)}"></label>
+       <label>WhatsApp varejo 1<input id="bhW1" value="${esc(storeConfig.whatsappRetail1)}"></label>
+       <label>WhatsApp varejo 2<input id="bhW2" value="${esc(storeConfig.whatsappRetail2)}"></label>
+       <label>WhatsApp atacado<input id="bhW3" value="${esc(storeConfig.whatsappWholesale)}"></label>
+       <div class="full admin-form-actions"><button class="btn btn-gold">Salvar cabeçalho</button></div>
+     </form></div>`;
+     $('#headerBuilderForm').onsubmit=e=>{e.preventDefault();storeConfig={...storeConfig,announcement:$('#bhAnnouncement').value.trim(),searchPlaceholder:$('#bhSearch').value.trim(),promoSupportText:$('#bhSupport').value.trim(),promoAccountText:$('#bhAccount').value.trim(),whatsappRetail1:$('#bhW1').value.replace(/\D/g,''),whatsappRetail2:$('#bhW2').value.replace(/\D/g,''),whatsappWholesale:$('#bhW3').value.replace(/\D/g,'')};saveAndRefresh();};
    }
 
-   $('#addCarouselSlide').onclick=()=>{
-     const slides=normalizeCarouselSlides(storeConfig.carouselSlides);
-     slides.push({id:'slide-'+Date.now(),enabled:true,kicker:'NOVIDADE THS',line1:'NOVO',line2:'DESTAQUE',text:'Edite este texto no painel.',button:'VER PRODUTOS',href:'#/catalogo',image:'',alt:'Banner THS',reference:false});
-     storeConfig={...storeConfig,carouselSlides:slides};saveAdminData();renderCarouselList();
-   };
-   renderCarouselList();
+   function renderBenefits(){
+     const items=storeConfig.benefits||defaultBenefits;
+     bp.innerHTML=`<div class="builder-card"><h3>PIX, envio, cartão e segurança</h3><p>Esses são os quatro benefícios que aparecem embaixo do carrossel.</p><div class="builder-four">${items.map((b,i)=>`<div class="builder-item"><h4>Benefício ${i+1}</h4><div class="builder-fields"><label>Ícone<input data-benefit-icon="${i}" value="${esc(b.icon)}"></label><label>Texto<textarea data-benefit-text="${i}">${esc(b.text)}</textarea></label></div></div>`).join('')}</div><div class="builder-actions"><button class="btn btn-gold" id="saveBenefits">Salvar benefícios</button></div></div>`;
+     $('#saveBenefits').onclick=()=>{storeConfig={...storeConfig,benefits:items.map((_,i)=>({icon:$('[data-benefit-icon="'+i+'"]').value,text:$('[data-benefit-text="'+i+'"]').value}))};saveAndRefresh();};
+   }
+
+   function renderCarousel(){
+     bp.innerHTML=`<div class="builder-card"><div class="admin-section-head"><div><h3>Carrossel principal</h3><p>Imagem, textos, link, ordem e visibilidade de cada slide.</p></div><button class="btn btn-gold" id="addCarouselSlide">+ Novo slide</button></div><div class="admin-carousel-list" id="adminCarouselList"></div></div>`;
+     function carouselValue(id,key,value){const slides=normalizeCarouselSlides(storeConfig.carouselSlides);const s=slides.find(x=>x.id===id);if(!s)return;s[key]=value;if(key==='image'&&value)s.reference=false;storeConfig={...storeConfig,carouselSlides:slides};}
+     function draw(){
+       storeConfig={...storeConfig,carouselSlides:normalizeCarouselSlides(storeConfig.carouselSlides)};
+       const list=$('#adminCarouselList');
+       list.innerHTML=storeConfig.carouselSlides.map((s,i)=>`<article class="admin-carousel-card" data-carousel-id="${esc(s.id)}"><div><div class="admin-carousel-preview">${s.image?`<img src="${esc(s.image)}" alt="">`:`<div class="empty">Sem imagem cadastrada</div>`}</div><div class="admin-carousel-actions"><button class="admin-mini" type="button" data-up="${esc(s.id)}" ${i===0?'disabled':''}>↑ Subir</button><button class="admin-mini" type="button" data-down="${esc(s.id)}" ${i===storeConfig.carouselSlides.length-1?'disabled':''}>↓ Descer</button><button class="admin-mini danger" type="button" data-del="${esc(s.id)}">Excluir</button></div></div><div><h3>Slide ${i+1}</h3><div class="admin-carousel-grid">
+       <label class="admin-carousel-toggle full"><input type="checkbox" data-cfield="enabled" data-cid="${esc(s.id)}" ${s.enabled!==false?'checked':''}> Exibir slide</label>
+       <label>Texto pequeno<input data-cfield="kicker" data-cid="${esc(s.id)}" value="${esc(s.kicker)}"></label><label>Primeira linha<input data-cfield="line1" data-cid="${esc(s.id)}" value="${esc(s.line1)}"></label><label>Palavra dourada<input data-cfield="line2" data-cid="${esc(s.id)}" value="${esc(s.line2)}"></label><label>Botão<input data-cfield="button" data-cid="${esc(s.id)}" value="${esc(s.button)}"></label>
+       <label class="full">Descrição<textarea data-cfield="text" data-cid="${esc(s.id)}">${esc(s.text)}</textarea></label><label class="full">Link<input data-cfield="href" data-cid="${esc(s.id)}" value="${esc(s.href)}"></label><label class="full">Imagem<input data-cfield="image" data-cid="${esc(s.id)}" value="${esc(s.image)}"></label>
+       <label class="full">Enviar imagem<div class="admin-upload-line"><input type="file" data-cfile="${esc(s.id)}" accept="image/jpeg,image/png,image/webp,image/gif"><span class="admin-upload-status" data-cstatus="${esc(s.id)}">Máximo 4 MB</span></div></label></div><div class="admin-form-actions"><button class="btn btn-gold" data-csave="${esc(s.id)}" type="button">Salvar slide</button></div></div></article>`).join('');
+       $$('[data-csave]',list).forEach(b=>b.onclick=()=>{const id=b.dataset.csave;const card=b.closest('[data-carousel-id]');$$('[data-cfield]',card).forEach(el=>carouselValue(id,el.dataset.cfield,el.dataset.cfield==='enabled'?el.checked:el.value));saveAdminData();b.textContent='Salvo ✓';setTimeout(()=>{if(document.body.contains(b))b.textContent='Salvar slide'},900)});
+       $$('[data-cfile]',list).forEach(inp=>inp.onchange=async e=>{const id=inp.dataset.cfile,status=$('[data-cstatus="'+CSS.escape(id)+'"]',list);try{const url=await uploadBuilderImage(e.target.files?.[0],status);if(url){carouselValue(id,'image',url);saveAdminData();draw();}}catch(err){status.textContent=err.message}});
+       $$('[data-up]',list).forEach(b=>b.onclick=()=>move(b.dataset.up,-1));$$('[data-down]',list).forEach(b=>b.onclick=()=>move(b.dataset.down,1));$$('[data-del]',list).forEach(b=>b.onclick=()=>{if(confirm('Excluir este slide?')){storeConfig={...storeConfig,carouselSlides:storeConfig.carouselSlides.filter(x=>x.id!==b.dataset.del)};saveAdminData();draw();}});
+     }
+     function move(id,d){const a=normalizeCarouselSlides(storeConfig.carouselSlides),i=a.findIndex(x=>x.id===id),j=i+d;if(i<0||j<0||j>=a.length)return;[a[i],a[j]]=[a[j],a[i]];storeConfig={...storeConfig,carouselSlides:a};saveAdminData();draw();}
+     $('#addCarouselSlide').onclick=()=>{const a=normalizeCarouselSlides(storeConfig.carouselSlides);a.push({id:'slide-'+Date.now(),enabled:true,kicker:'NOVIDADE THS',line1:'NOVO',line2:'DESTAQUE',text:'Edite este texto.',button:'VER PRODUTOS',href:'#/catalogo',image:'',alt:'Banner THS',reference:false});storeConfig={...storeConfig,carouselSlides:a};saveAdminData();draw();};draw();
+   }
+
+   function renderCards(){
+     const cards=storeConfig.categoryCards||defaultCategoryCards;
+     bp.innerHTML=`<div class="builder-card"><h3>Cards de categorias da home</h3><p>Aqui ficam Hookahs Premium, Acessórios, Carvões e Lançamentos. Tudo é editável, inclusive as imagens.</p><div class="builder-two">${cards.map((x,i)=>`<div class="builder-item" data-card-builder="${i}"><div class="builder-preview">${x.image?`<img src="${esc(x.image)}" alt="">`:'Imagem automática do catálogo'}</div><h4>Card ${i+1}</h4><div class="builder-fields"><label>Título<textarea data-card-title="${i}">${esc(x.title)}</textarea></label><label>Descrição<textarea data-card-text="${i}">${esc(x.text)}</textarea></label><label>Botão<input data-card-button="${i}" value="${esc(x.button)}"></label><label>Link<input data-card-href="${i}" value="${esc(x.href)}"></label><label>Imagem<input data-card-image="${i}" value="${esc(x.image)}"></label><label>Enviar imagem<div class="builder-upload"><input type="file" data-card-file="${i}" accept="image/jpeg,image/png,image/webp,image/gif"><small data-card-status="${i}">Máx. 4 MB</small></div></label></div></div>`).join('')}</div><div class="builder-actions"><button class="btn btn-gold" id="saveCards">Salvar cards</button></div></div>`;
+     $$('[data-card-file]').forEach(inp=>inp.onchange=async e=>{const i=Number(inp.dataset.cardFile),status=$('[data-card-status="'+i+'"]');try{const url=await uploadBuilderImage(e.target.files?.[0],status);if(url){$('[data-card-image="'+i+'"]').value=url;$('[data-card-builder="'+i+'"] .builder-preview').innerHTML='<img src="'+esc(url)+'" alt="">';}}catch(err){status.textContent=err.message}});
+     $('#saveCards').onclick=()=>{storeConfig={...storeConfig,categoryCards:cards.map((x,i)=>({...x,title:$('[data-card-title="'+i+'"]').value,text:$('[data-card-text="'+i+'"]').value,button:$('[data-card-button="'+i+'"]').value,href:$('[data-card-href="'+i+'"]').value,image:$('[data-card-image="'+i+'"]').value.trim()}))};saveAndRefresh();};
+   }
+
+   function renderBrands(){
+     const lines=(storeConfig.brandRail||defaultBrandRail).map(x=>[x.symbol,x.name,x.href].join(' | ')).join('\n');
+     bp.innerHTML=`<div class="builder-card"><h3>Faixa de marcas</h3><p>Uma marca por linha no formato: símbolo | nome | link.</p><div class="builder-fields"><label>Marcas<textarea id="brandRailText" style="min-height:280px">${esc(lines)}</textarea></label></div><div class="builder-actions"><button class="btn btn-gold" id="saveBrandRail">Salvar marcas</button></div></div>`;
+     $('#saveBrandRail').onclick=()=>{const arr=$('#brandRailText').value.split('\n').map(x=>x.trim()).filter(Boolean).map(line=>{const [symbol='',name='',href='#/catalogo']=line.split('|').map(x=>x.trim());return{symbol,name,href}}).filter(x=>x.name);storeConfig={...storeConfig,brandRail:arr.length?arr:defaultBrandRail};saveAndRefresh();};
+   }
+
+   function renderSections(){
+     const slots=Array.from({length:6},(_,i)=>storeConfig.featuredProductIds?.[i]||'');
+     const opts='<option value="">Automático</option>'+products.map(p=>`<option value="${esc(p.id)}">${esc(p.name)}</option>`).join('');
+     bp.innerHTML=`<div class="builder-card"><h3>Produtos em destaque e lançamentos</h3><p>Edite os títulos e escolha quais produtos aparecem na primeira grade.</p><form id="sectionsForm" class="admin-form-grid">
+       <label>Título destaques<input id="bsFeaturedTitle" value="${esc(storeConfig.featuredTitle)}"></label><label>Link destaques<input id="bsFeaturedLink" value="${esc(storeConfig.featuredLinkText)}"></label><label class="full">Subtítulo destaques<input id="bsFeaturedSubtitle" value="${esc(storeConfig.featuredSubtitle)}"></label>
+       ${slots.map((id,i)=>`<label>Produto destaque ${i+1}<select data-featured-slot="${i}">${opts}</select></label>`).join('')}
+       <label>Etiqueta lançamentos<input id="bsLaunchEye" value="${esc(storeConfig.launchEyebrow)}"></label><label>Título lançamentos<input id="bsLaunchTitle" value="${esc(storeConfig.launchTitle)}"></label><label>Texto do link<input id="bsLaunchLink" value="${esc(storeConfig.launchLinkText)}"></label>
+       <div class="full admin-form-actions"><button class="btn btn-gold">Salvar seções</button></div>
+     </form></div>
+     <div class="builder-card"><h3>Newsletter e rodapé</h3><p>Edite os textos que aparecem no final do site.</p><form id="footerBuilderForm" class="admin-form-grid">
+       <label>Etiqueta newsletter<input id="bfNewsEye" value="${esc(storeConfig.newsletterEyebrow)}"></label><label>Título newsletter<input id="bfNewsTitle" value="${esc(storeConfig.newsletterTitle)}"></label><label class="full">Texto newsletter<input id="bfNewsText" value="${esc(storeConfig.newsletterText)}"></label><label>Botão newsletter<input id="bfNewsButton" value="${esc(storeConfig.newsletterButton)}"></label><label>Placeholder e-mail<input id="bfNewsPlaceholder" value="${esc(storeConfig.newsletterPlaceholder)}"></label>
+       <label class="full">Descrição rodapé<textarea id="bfFooterDesc">${esc(storeConfig.footerDescription)}</textarea></label><label class="full">Aviso responsável<textarea id="bfFooterResp">${esc(storeConfig.footerResponsible)}</textarea></label><label class="full">Texto inferior direito<input id="bfFooterBottom" value="${esc(storeConfig.footerBottomRight)}"></label>
+       <div class="full admin-form-actions"><button class="btn btn-gold">Salvar newsletter e rodapé</button></div>
+     </form></div>`;
+     $$('[data-featured-slot]').forEach((s,i)=>s.value=slots[i]||'');
+     $('#sectionsForm').onsubmit=e=>{e.preventDefault();storeConfig={...storeConfig,featuredTitle:$('#bsFeaturedTitle').value,featuredSubtitle:$('#bsFeaturedSubtitle').value,featuredLinkText:$('#bsFeaturedLink').value,featuredProductIds:$$('[data-featured-slot]').map(s=>s.value).filter(Boolean),launchEyebrow:$('#bsLaunchEye').value,launchTitle:$('#bsLaunchTitle').value,launchLinkText:$('#bsLaunchLink').value};saveAndRefresh();};
+     $('#footerBuilderForm').onsubmit=e=>{e.preventDefault();storeConfig={...storeConfig,newsletterEyebrow:$('#bfNewsEye').value,newsletterTitle:$('#bfNewsTitle').value,newsletterText:$('#bfNewsText').value,newsletterButton:$('#bfNewsButton').value,newsletterPlaceholder:$('#bfNewsPlaceholder').value,footerDescription:$('#bfFooterDesc').value,footerResponsible:$('#bfFooterResp').value,footerBottomRight:$('#bfFooterBottom').value};saveAndRefresh();};
+   }
+
+   activateBuilder('brand');
  }
  function renderAdminOrders(){const orders=readJSON('ths-demo-orders',[]);panel.innerHTML=`<div class="admin-section-card"><div class="admin-section-head"><div><span class="eyebrow">PEDIDOS</span><h2>Pedidos de demonstração</h2><p>Quando o checkout real for conectado, esta área vira a central de pedidos.</p></div>${orders.length?'<button class="btn btn-outline" id="clearDemoOrders">Limpar testes</button>':''}</div><div class="admin-order-list">${orders.length?orders.map(o=>`<div><strong>${esc(o.id)}</strong><span>${new Date(o.createdAt).toLocaleString('pt-BR')}</span><b>${money(o.total)}</b><small>${esc(o.status)}</small></div>`).join(''):'<div class="admin-empty">Nenhum pedido de teste criado.</div>'}</div></div>`;const c=$('#clearDemoOrders');if(c)c.onclick=()=>{if(confirm('Limpar todos os pedidos de teste?')){localStorage.removeItem('ths-demo-orders');renderAdminOrders();}};}
 
@@ -3348,12 +3410,47 @@ function setupNav(){
 }
 function prettyPhone(v){const d=String(v||'').replace(/\D/g,'');const n=d.startsWith('55')?d.slice(2):d;return n.length===11?`(${n.slice(0,2)}) ${n.slice(2,7)}-${n.slice(7)}`:n}
 function applyStoreConfig(){
+  storeConfig=normalizeStoreConfig(storeConfig);
+  const root=document.documentElement;
+  root.style.setProperty('--gold',storeConfig.themeGold||defaultStoreConfig.themeGold);
+  root.style.setProperty('--gold2',storeConfig.themeGold2||defaultStoreConfig.themeGold2);
+  root.style.setProperty('--ink',storeConfig.themeInk||defaultStoreConfig.themeInk);
+  root.style.setProperty('--paper',storeConfig.themePaper||defaultStoreConfig.themePaper);
+  root.style.setProperty('--font',`'${storeConfig.bodyFont||'DM Sans'}',system-ui,sans-serif`);
+  root.style.setProperty('--display',`'${storeConfig.displayFont||'Manrope'}',system-ui,sans-serif`);
+  document.title=`${storeConfig.brandName||'THS'} — ${storeConfig.brandTagline||'Loja'}`;
+
   const ann=$('.announcement-message');if(ann)ann.textContent=storeConfig.announcement||defaultStoreConfig.announcement;
+  const support=$('#promoSupport');if(support)support.innerHTML='◔&nbsp; '+esc(storeConfig.promoSupportText);
+  const account=$('#promoAccount');if(account)account.innerHTML='♟&nbsp; '+esc(storeConfig.promoAccountText);
+  const search=$('#searchInput');if(search)search.placeholder=storeConfig.searchPlaceholder||defaultStoreConfig.searchPlaceholder;
+  const msearch=$('#mobileSearchInput');if(msearch)msearch.placeholder=storeConfig.searchPlaceholder||defaultStoreConfig.searchPlaceholder;
+
+  $$('[data-brand]').forEach(el=>{
+    const img=$('[data-brand-logo]',el),name=$('[data-brand-name]',el),tag=$('[data-brand-tagline]',el);
+    const use=Boolean(storeConfig.useLogoImage&&storeConfig.logoImage);
+    if(img){img.src=storeConfig.logoImage||'';img.classList.toggle('hidden',!use);}
+    if(name){name.classList.toggle('hidden',use);name.innerHTML=esc(storeConfig.brandName||'THS')+'<span>.</span>';}
+    if(tag){tag.classList.toggle('hidden',use);tag.textContent=storeConfig.brandTagline||'';}
+  });
+  const ageLogo=$('#ageBrandLogo'),ageText=$('#ageBrandText'),useAge=Boolean(storeConfig.useLogoImage&&storeConfig.logoImage);
+  if(ageLogo){ageLogo.src=storeConfig.logoImage||'';ageLogo.classList.toggle('hidden',!useAge);}
+  if(ageText){ageText.classList.toggle('hidden',useAge);ageText.innerHTML=esc(storeConfig.brandName||'THS')+'<span>.</span>';}
+
+  const ne=$('#newsletterEyebrow');if(ne)ne.textContent=storeConfig.newsletterEyebrow;
+  const nt=$('#newsletterTitle');if(nt)nt.textContent=storeConfig.newsletterTitle;
+  const nx=$('#newsletterText');if(nx)nx.textContent=storeConfig.newsletterText;
+  const nb=$('#newsletterButton');if(nb)nb.textContent=storeConfig.newsletterButton;
+  const ni=$('#newsletterInput');if(ni)ni.placeholder=storeConfig.newsletterPlaceholder;
+  const fd=$('#footerDescription');if(fd)fd.textContent=storeConfig.footerDescription;
+  const fr=$('#footerResponsible');if(fr)fr.textContent=storeConfig.footerResponsible;
+  const fbr=$('#footerBottomRight');if(fbr)fbr.textContent=storeConfig.footerBottomRight;
+  const fc=$('#footerCopyright');if(fc)fc.innerHTML='© <span id="year">'+new Date().getFullYear()+'</span> '+esc(storeConfig.brandName)+' — '+esc(storeConfig.brandTagline)+'.';
+
   const pairs=[['#footerW1',storeConfig.whatsappRetail1,'Varejo 1'],['#footerW2',storeConfig.whatsappRetail2,'Varejo 2'],['#footerW3',storeConfig.whatsappWholesale,'Atacado']];
   pairs.forEach(([sel,num,label])=>{const el=$(sel);if(el){el.href=`https://wa.me/${String(num||'').replace(/\D/g,'')}`;el.textContent=`${label} · ${prettyPhone(num)}`}});
   const wf=$('#whatsappFloat');if(wf)wf.href=`https://wa.me/${String(storeConfig.whatsappRetail1||'').replace(/\D/g,'')}`;
 }
-
 async function setup(){
  await loadRemoteCatalog();
  $('#year').textContent=new Date().getFullYear();setupNav();updateCartUI();updateHeaderExtras();applyStoreConfig();
