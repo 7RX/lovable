@@ -2708,9 +2708,9 @@ const defaultCarouselSlides=[
     text:'TANGIERS, MUSTHAVE, BLACKBURN, STARBUZZ, UNCUT E MUITO MAIS. QUALIDADE E PROCEDÊNCIA GARANTIDA.',
     button:'VER ESSÊNCIAS',
     href:'#/catalogo?categoria=Essências%20Premium',
-    image:'',
+    image:'/assets/hero-premium-v2.webp',
     alt:'Essências Premium',
-    reference:true
+    reference:false
   },
   {
     id:'hookahs',
@@ -2721,7 +2721,7 @@ const defaultCarouselSlides=[
     text:'CORE, AMOTION, BLADE, WOOKAH E OUTROS MODELOS SELECIONADOS PARA SUA SESSÃO.',
     button:'VER HOOKAHS',
     href:'#/catalogo?categoria=Arguiles',
-    image:'/assets/hero-hookahs.svg',
+    image:'/assets/hero-hookahs-v2.webp',
     alt:'Hookahs Premium',
     reference:false
   },
@@ -2734,7 +2734,7 @@ const defaultCarouselSlides=[
     text:'ESCOLHA ENTRE MARCAS, LINHAS E SABORES PARA ENCONTRAR A COMBINAÇÃO IDEAL.',
     button:'VER CONVENCIONAIS',
     href:'#/catalogo?categoria=Essências%20Convencionais',
-    image:'/assets/hero-convencionais.svg',
+    image:'/assets/hero-convencionais-v2.webp',
     alt:'Essências Convencionais',
     reference:false
   },
@@ -2760,26 +2760,40 @@ const defaultCarouselSlides=[
     text:'CARVÕES, ALUMÍNIOS E ITENS ESSENCIAIS PARA PREPARO, CALOR E MELHOR RENDIMENTO.',
     button:'VER CARVÕES',
     href:'#/catalogo?categoria=Carvões%20e%20Alumínios',
-    image:'/assets/hero-carvoes.svg',
+    image:'/assets/hero-carvoes-v2.webp',
     alt:'Carvões e Alumínios',
     reference:false
   }
 ];
 function normalizeCarouselSlides(slides){
   const src=Array.isArray(slides)&&slides.length?slides:defaultCarouselSlides;
-  return src.map((s,i)=>({
-    id:s.id||('slide-'+(i+1)),
-    enabled:s.enabled!==false,
-    kicker:String(s.kicker||''),
-    line1:String(s.line1||''),
-    line2:String(s.line2||''),
-    text:String(s.text||''),
-    button:String(s.button||'VER PRODUTOS'),
-    href:String(s.href||'#/catalogo'),
-    image:String(s.image||''),
-    alt:String(s.alt||s.line1||'Banner THS'),
-    reference:Boolean(s.reference)&&!s.image
-  }));
+  const legacyImages={
+    premium:'/assets/hero-premium-v2.webp',
+    hookahs:'/assets/hero-hookahs-v2.webp',
+    convencionais:'/assets/hero-convencionais-v2.webp',
+    carvoes:'/assets/hero-carvoes-v2.webp'
+  };
+  return src.map((s,i)=>{
+    const id=s.id||('slide-'+(i+1));
+    let image=String(s.image||'');
+    if(id==='premium' && (!image || s.reference===true)) image=legacyImages.premium;
+    if(id==='hookahs' && (!image || image==='/assets/hero-hookahs.svg')) image=legacyImages.hookahs;
+    if(id==='convencionais' && (!image || image==='/assets/hero-convencionais.svg')) image=legacyImages.convencionais;
+    if(id==='carvoes' && (!image || image==='/assets/hero-carvoes.svg')) image=legacyImages.carvoes;
+    return {
+      id,
+      enabled:s.enabled!==false,
+      kicker:String(s.kicker||''),
+      line1:String(s.line1||''),
+      line2:String(s.line2||''),
+      text:String(s.text||''),
+      button:String(s.button||'VER PRODUTOS'),
+      href:String(s.href||'#/catalogo'),
+      image,
+      alt:String(s.alt||s.line1||'Banner THS'),
+      reference:Boolean(s.reference)&&!image
+    };
+  });
 }
 const defaultStoreConfig={
   announcement:'FRETE PARA TODO O BRASIL • PARCELE EM ATÉ 12X • PAGUE COM PIX, CARTÃO OU MERCADO PAGO',
