@@ -86,6 +86,8 @@ body{background:#fff}.container{width:min(calc(100% - 64px),1460px)}
  .ref-products{padding:18px 0 50px}.ref-products-head{align-items:flex-end}.ref-products-head .fire{display:none}.ref-products-head h2{font-size:1rem}.ref-products-head p{font-size:.48rem;max-width:240px}.ref-products-head>a{font-size:.54rem}.ref-products .product-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.ref-products .product-image{aspect-ratio:1/1}.ref-products .product-info{min-height:145px;padding:9px}.ref-products .product-name{font-size:.68rem}.ref-products .price{font-size:.87rem}.ref-products .installment span{display:none}.home-secondary{padding-top:48px}
 }
 
+
+.admin-carousel-list{display:grid;gap:12px}.admin-carousel-card{display:grid;grid-template-columns:190px minmax(0,1fr);gap:18px;padding:16px;border:1px solid var(--line);background:#fbfaf7}.admin-carousel-preview{height:120px;background:#090909;border:1px solid #292722;overflow:hidden;position:relative}.admin-carousel-preview img{width:100%;height:100%;object-fit:cover;display:block}.admin-carousel-preview .empty{height:100%;display:grid;place-items:center;color:#958d81;font-size:.62rem;text-align:center;padding:10px}.admin-carousel-card h3{margin:0 0 10px;font:800 1rem var(--display)}.admin-carousel-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:11px}.admin-carousel-actions button{height:34px}.admin-carousel-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.admin-carousel-grid label{display:grid;gap:5px;font-size:.6rem;font-weight:800}.admin-carousel-grid label.full{grid-column:1/-1}.admin-carousel-grid input,.admin-carousel-grid textarea{width:100%;border:1px solid var(--line);background:#fff;padding:0 9px;font-size:.7rem}.admin-carousel-grid input{height:38px}.admin-carousel-grid textarea{padding-top:9px;min-height:74px;resize:vertical}.admin-carousel-toggle{display:flex!important;grid-auto-flow:column;justify-content:start;align-items:center;gap:8px}.admin-carousel-toggle input{width:17px!important;height:17px!important}.admin-upload-line{display:flex;gap:8px;align-items:center}.admin-upload-line input[type=file]{height:auto;padding:8px}.admin-upload-status{font-size:.6rem;color:var(--muted)}@media(max-width:760px){.admin-carousel-card{grid-template-columns:1fr}.admin-carousel-preview{height:170px}.admin-carousel-grid{grid-template-columns:1fr}.admin-carousel-grid label.full{grid-column:auto}}
 </style>
 
 <style id="ths-reference-assets">
@@ -2696,6 +2698,89 @@ const baseProducts = [
 ];
 
 const defaultCategories=['Essências Premium','Essências Convencionais','Arguiles','Rosh','Bases','Carvões e Alumínios','Acessórios','Mangueiras','Controladores','Fogareiros'];
+const defaultCarouselSlides=[
+  {
+    id:'premium',
+    enabled:true,
+    kicker:'A MAIOR VARIEDADE DO BRASIL',
+    line1:'ESSÊNCIAS',
+    line2:'PREMIUM',
+    text:'TANGIERS, MUSTHAVE, BLACKBURN, STARBUZZ, UNCUT E MUITO MAIS. QUALIDADE E PROCEDÊNCIA GARANTIDA.',
+    button:'VER ESSÊNCIAS',
+    href:'#/catalogo?categoria=Essências%20Premium',
+    image:'',
+    alt:'Essências Premium',
+    reference:true
+  },
+  {
+    id:'hookahs',
+    enabled:true,
+    kicker:'EXPERIÊNCIA PREMIUM THS',
+    line1:'HOOKAHS',
+    line2:'PREMIUM',
+    text:'CORE, AMOTION, BLADE, WOOKAH E OUTROS MODELOS SELECIONADOS PARA SUA SESSÃO.',
+    button:'VER HOOKAHS',
+    href:'#/catalogo?categoria=Arguiles',
+    image:'/assets/hero-hookahs.svg',
+    alt:'Hookahs Premium',
+    reference:false
+  },
+  {
+    id:'convencionais',
+    enabled:true,
+    kicker:'SABORES PARA TODOS OS MOMENTOS',
+    line1:'ESSÊNCIAS',
+    line2:'CONVENCIONAIS',
+    text:'ESCOLHA ENTRE MARCAS, LINHAS E SABORES PARA ENCONTRAR A COMBINAÇÃO IDEAL.',
+    button:'VER CONVENCIONAIS',
+    href:'#/catalogo?categoria=Essências%20Convencionais',
+    image:'/assets/hero-convencionais.svg',
+    alt:'Essências Convencionais',
+    reference:false
+  },
+  {
+    id:'acessorios',
+    enabled:true,
+    kicker:'COMPLETE O SEU SETUP',
+    line1:'ROSH &',
+    line2:'ACESSÓRIOS',
+    text:'ROSHS, CONTROLADORES, MANGUEIRAS, PEÇAS E ACESSÓRIOS PARA COMPLETAR SUA EXPERIÊNCIA.',
+    button:'VER ACESSÓRIOS',
+    href:'#/catalogo?categoria=Acessórios',
+    image:'/assets/hero-acessorios.svg',
+    alt:'Rosh e Acessórios',
+    reference:false
+  },
+  {
+    id:'carvoes',
+    enabled:true,
+    kicker:'PERFORMANCE PARA SUA SESSÃO',
+    line1:'CARVÕES &',
+    line2:'ALUMÍNIOS',
+    text:'CARVÕES, ALUMÍNIOS E ITENS ESSENCIAIS PARA PREPARO, CALOR E MELHOR RENDIMENTO.',
+    button:'VER CARVÕES',
+    href:'#/catalogo?categoria=Carvões%20e%20Alumínios',
+    image:'/assets/hero-carvoes.svg',
+    alt:'Carvões e Alumínios',
+    reference:false
+  }
+];
+function normalizeCarouselSlides(slides){
+  const src=Array.isArray(slides)&&slides.length?slides:defaultCarouselSlides;
+  return src.map((s,i)=>({
+    id:s.id||('slide-'+(i+1)),
+    enabled:s.enabled!==false,
+    kicker:String(s.kicker||''),
+    line1:String(s.line1||''),
+    line2:String(s.line2||''),
+    text:String(s.text||''),
+    button:String(s.button||'VER PRODUTOS'),
+    href:String(s.href||'#/catalogo'),
+    image:String(s.image||''),
+    alt:String(s.alt||s.line1||'Banner THS'),
+    reference:Boolean(s.reference)&&!s.image
+  }));
+}
 const defaultStoreConfig={
   announcement:'FRETE PARA TODO O BRASIL • PARCELE EM ATÉ 12X • PAGUE COM PIX, CARTÃO OU MERCADO PAGO',
   heroEyebrow:'A MAIOR VARIEDADE DO BRASIL',
@@ -2708,11 +2793,18 @@ const defaultStoreConfig={
   whatsappRetail2:'5511940144162',
   whatsappWholesale:'5511947988458'
 };
+function normalizeStoreConfig(raw={}){
+  return {
+    ...defaultStoreConfig,
+    ...raw,
+    carouselSlides:normalizeCarouselSlides(raw.carouselSlides)
+  };
+}
 function readJSON(key,fallback){try{const raw=localStorage.getItem(key);return raw?JSON.parse(raw):structuredClone(fallback)}catch{return structuredClone(fallback)}}
 let categories=readJSON('ths-admin-categories',defaultCategories);
 let customProducts=readJSON('ths-admin-products',[]);
 let hiddenProducts=readJSON('ths-admin-hidden',[]);
-let storeConfig={...defaultStoreConfig,...readJSON('ths-admin-store',{})};
+let storeConfig=normalizeStoreConfig(readJSON('ths-admin-store',{}));
 const brandGroups={
   'Essências Premium':['Tangiers','Musthave','Blackburn','Starbuzz','Uncut Hookah John','Pure / FML','Fumari','Al Fakher','Darkside'],
   'Essências Convencionais':['Pred','ZGY','Zomo','Smyrna','Adalya','Haze','Sense','Skull','Primal','Ona','Onix','Fusion'],
@@ -2796,7 +2888,7 @@ async function loadRemoteCatalog(){
     customProducts=Array.isArray(remote.customProducts)?remote.customProducts:[];
     hiddenProducts=Array.isArray(remote.hiddenProducts)?remote.hiddenProducts:[];
     categories=Array.isArray(remote.categories)&&remote.categories.length?remote.categories:defaultCategories;
-    storeConfig={...defaultStoreConfig,...(remote.storeConfig||{})};
+    storeConfig=normalizeStoreConfig(remote.storeConfig||{});
     localStorage.setItem('ths-admin-overrides',JSON.stringify(state.overrides));
     localStorage.setItem('ths-admin-products',JSON.stringify(customProducts));
     localStorage.setItem('ths-admin-hidden',JSON.stringify(hiddenProducts));
@@ -2849,43 +2941,8 @@ function home(){
  const catLaunch=productById('amotion-pedal-frx-grape')||catHookah;
  const launches=products.filter(p=>p.badge==='Novo').slice(0,6);
 
- const heroSlides=[
-   {
-     kicker:'A MAIOR VARIEDADE DO BRASIL',
-     line1:'ESSÊNCIAS',line2:'PREMIUM',
-     text:'TANGIERS, MUSTHAVE, BLACKBURN, STARBUZZ, UNCUT E MUITO MAIS. QUALIDADE E PROCEDÊNCIA GARANTIDA.',
-     button:'VER ESSÊNCIAS',href:'#/catalogo?categoria=Essências%20Premium',
-     image:'',alt:'Essências Premium',reference:true
-   },
-   {
-     kicker:'EXPERIÊNCIA PREMIUM THS',
-     line1:'HOOKAHS',line2:'PREMIUM',
-     text:'CORE, AMOTION, BLADE, WOOKAH E OUTROS MODELOS SELECIONADOS PARA SUA SESSÃO.',
-     button:'VER HOOKAHS',href:'#/catalogo?categoria=Arguiles',
-     image:'/assets/hero-hookahs.svg',alt:catHookah?.name||'Hookahs Premium'
-   },
-   {
-     kicker:'SABORES PARA TODOS OS MOMENTOS',
-     line1:'ESSÊNCIAS',line2:'CONVENCIONAIS',
-     text:'ESCOLHA ENTRE MARCAS, LINHAS E SABORES PARA ENCONTRAR A COMBINAÇÃO IDEAL.',
-     button:'VER CONVENCIONAIS',href:'#/catalogo?categoria=Essências%20Convencionais',
-     image:'/assets/hero-convencionais.svg',alt:conventional?.name||'Essências Convencionais'
-   },
-   {
-     kicker:'COMPLETE O SEU SETUP',
-     line1:'ROSH &',line2:'ACESSÓRIOS',
-     text:'ROSHS, CONTROLADORES, MANGUEIRAS, PEÇAS E ACESSÓRIOS PARA COMPLETAR SUA EXPERIÊNCIA.',
-     button:'VER ACESSÓRIOS',href:'#/catalogo?categoria=Acessórios',
-     image:'/assets/hero-acessorios.svg',alt:catAccess?.name||'Rosh e Acessórios'
-   },
-   {
-     kicker:'PERFORMANCE PARA SUA SESSÃO',
-     line1:'CARVÕES &',line2:'ALUMÍNIOS',
-     text:'CARVÕES, ALUMÍNIOS E ITENS ESSENCIAIS PARA PREPARO, CALOR E MELHOR RENDIMENTO.',
-     button:'VER CARVÕES',href:'#/catalogo?categoria=Carvões%20e%20Alumínios',
-     image:'/assets/hero-carvoes.svg',alt:catCoal?.name||'Carvões e Alumínios'
-   }
- ];
+ const heroSlides=normalizeCarouselSlides(storeConfig.carouselSlides).filter(s=>s.enabled!==false);
+ if(!heroSlides.length)heroSlides.push({...defaultCarouselSlides[0]});
 
  $('#app').innerHTML=`
  <section class="ref-hero" id="homeHero">
@@ -3031,7 +3088,7 @@ function adminPage(){
    <div class="admin-head"><div><span class="eyebrow">PAINEL THS</span><h1>Administração da loja</h1><p>Gerencie produtos, categorias e aparência. As alterações salvas aqui são publicadas para todos os visitantes.</p></div><div class="admin-head-actions"><a class="btn btn-outline" href="#/">Ver loja</a><button class="btn btn-outline" id="adminLogout">Sair</button><button class="btn btn-gold" id="adminAddTop">+ Novo produto</button></div></div>
    <div class="admin-warning"><strong>Painel online.</strong> <span id="syncStatus">Sincronizado com a Vercel</span>. Você pode editar por celular ou computador usando a mesma senha administrativa.</div>
    <div class="admin-stats"><div><span>Produtos</span><strong>${products.length}</strong></div><div><span>Disponíveis</span><strong>${availableCount}</strong></div><div><span>Indisponíveis</span><strong>${soldOutCount}</strong></div><div><span>Categorias</span><strong>${categories.length}</strong></div><div><span>Pedidos teste</span><strong>${demoOrders.length}</strong></div></div>
-   <div class="admin-tabs"><button class="active" data-admin-tab="products">Produtos</button><button data-admin-tab="categories">Categorias</button><button data-admin-tab="store">Loja & banner</button><button data-admin-tab="orders">Pedidos teste</button><button data-admin-tab="backup">Backup</button></div>
+   <div class="admin-tabs"><button class="active" data-admin-tab="products">Produtos</button><button data-admin-tab="categories">Categorias</button><button data-admin-tab="store">Editar site & carrossel</button><button data-admin-tab="orders">Pedidos teste</button><button data-admin-tab="backup">Backup</button></div>
    <div id="adminPanel"></div>
  </div></section>`;
 
@@ -3120,24 +3177,132 @@ function adminPage(){
  }
 
  function renderAdminStore(){
-   const opts=products.map(p=>`<option value="${esc(p.id)}">${esc(p.name)}</option>`).join('');
-   panel.innerHTML=`<div class="admin-section-card"><div class="admin-section-head"><div><span class="eyebrow">IDENTIDADE DA LOJA</span><h2>Banner, avisos e contatos</h2><p>Essas mudanças refletem na vitrine quando salvas.</p></div></div><form id="adminStoreForm" class="admin-form-grid">
-     <label class="full">Aviso superior<input id="asAnnouncement" value="${esc(storeConfig.announcement)}"></label>
-     <label>Texto pequeno do banner<input id="asEyebrow" value="${esc(storeConfig.heroEyebrow)}"></label>
-     <label>Título principal<input id="asTitle" value="${esc(storeConfig.heroTitle)}"></label>
-     <label>Palavra dourada<input id="asAccent" value="${esc(storeConfig.heroAccent)}"></label>
-     <label class="full">Descrição do banner<textarea id="asText" rows="4">${esc(storeConfig.heroText)}</textarea></label>
-     <label>Produto principal do banner<select id="asHeroMain">${opts}</select></label>
-     <label>Produto secundário do banner<select id="asHeroSecondary">${opts}</select></label>
-     <label>WhatsApp varejo 1 <small>Somente números, com 55 + DDD</small><input id="asW1" value="${esc(storeConfig.whatsappRetail1)}"></label>
-     <label>WhatsApp varejo 2<input id="asW2" value="${esc(storeConfig.whatsappRetail2)}"></label>
-     <label>WhatsApp atacado<input id="asW3" value="${esc(storeConfig.whatsappWholesale)}"></label>
-     <div class="full admin-form-actions"><button class="btn btn-gold">Salvar loja</button></div>
-   </form></div>`;
-   $('#asHeroMain').value=storeConfig.heroMainProductId;$('#asHeroSecondary').value=storeConfig.heroSecondaryProductId;
-   $('#adminStoreForm').onsubmit=e=>{e.preventDefault();storeConfig={...storeConfig,announcement:$('#asAnnouncement').value.trim(),heroEyebrow:$('#asEyebrow').value.trim(),heroTitle:$('#asTitle').value.trim(),heroAccent:$('#asAccent').value.trim(),heroText:$('#asText').value.trim(),heroMainProductId:$('#asHeroMain').value,heroSecondaryProductId:$('#asHeroSecondary').value,whatsappRetail1:$('#asW1').value.replace(/\D/g,''),whatsappRetail2:$('#asW2').value.replace(/\D/g,''),whatsappWholesale:$('#asW3').value.replace(/\D/g,'')};saveAdminData();applyStoreConfig();alert('Configurações salvas. A sincronização com a Vercel acontece automaticamente.');};
- }
+   storeConfig=normalizeStoreConfig(storeConfig);
+   panel.innerHTML=`
+   <div class="admin-section-card">
+     <div class="admin-section-head"><div><span class="eyebrow">LOJA</span><h2>Avisos e contatos</h2><p>Configurações gerais da vitrine e WhatsApp.</p></div></div>
+     <form id="adminStoreForm" class="admin-form-grid">
+       <label class="full">Aviso superior<input id="asAnnouncement" value="${esc(storeConfig.announcement)}"></label>
+       <label>WhatsApp varejo 1 <small>Somente números, com 55 + DDD</small><input id="asW1" value="${esc(storeConfig.whatsappRetail1)}"></label>
+       <label>WhatsApp varejo 2<input id="asW2" value="${esc(storeConfig.whatsappRetail2)}"></label>
+       <label>WhatsApp atacado<input id="asW3" value="${esc(storeConfig.whatsappWholesale)}"></label>
+       <div class="full admin-form-actions"><button class="btn btn-gold">Salvar configurações</button></div>
+     </form>
+   </div>
+   <div class="admin-section-card">
+     <div class="admin-section-head"><div><span class="eyebrow">CARROSSEL DA HOME</span><h2>Editar banners</h2><p>Troque imagens, textos, botões, links e a ordem dos slides. As alterações são publicadas para todos os visitantes.</p></div><button class="btn btn-gold" id="addCarouselSlide">+ Novo slide</button></div>
+     <div class="admin-carousel-list" id="adminCarouselList"></div>
+   </div>`;
 
+   $('#adminStoreForm').onsubmit=e=>{
+     e.preventDefault();
+     storeConfig={...storeConfig,
+       announcement:$('#asAnnouncement').value.trim(),
+       whatsappRetail1:$('#asW1').value.replace(/\D/g,''),
+       whatsappRetail2:$('#asW2').value.replace(/\D/g,''),
+       whatsappWholesale:$('#asW3').value.replace(/\D/g,'')
+     };
+     saveAdminData();applyStoreConfig();alert('Configurações salvas e sincronizadas.');
+   };
+
+   function carouselValue(slide,key,value){
+     const slides=normalizeCarouselSlides(storeConfig.carouselSlides);
+     const s=slides.find(x=>x.id===slide.id);if(!s)return;
+     s[key]=value;
+     if(key==='image'&&value)s.reference=false;
+     storeConfig={...storeConfig,carouselSlides:slides};
+   }
+
+   function renderCarouselList(){
+     storeConfig={...storeConfig,carouselSlides:normalizeCarouselSlides(storeConfig.carouselSlides)};
+     const list=$('#adminCarouselList');
+     list.innerHTML=storeConfig.carouselSlides.map((s,i)=>`
+       <article class="admin-carousel-card" data-carousel-id="${esc(s.id)}">
+         <div>
+           <div class="admin-carousel-preview">${s.image?`<img src="${esc(s.image)}" alt="">`:`<div class="empty">${s.reference?'Usando a arte original embutida do banner':'Sem imagem cadastrada'}</div>`}</div>
+           <div class="admin-carousel-actions">
+             <button class="admin-mini" type="button" data-slide-up="${esc(s.id)}" ${i===0?'disabled':''}>↑ Subir</button>
+             <button class="admin-mini" type="button" data-slide-down="${esc(s.id)}" ${i===storeConfig.carouselSlides.length-1?'disabled':''}>↓ Descer</button>
+             <button class="admin-mini danger" type="button" data-slide-delete="${esc(s.id)}">Excluir</button>
+           </div>
+         </div>
+         <div>
+           <h3>Slide ${i+1} · ${esc((s.line1+' '+s.line2).trim()||'Sem título')}</h3>
+           <div class="admin-carousel-grid">
+             <label class="admin-carousel-toggle full"><input type="checkbox" data-slide-field="enabled" data-slide-id="${esc(s.id)}" ${s.enabled!==false?'checked':''}> Exibir este slide</label>
+             <label>Texto pequeno<input data-slide-field="kicker" data-slide-id="${esc(s.id)}" value="${esc(s.kicker)}"></label>
+             <label>Primeira linha<input data-slide-field="line1" data-slide-id="${esc(s.id)}" value="${esc(s.line1)}"></label>
+             <label>Palavra / linha dourada<input data-slide-field="line2" data-slide-id="${esc(s.id)}" value="${esc(s.line2)}"></label>
+             <label>Texto do botão<input data-slide-field="button" data-slide-id="${esc(s.id)}" value="${esc(s.button)}"></label>
+             <label class="full">Descrição<textarea data-slide-field="text" data-slide-id="${esc(s.id)}">${esc(s.text)}</textarea></label>
+             <label class="full">Link do botão<input data-slide-field="href" data-slide-id="${esc(s.id)}" value="${esc(s.href)}" placeholder="#/catalogo?categoria=..."></label>
+             <label class="full">Imagem do banner<input data-slide-field="image" data-slide-id="${esc(s.id)}" value="${esc(s.image)}" placeholder="https://..."><small>Você pode colar uma URL ou usar o upload abaixo.</small></label>
+             <label class="full">Enviar nova imagem
+               <div class="admin-upload-line"><input type="file" data-slide-file="${esc(s.id)}" accept="image/jpeg,image/png,image/webp,image/gif"><span class="admin-upload-status" data-slide-status="${esc(s.id)}">Máximo 4 MB</span></div>
+             </label>
+           </div>
+           <div class="admin-form-actions"><button class="btn btn-gold" type="button" data-slide-save="${esc(s.id)}">Salvar este slide</button></div>
+         </div>
+       </article>`).join('');
+
+     $$('[data-slide-field]',list).forEach(el=>{
+       const id=el.dataset.slideId,field=el.dataset.slideField;
+       const apply=()=>carouselValue({id},field,field==='enabled'?el.checked:el.value);
+       el.onchange=apply;
+     });
+
+     $$('[data-slide-save]',list).forEach(b=>b.onclick=async()=>{
+       const id=b.dataset.slideSave;
+       const card=b.closest('[data-carousel-id]');
+       $$('[data-slide-field]',card).forEach(el=>carouselValue({id},el.dataset.slideField,el.dataset.slideField==='enabled'?el.checked:el.value));
+       saveAdminData();
+       b.textContent='Salvo ✓';
+       setTimeout(()=>{if(document.body.contains(b))b.textContent='Salvar este slide'},1200);
+     });
+
+     $$('[data-slide-file]',list).forEach(inp=>inp.onchange=e=>{
+       const file=e.target.files?.[0];if(!file)return;
+       const id=inp.dataset.slideFile;
+       const status=$(`[data-slide-status="${CSS.escape(id)}"]`,list);
+       if(file.size>4*1024*1024){status.textContent='A imagem ultrapassa 4 MB.';return;}
+       status.textContent='Enviando…';
+       const reader=new FileReader();
+       reader.onload=async()=>{
+         try{
+           const r=await fetch('/api/upload',{method:'POST',headers:{'content-type':'application/json','x-admin-key':adminKey},body:JSON.stringify({filename:'banner-'+file.name,dataUrl:reader.result})});
+           const data=await r.json();if(!r.ok)throw new Error(data.error||'Falha no upload');
+           carouselValue({id},'image',data.url);saveAdminData();renderCarouselList();
+         }catch(err){status.textContent=err.message||'Não foi possível enviar a imagem.';}
+       };
+       reader.readAsDataURL(file);
+     });
+
+     $$('[data-slide-up]',list).forEach(b=>b.onclick=()=>moveSlide(b.dataset.slideUp,-1));
+     $$('[data-slide-down]',list).forEach(b=>b.onclick=()=>moveSlide(b.dataset.slideDown,1));
+     $$('[data-slide-delete]',list).forEach(b=>b.onclick=()=>{
+       const slides=normalizeCarouselSlides(storeConfig.carouselSlides);
+       const s=slides.find(x=>x.id===b.dataset.slideDelete);
+       if(!s||!confirm('Excluir este slide do carrossel?'))return;
+       storeConfig={...storeConfig,carouselSlides:slides.filter(x=>x.id!==s.id)};
+       saveAdminData();renderCarouselList();
+     });
+   }
+
+   function moveSlide(id,dir){
+     const slides=normalizeCarouselSlides(storeConfig.carouselSlides);
+     const i=slides.findIndex(x=>x.id===id);const j=i+dir;
+     if(i<0||j<0||j>=slides.length)return;
+     [slides[i],slides[j]]=[slides[j],slides[i]];
+     storeConfig={...storeConfig,carouselSlides:slides};saveAdminData();renderCarouselList();
+   }
+
+   $('#addCarouselSlide').onclick=()=>{
+     const slides=normalizeCarouselSlides(storeConfig.carouselSlides);
+     slides.push({id:'slide-'+Date.now(),enabled:true,kicker:'NOVIDADE THS',line1:'NOVO',line2:'DESTAQUE',text:'Edite este texto no painel.',button:'VER PRODUTOS',href:'#/catalogo',image:'',alt:'Banner THS',reference:false});
+     storeConfig={...storeConfig,carouselSlides:slides};saveAdminData();renderCarouselList();
+   };
+   renderCarouselList();
+ }
  function renderAdminOrders(){const orders=readJSON('ths-demo-orders',[]);panel.innerHTML=`<div class="admin-section-card"><div class="admin-section-head"><div><span class="eyebrow">PEDIDOS</span><h2>Pedidos de demonstração</h2><p>Quando o checkout real for conectado, esta área vira a central de pedidos.</p></div>${orders.length?'<button class="btn btn-outline" id="clearDemoOrders">Limpar testes</button>':''}</div><div class="admin-order-list">${orders.length?orders.map(o=>`<div><strong>${esc(o.id)}</strong><span>${new Date(o.createdAt).toLocaleString('pt-BR')}</span><b>${money(o.total)}</b><small>${esc(o.status)}</small></div>`).join(''):'<div class="admin-empty">Nenhum pedido de teste criado.</div>'}</div></div>`;const c=$('#clearDemoOrders');if(c)c.onclick=()=>{if(confirm('Limpar todos os pedidos de teste?')){localStorage.removeItem('ths-demo-orders');renderAdminOrders();}};}
 
  function renderAdminBackup(){panel.innerHTML=`<div class="admin-section-card"><div class="admin-section-head"><div><span class="eyebrow">SEGURANÇA DOS DADOS</span><h2>Backup e restauração</h2><p>Exporte suas alterações para levar o painel a outro navegador ou guardar uma cópia.</p></div></div><div class="admin-backup-grid"><div><h3>Exportar backup</h3><p>Baixa produtos cadastrados, alterações do catálogo, categorias, banner, contatos e pedidos de teste.</p><button class="btn btn-gold" id="exportAdminBackup">Baixar backup JSON</button></div><div><h3>Importar backup</h3><p>Restaura um arquivo exportado por este painel.</p><label class="btn btn-dark admin-file-label">Selecionar arquivo<input id="importAdminBackup" type="file" accept="application/json,.json"></label></div><div class="danger-zone"><h3>Restaurar padrão</h3><p>Apaga todas as alterações administrativas deste navegador e volta ao catálogo base.</p><button class="btn btn-outline" id="resetAdminAll">Restaurar catálogo original</button></div></div></div>`;
